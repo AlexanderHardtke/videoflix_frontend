@@ -1,1 +1,73 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --black: #141414;
+    --error-red: #FF002E;
+    --purple: #2E3EDF;
+    --grey: #5E5E5E;
+    --utility-white: #D9D9D9;
+    --text-field-bg: #1C1A20CC;
+    --card-bg: #1B1B22D9;
+}
+
+* {
+    background-color: var(--black);
+    color: white;
+    box-sizing: border-box;
+    margin: 0;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    font-family: 'DM Sans';
+}
+
+/* dm-sans-300 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-300.woff2') format('woff2');
+}
+
+/* dm-sans-regular - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-regular.woff2') format('woff2');
+}
+
+/* dm-sans-500 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-500.woff2') format('woff2');
+}
+
+/* dm-sans-600 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-600.woff2') format('woff2');
+}
+
+/* dm-sans-700 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-700.woff2') format('woff2');
+}
+
+/* dm-sans-800 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../public/assets/fonts/dm-sans-v15-latin-800.woff2') format('woff2');
+}
