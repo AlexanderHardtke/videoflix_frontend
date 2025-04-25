@@ -1,0 +1,15 @@
+section {
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 96px;
+}
+
+a {
+    border-radius: 40px;
+    background-color: var(--purple);
+    padding: 12px 24px 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+}
