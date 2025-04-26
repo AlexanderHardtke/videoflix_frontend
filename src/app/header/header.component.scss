@@ -13,3 +13,16 @@ a {
     font-size: 18px;
     cursor: pointer;
 }
+
+div {
+    display: flex;
+    gap: 8px;
+
+    img {
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: var(--purple);
+        padding: 5px;
+        height: 30px;
+    }
+}

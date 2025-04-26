@@ -1,15 +1,31 @@
-:root {
-    --black: #141414;
-    --error-red: #FF002E;
-    --purple: #2E3EDF;
-    --grey: #5E5E5E;
-    --utility-white: #D9D9D9;
-    --text-field-bg: #1C1A20CC;
-    --card-bg: #1B1B22D9;
+@media (prefers-color-scheme: dark) {
+    :root {
+        --white: #ffffff;
+        --black: #141414;
+        --error-red: #FF002E;
+        --purple: #2E3EDF;
+        --grey: #5E5E5E;
+        --utility-white: #D9D9D9;
+        --text-field-bg: #1C1A20CC;
+        --card-bg: #1B1B22D9;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --white: #000000;
+        --black: #ffffff;
+        --error-red: #FF002E;
+        --purple: #2E3EDF;
+        --grey: #5E5E5E;
+        --utility-white: #D9D9D9;
+        --text-field-bg: #1C1A20CC;
+        --card-bg: #1B1B22D9;
+    }
 }
 
 * {
-    color: white;
+    color: var(--white);
     box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
