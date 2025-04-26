@@ -11,14 +11,12 @@ a {
     background-repeat: no-repeat;
     background-position: left bottom;
     transition: background-size 300ms ease;
+    &:hover, &:focus {
+        background-size: 100% 3px;
+    }
 }
 
 a:nth-child(2) {
     background-position: right bottom;
     background-image: linear-gradient(100deg,var(--error-red), var(--card-bg), var(--purple));
 }
-
-a:hover {
-    background-size: 100% 3px;
-}
-
