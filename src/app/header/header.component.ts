@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import translateionsDE from '../../../public/i18n/de.json';
+import translateionsEN from '../../../public/i18n/en.json';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +12,17 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   darkmode: boolean = true;
+  public currentLang = 'DE';
+
+  constructor(private translate: TranslateService) {
+    this.translate.setTranslation('en', translateionsDE);
+    this.translate.setTranslation('de', translateionsEN);
+    this.translate.setDefaultLang('de');
+  }
+
+  public changeLang(lang: string) {
+    this.translate
+  }
 
   ngOnInit() {
     switch (localStorage.getItem("color")) {
