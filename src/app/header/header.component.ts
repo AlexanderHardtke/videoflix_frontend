@@ -4,11 +4,10 @@ import translateionsDE from '../../../public/i18n/de.json';
 import translateionsEN from '../../../public/i18n/en.json';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+    selector: 'app-header',
+    imports: [],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   darkmode: boolean = true;
