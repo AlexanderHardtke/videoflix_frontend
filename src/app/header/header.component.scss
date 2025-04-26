@@ -18,11 +18,12 @@ div {
     display: flex;
     gap: 8px;
 
-    img {
+    svg {
+        fill: var(--white);
         cursor: pointer;
         border-radius: 50%;
         background-color: var(--purple);
-        padding: 5px;
-        height: 30px;
+        padding: 6px;
+        height: 32px;
     }
 }
