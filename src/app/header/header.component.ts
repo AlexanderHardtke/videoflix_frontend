@@ -5,6 +5,7 @@ import translateionsEN from '../../../public/i18n/en.json';
 
 @Component({
     selector: 'app-header',
+    standalone: true,
     imports: [],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
