@@ -17,6 +17,7 @@ export class HeaderComponent {
         break;
       case "light":
         this.setLightMode();
+        this.darkmode = false;
         break;
       default: this.setColorScheme()
         break;
@@ -47,9 +48,11 @@ export class HeaderComponent {
     this.darkmode = !this.darkmode;
     if (this.darkmode) {
       this.setDarkMode();
+      localStorage.setItem("color", "dark")
     } else {
       this.setLightMode();
+      localStorage.setItem("color", "light")
     }
   }
-
+  
 }
