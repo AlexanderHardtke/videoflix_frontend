@@ -6,4 +6,19 @@ section {
 
 a {
     cursor: pointer;
+    background-image: linear-gradient(100deg,var(--purple), var(--card-bg), var(--error-red));
+    background-size: 0% 3px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size 300ms ease;
 }
+
+a:nth-child(2) {
+    background-position: right bottom;
+    background-image: linear-gradient(100deg,var(--error-red), var(--card-bg), var(--purple));
+}
+
+a:hover {
+    background-size: 100% 3px;
+}
+
