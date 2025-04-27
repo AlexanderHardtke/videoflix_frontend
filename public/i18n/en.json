@@ -1,5 +1,9 @@
 {
     "login": {
         "title": "Login"
+    },
+    "footer": {
+        "legal": "Legal Notice",
+        "privacy": "Privacy Policy"
     }
 }

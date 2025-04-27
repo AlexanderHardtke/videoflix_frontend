@@ -1,5 +1,11 @@
 {
     "login": {
         "title": "Anmelden"
+    },
+    "footer": {
+        "legal": "Impressum",
+        "privacy": "Datenschutz"
     }
 }
+
+   
