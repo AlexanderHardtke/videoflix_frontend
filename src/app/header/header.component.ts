@@ -22,12 +22,15 @@ export class HeaderComponent {
     this.translate.setTranslation('en', translateionsEN);
     if (localStorage.getItem("lang")) {
       let lang = localStorage.getItem("lang")
-      if (lang) this.currentLang = lang;
+      if (lang) {
+        this.currentLang = lang;
+        this.translate.setDefaultLang(lang);
+      }
     } else {
       this.translate.setDefaultLang('de');
       localStorage.setItem("lang", 'de');
+    }
   }
-}
 
   @HostListener('document:mouseup', ['$event.target'])
   onClickOutsideLanBox(target: HTMLElement): void {

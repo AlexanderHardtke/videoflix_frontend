@@ -37,9 +37,9 @@
 
         @if (selectLang) {
         <nav #langBox>
-            <p [ngStyle]="{ color: currentLang === 'en' ? 'red' : 'inherit' }" tabindex="3" (click)="changeLang('en')"
+            <p [ngStyle]="{ color: currentLang === 'en' ? 'var(--error-red)' : 'inherit' }" tabindex="3" (click)="changeLang('en')"
                 (keydown.enter)="changeLang('en')" (keydown.space)="changeLang('en')">EN</p>
-            <p [ngStyle]="{ color: currentLang === 'de' ? 'red' : 'inherit' }" tabindex="4" (click)="changeLang('de')"
+            <p [ngStyle]="{ color: currentLang === 'de' ? 'var(--error-red)' : 'inherit' }" tabindex="4" (click)="changeLang('de')"
                 (keydown.enter)="changeLang('de')" (keydown.space)="changeLang('de')">DE</p>
         </nav>
         }
