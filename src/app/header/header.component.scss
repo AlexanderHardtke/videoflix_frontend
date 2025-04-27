@@ -8,9 +8,17 @@ section {
 
 a {
     border-radius: 40px;
-    background-color: var(--purple);
+    background: linear-gradient(0deg, var(--black) 0%, var(--purple) 50%, var(--purple) 100%);
+    background-size: 100% 200%;
     padding: 12px 24px 12px 24px;
     cursor: pointer;
+    border: 1px solid var(--purple);
+
+    &:hover,
+    &:focus {
+        transition: background-position 500ms;
+        background-position: 100% 100%;
+    }
 }
 
 div {
@@ -21,8 +29,51 @@ div {
         fill: var(--white);
         cursor: pointer;
         border-radius: 50%;
-        background-color: var(--purple);
         padding: 6px;
         height: 32px;
+        transition: background-position 500ms, fill 250ms;
+
+        &:nth-child(1) {
+            background: linear-gradient(0deg, var(--black) 0%, var(--purple) 50%, var(--purple) 100%);
+            background-size: 100% 200%;
+        }
+
+        &:nth-child(2) {
+            background: radial-gradient(circle, var(--black) 0%, var(--purple) 50%);
+        }
+
+        &:nth-child(1):hover,
+        &:nth-child(1):focus {
+            transition: background-position 500ms;
+            background-position: 100% 100%;
+            background-size: 200% 200%;
+        }
+
+        &:nth-child(2):hover,
+        &:nth-child(2):focus {
+            transition: background-position 500ms;
+            fill: var(--utility-white);
+            background-position: 100% 100%;
+            background-size: 200% 200%;
+        }
+    }
+}
+
+nav {
+    background-color: var(--grey);
+    position: absolute;
+    margin-left: 80px;
+    margin-top: -6px;
+
+    p {
+        padding-inline: 3px;
+        cursor: pointer;
+        transition: color 200ms;
+
+        &:hover,
+        &:focus {
+            transition: color 200ms;
+            color: var(--purple);
+        }
     }
 }

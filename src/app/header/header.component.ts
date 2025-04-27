@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import translateionsDE from '../../../public/i18n/de.json';
 import translateionsEN from '../../../public/i18n/en.json';
@@ -11,14 +11,24 @@ import translateionsEN from '../../../public/i18n/en.json';
     styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  @ViewChild('langBox') langBox!: ElementRef<HTMLDivElement>;
   darkmode: boolean = true;
   public currentLang = 'DE';
+  selectLang = false;
 
   constructor(private translate: TranslateService) {
     this.translate.setTranslation('en', translateionsDE);
     this.translate.setTranslation('de', translateionsEN);
     this.translate.setDefaultLang('de');
   }
+
+    @HostListener('document:mouseup', ['$event.target'])
+    onClickOutsideLanBox(target: HTMLElement): void {
+      if (this.selectLang) {
+        let clickInsideBox = this.langBox.nativeElement.contains(target); {
+        } if (!clickInsideBox) this.selectLang = false;
+      }
+    }
 
   public changeLang(lang: string) {
     this.translate
@@ -69,4 +79,7 @@ export class HeaderComponent {
     }
   }
   
+  toggleLang() {
+    this.selectLang = !this.selectLang;
+  }
 }
