@@ -1,37 +1,46 @@
 import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import translateionsDE from '../../../public/i18n/de.json';
 import translateionsEN from '../../../public/i18n/en.json';
+import { NgStyle } from '@angular/common';
 
 @Component({
-    selector: 'app-header',
-    standalone: true,
-    imports: [],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.scss'
+  selector: 'app-header',
+  standalone: true,
+  imports: [TranslatePipe, NgStyle],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   @ViewChild('langBox') langBox!: ElementRef<HTMLDivElement>;
   darkmode: boolean = true;
-  public currentLang = 'DE';
+  public currentLang = 'de';
   selectLang = false;
 
   constructor(private translate: TranslateService) {
-    this.translate.setTranslation('en', translateionsDE);
-    this.translate.setTranslation('de', translateionsEN);
-    this.translate.setDefaultLang('de');
+    this.translate.setTranslation('de', translateionsDE);
+    this.translate.setTranslation('en', translateionsEN);
+    if (localStorage.getItem("lang")) {
+      let lang = localStorage.getItem("lang")
+      if (lang) this.currentLang = lang;
+    } else {
+      this.translate.setDefaultLang('de');
+      localStorage.setItem("lang", 'de');
+  }
+}
+
+  @HostListener('document:mouseup', ['$event.target'])
+  onClickOutsideLanBox(target: HTMLElement): void {
+    if (this.selectLang) {
+      let clickInsideBox = this.langBox.nativeElement.contains(target); {
+      } if (!clickInsideBox) this.selectLang = false;
+    }
   }
 
-    @HostListener('document:mouseup', ['$event.target'])
-    onClickOutsideLanBox(target: HTMLElement): void {
-      if (this.selectLang) {
-        let clickInsideBox = this.langBox.nativeElement.contains(target); {
-        } if (!clickInsideBox) this.selectLang = false;
-      }
-    }
-
   public changeLang(lang: string) {
-    this.translate
+    this.translate.use(lang);
+    this.currentLang = lang === 'en' ? 'en' : 'de';
+    localStorage.setItem("lang", this.currentLang);
   }
 
   ngOnInit() {
@@ -78,7 +87,7 @@ export class HeaderComponent {
       localStorage.setItem("color", "light")
     }
   }
-  
+
   toggleLang() {
     this.selectLang = !this.selectLang;
   }
