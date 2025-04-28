@@ -5,5 +5,11 @@
     "footer": {
         "legal": "Legal Notice",
         "privacy": "Privacy Policy"
+    },
+    "main": {
+        "headline": "Movies, TV shows, and more",
+        "info": "Enter your email to create or restart your subscription.",
+        "email": "Email Address",
+        "signUp": "Sign Up"
     }
 }
