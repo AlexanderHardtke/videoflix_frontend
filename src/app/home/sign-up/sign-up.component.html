@@ -1,17 +1,23 @@
 <main>
     <div class="card">
         <h1>{{'main.signUp' | translate}}</h1>
-        <input #email="ngModel" tabindex="4" [(ngModel)]="form.email" (keydown.enter)="registerUser()" type="email"
-            [ngClass]="{'redBorder': !email.valid && email.touched && !email.disabled}"
-            placeholder="{{'main.email' | translate}}">
-        <input #pw="ngModel" tabindex="5" [(ngModel)]="form.pw" (keydown.enter)="registerUser()" type="password"
-            [ngClass]="{'redBorder': !pw.valid && pw.touched && !pw.disabled}"
-            placeholder="{{'main.password' | translate}}">
-        <input #repeatPw="ngModel" tabindex="6" [(ngModel)]="form.repeatPw" (keydown.enter)="registerUser()"
-            type="password" [ngClass]="{'redBorder': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled}"
-            placeholder="{{'main.repeatPassword' | translate}}">
+
+        <form (ngSubmit)="registerUser()" #contactForm="ngForm">
+            <input #email="ngModel" tabindex="4" [(ngModel)]="form.email" (keydown.enter)="registerUser()" type="email"
+                [ngClass]="{'redBorder': !email.valid && email.touched && !email.disabled}" name="email" required
+                pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" placeholder="{{'main.email' | translate}}">
+
+            <input #pw="ngModel" tabindex="5" [(ngModel)]="form.pw" (keydown.enter)="registerUser()" type="password"
+                [ngClass]="{'redBorder': !pw.valid && pw.touched && !pw.disabled}" name="pw"
+                placeholder="{{'main.password' | translate}}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+
+            <input #repeatPw="ngModel" tabindex="6" [(ngModel)]="form.repeatPw" (keydown.enter)="registerUser()"
+                [ngClass]="{'redBorder': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled || (form.pw !== form.repeatPw && repeatPw.touched)}"
+                placeholder="{{'main.repeatPassword' | translate}}" name="repeatPw" type="password" required>
+        </form>
 
         <a tabindex="7" (click)="registerUser()" (keydown.enter)="registerUser()" (keydown.space)="registerUser()"
             class="button">{{'main.getStarted' | translate}}</a>
+
     </div>
 </main>

@@ -54,6 +54,10 @@ main {
     gap: 32px;
 }
 
+.redBorder {
+    border:solid 1px var(--error-red)!important;
+}
+
 .card {
     background-color: var(--card-bg);
     width: 520px;

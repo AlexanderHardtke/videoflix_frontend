@@ -2,6 +2,13 @@ div {
     height: 492px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+}
+
 @media screen and (min-width: 1921px) {
     div {
         height: 540px;
