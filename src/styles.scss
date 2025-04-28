@@ -55,6 +55,12 @@ section {
     }
 }
 
+@media screen and (min-width: 1920px) {
+    * {
+        font-size: 26px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     section {
         padding-inline: 48px;
