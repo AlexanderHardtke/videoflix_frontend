@@ -35,11 +35,21 @@ html {
     background-color: var(--black);
 }
 
-@media screen and (max-width: 768px) {}
+section {
+    padding-inline: 96px;
+}
 
-@media screen and (max-width: 480px) {}
+@media screen and (max-width: 768px) {
+    section {
+        padding-inline: 48px;
+    }
+}
 
-@media screen and (max-width: 380px) {}
+@media screen and (max-width: 480px) {
+    section {
+        padding-inline: 16px;
+    }
+}
 
 /* dm-sans-300 - latin */
 @font-face {
