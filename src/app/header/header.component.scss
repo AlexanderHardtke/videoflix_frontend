@@ -78,14 +78,20 @@ nav {
     }
 }
 
+.smallLogo {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
-    
+    .logo {
+        display: none;
+    }
+
+    .smallLogo {
+        display: block;
+    }
 }
 
-@media screen and (max-width: 480px) {
-    
-}
+@media screen and (max-width: 480px) {}
 
-@media screen and (max-width: 380px) {
-    
-}
+@media screen and (max-width: 380px) {}
