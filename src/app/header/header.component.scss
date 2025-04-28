@@ -74,6 +74,16 @@ nav {
         max-width: 1920px;
         left: calc(50svw - 960px);
     }
+
+    .logo {
+        height: 60px;
+    }
+
+    div{
+        svg {
+            height: 58px;
+        }
+    }
 }
 
 @media screen and (max-width: 768px) {
