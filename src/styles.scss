@@ -39,6 +39,47 @@ section {
     padding-inline: 96px;
 }
 
+h1 {
+    font-size: 48px;
+    text-align: center;
+}
+
+main {
+    padding-inline: 96px;
+    min-height: calc(100svh - 190px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    width: 520px;
+    max-width: 100%;
+    border-radius: 48px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 43px 56px 43px 56px;
+    gap: 32px;
+
+    input {
+        background-color: var(--text-field-bg);
+        width: 100%;
+        padding: 12px 36px 12px 36px;
+        border-radius: 12px;
+        border: solid 1px var(--purple);
+
+        &:hover,
+        &:focus-visible {
+            outline: none;
+            border: solid 1px var(--grey);
+        }
+    }
+}
+
 .button {
     font-weight: 700;
     border-radius: 40px;
@@ -59,10 +100,22 @@ section {
     * {
         font-size: 26px;
     }
+
+    h1 {
+        font-size: 60px;
+    }
+
+    .card {
+        width: 640px;
+    }
 }
 
 @media screen and (max-width: 768px) {
     section {
+        padding-inline: 48px;
+    }
+
+    main {
         padding-inline: 48px;
     }
 }
@@ -70,6 +123,24 @@ section {
 @media screen and (max-width: 480px) {
     section {
         padding-inline: 16px;
+    }
+
+    main {
+        padding-inline: 16px;
+    }
+
+    .card {
+        padding: 43px 24px 43px 24px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    .card {
+        padding: 43px 20px 43px 20px;
     }
 }
 

@@ -11,7 +11,13 @@
         "info": "Geben Sie Ihre E-Mail-Adresse ein, um Ihr Abonnement zu erstellen oder neu zu starten.",
         "watch": "Schaue was und wann du willst.",
         "email": "E-Mail-Adresse",
-        "signUp": "Registrieren"
+        "password": "Passwort eingeben",
+        "repeatPassword": "Passwort bestätigen",
+        "signUp": "Registrieren",
+        "getStarted": "Loslegen",
+        "errorName":"The email adress is not valid",
+        "errorPw":"Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.",
+        "errorRepeatedPw":"Passwords must match."
     }
 }
 
