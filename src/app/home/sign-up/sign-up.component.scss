@@ -1,4 +1,4 @@
-div {
+.card {
     height: 492px;
 }
 
@@ -7,7 +7,29 @@ form {
     flex-direction: column;
     gap: 32px;
     width: 100%;
+
+    >div {
+        position: relative;
+
+        svg {
+            fill: var(--purple);
+            position: absolute;
+            top: 17px;
+            left: 10px;
+
+            &:nth-of-type(2) {
+                left: auto;
+                right: 10px;
+            }
+        }
+    }
 }
+
+.info {}
+
+.visible {}
+
+.error {}
 
 @media screen and (min-width: 1921px) {
     div {
