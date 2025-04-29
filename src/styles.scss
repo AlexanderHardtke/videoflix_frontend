@@ -55,7 +55,13 @@ main {
 }
 
 .redBorder {
-    border:solid 1px var(--error-red)!important;
+    input {
+        border: solid 1px var(--error-red) !important;
+    }
+
+    svg {
+        fill: var(--error-red) !important;
+    }
 }
 
 .card {
@@ -133,16 +139,16 @@ main {
         padding-inline: 16px;
     }
 
+    h1 {
+        font-size: 40px;
+    }
+
     .card {
         padding: 43px 24px 43px 24px;
     }
 }
 
 @media screen and (max-width: 380px) {
-    h1 {
-        font-size: 40px;
-    }
-
     .card {
         padding: 43px 20px 43px 20px;
     }

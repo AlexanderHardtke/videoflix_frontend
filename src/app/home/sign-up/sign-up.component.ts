@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SVG_PATHS } from '../../assets/img/svg-paths';
 
 @Component({
     selector: 'app-sign-up',
@@ -11,6 +12,9 @@ import { TranslatePipe } from '@ngx-translate/core';
     styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
+    passwordType: string = "password";
+    repeatPasswordType: string = "password";
+
     form = {
         email: "",
         pw: "",
@@ -19,5 +23,25 @@ export class SignUpComponent {
 
     registerUser() {
         console.log(this.form)
+    }
+
+    markAsUntouched(item: NgModel) {
+        item.control?.markAsUntouched();
+    }
+
+    onMouseDown(svg: HTMLElement, pw: string): void {
+        if (pw === 'pw') this.passwordType = 'text';
+        else this.repeatPasswordType = 'text';
+        const path = svg.querySelector('svg path');
+        if (!path) return;
+        path.setAttribute('d', SVG_PATHS.visible);
+    }
+
+    onMouseUp(svg: HTMLElement, pw: string): void {
+        if (pw === 'pw') this.passwordType = 'password';
+        else this.repeatPasswordType = 'password';
+        const path = svg.querySelector('svg path');
+        if (!path) return;
+        path.setAttribute('d', SVG_PATHS.invisible);
     }
 }

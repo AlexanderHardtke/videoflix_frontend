@@ -16,7 +16,7 @@
         "signUp": "Sign Up",
         "getStarted": "Get Started",
         "errorName":"The email adress is not valid",
-        "errorPw":"Your password must be at least 8 characters long, contain at least one number and have a mixture of uppercase and lowercase letters.",
+        "errorPw":"Min. 8 chars, number, upper & lowercase",
         "errorRepeatedPw":"Passwords must match."
     }
 }
