@@ -10,7 +10,9 @@ section {
 
 div {
     display: flex;
+    align-items: center;
     gap: 8px;
+    position: relative;
 
     svg {
         fill: var(--white);
@@ -20,24 +22,24 @@ div {
         height: 32px;
         transition: background-position 500ms, fill 250ms;
 
-        &:nth-child(3) {
+        &:nth-child(2) {
             background: linear-gradient(0deg, var(--black) 0%, var(--purple) 50%, var(--purple) 100%);
             background-size: 100% 200%;
         }
 
-        &:nth-child(4) {
+        &:nth-child(1) {
             background: radial-gradient(circle, var(--black) 0%, var(--purple) 50%);
         }
 
-        &:nth-child(3):hover,
-        &:nth-child(3):focus {
+        &:nth-child(2):hover,
+        &:nth-child(2):focus {
             transition: background-position 500ms;
             background-position: 100% 100%;
             background-size: 200% 200%;
         }
 
-        &:nth-child(4):hover,
-        &:nth-child(4):focus {
+        &:nth-child(1):hover,
+        &:nth-child(1):focus {
             transition: background-position 500ms;
             fill: var(--utility-white);
             background-position: 100% 100%;
@@ -48,7 +50,8 @@ div {
 
 nav {
     background-color: var(--grey);
-    position: relative;
+    position: absolute;
+    left: -34px;
     margin-top: -6px;
 
     p {
@@ -103,11 +106,5 @@ nav {
 @media screen and (max-width: 480px) {
     .smallLogo {
         padding-right: 10px;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    div {
-        margin-right: 40px;
     }
 }

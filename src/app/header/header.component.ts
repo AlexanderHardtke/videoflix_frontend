@@ -13,9 +13,10 @@ import { NgStyle } from '@angular/common';
 })
 export class HeaderComponent {
   @ViewChild('langBox') langBox!: ElementRef<HTMLDivElement>;
+  @ViewChild('toggleBox') toggleBox!: ElementRef<HTMLDivElement>;
   darkmode: boolean = true;
   public currentLang = 'de';
-  selectLang = false;
+  selectLang: boolean = false;
 
   constructor(private translate: TranslateService) {
     this.translate.setTranslation('de', translateionsDE);
@@ -35,7 +36,7 @@ export class HeaderComponent {
   @HostListener('document:mouseup', ['$event.target'])
   onClickOutsideLanBox(target: HTMLElement): void {
     if (this.selectLang) {
-      let clickInsideBox = this.langBox.nativeElement.contains(target); {
+      let clickInsideBox = this.langBox.nativeElement.contains(target) || this.toggleBox.nativeElement.contains(target); {
       } if (!clickInsideBox) this.selectLang = false;
     }
   }
