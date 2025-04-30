@@ -21,5 +21,21 @@
         "forgotPw": "Forgot password?",
         "newCustomer": "New to Videoflix?",
         "SignUpNow": "Sign Up now"
+    },
+    "forgot": {
+        "title":"Forgot your password?",
+        "sendMail":"We will send you an email with instructions to reset your password.",
+        "sendButton":"Send Email"
+    },
+    "chooseVid": {
+        "logout":"Log Out",
+        "title":"",
+        "description":"",
+        "play": "Play",
+        "new":"New on Videoflix",
+        "documentary":"Documentary",
+        "Drama":"Drama",
+        "Sci-Fi":"Sci-Fi",
+        "Action":"Action"
     }
 }
