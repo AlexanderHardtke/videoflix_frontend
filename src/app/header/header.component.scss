@@ -71,6 +71,31 @@ nav {
     display: none;
 }
 
+.back {
+    height: 44px !important;
+    cursor: pointer;
+    fill: var(--white);
+
+    &:hover,
+    &:focus {
+        animation: rotateAndMove 1s ease-in-out forwards;
+    }
+}
+
+@keyframes rotateAndMove {
+    0% {
+      transform: rotate(0deg) translateX(0);
+    }
+    70% {
+      transform: rotate(360deg) translateX(0);
+      fill: var(--white);
+    }
+    100% {
+      transform: rotate(360deg) translateX(-4px);
+      fill: var(--purple);
+    }
+  }
+
 @media screen and (min-width: 1921px) {
     section {
         max-width: 1920px;
@@ -81,7 +106,7 @@ nav {
         height: 60px;
     }
 
-    div{
+    div {
         svg {
             height: 58px;
         }

@@ -24,8 +24,8 @@
     },
     "forgot": {
         "title":"Passwort vergessen?",
-        "sendMail":"",
-        "sendButton":""
+        "sendMail":"Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts.",
+        "sendButton":"Email senden"
     },
     "chooseVid": {
         "logout":"Abmelden",

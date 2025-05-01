@@ -3,11 +3,13 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import translateionsDE from '../../../public/i18n/de.json';
 import translateionsEN from '../../../public/i18n/en.json';
 import { NgStyle } from '@angular/common';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [TranslatePipe, NgStyle],
+  imports: [TranslatePipe, NgStyle, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -17,20 +19,14 @@ export class HeaderComponent {
   darkmode: boolean = true;
   public currentLang = 'de';
   selectLang: boolean = false;
+  currentUrl: string = '';
 
-  constructor(private translate: TranslateService) {
-    this.translate.setTranslation('de', translateionsDE);
-    this.translate.setTranslation('en', translateionsEN);
-    if (localStorage.getItem("lang")) {
-      let lang = localStorage.getItem("lang")
-      if (lang) {
-        this.currentLang = lang;
-        this.translate.setDefaultLang(lang);
-      }
-    } else {
-      this.translate.setDefaultLang('de');
-      localStorage.setItem("lang", 'de');
-    }
+  constructor(private translate: TranslateService, private router: Router) {
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.currentUrl = event.urlAfterRedirects;
+      });
+    this.setTranslation();
   }
 
   @HostListener('document:mouseup', ['$event.target'])
@@ -89,6 +85,21 @@ export class HeaderComponent {
     } else {
       this.setLightMode();
       localStorage.setItem("color", "light")
+    }
+  }
+
+  setTranslation() {
+    this.translate.setTranslation('de', translateionsDE);
+    this.translate.setTranslation('en', translateionsEN);
+    if (localStorage.getItem("lang")) {
+      let lang = localStorage.getItem("lang")
+      if (lang) {
+        this.currentLang = lang;
+        this.translate.setDefaultLang(lang);
+      }
+    } else {
+      this.translate.setDefaultLang('de');
+      localStorage.setItem("lang", 'de');
     }
   }
 
