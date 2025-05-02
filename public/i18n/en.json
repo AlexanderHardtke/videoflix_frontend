@@ -29,8 +29,8 @@
     },
     "chooseVid": {
         "logout":"Log Out",
-        "title":"",
-        "description":"",
+        "title":"title",
+        "description":"description",
         "play": "Play",
         "new":"New on Videoflix",
         "documentary":"Documentary",

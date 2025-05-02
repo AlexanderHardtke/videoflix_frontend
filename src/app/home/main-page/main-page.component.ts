@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-main-page',
     standalone: true,
-    imports: [],
+    imports: [TranslatePipe],
     templateUrl: './main-page.component.html',
     styleUrl: './main-page.component.scss'
 })

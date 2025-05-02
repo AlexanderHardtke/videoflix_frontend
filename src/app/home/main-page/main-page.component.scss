@@ -1,0 +1,22 @@
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 311px;
+    width: 440px;
+
+    p {
+        font-size: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+h2 {
+    font-size: 88px;
+    margin-bottom: -12px;
+}

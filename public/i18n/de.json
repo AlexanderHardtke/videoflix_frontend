@@ -14,6 +14,7 @@
         "password": "Passwort eingeben",
         "repeatPassword": "Passwort bestätigen",
         "signUp": "Registrieren",
+        "logout":"Abmelden",
         "getStarted": "Loslegen",
         "errorName":"Die E-Mail-Adresse ist ungültig",
         "errorPw":"Min. 8 Zeichen, Zahl, Groß-/Kleinschr.",
@@ -28,9 +29,8 @@
         "sendButton":"Email senden"
     },
     "chooseVid": {
-        "logout":"Abmelden",
-        "title":"",
-        "description":"",
+        "title":"title",
+        "description":"description Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts",
         "play": "Abspielen",
         "new":"Neu bei Videoflix",
         "documentary":"Dokumentation",
