@@ -9,5 +9,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
-
+    chooseVid = ["new", "documentary", "Drama", "Sci-Fi", "Action"]
+    kekse = ["Keks"]
 }

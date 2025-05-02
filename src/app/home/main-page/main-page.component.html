@@ -1,9 +1,19 @@
 <section>
-    <div>
+    <header>
         <h2>{{'chooseVid.title' | translate}}</h2>
         <p>{{'chooseVid.description' | translate}}</p>
         <a class="button">{{'chooseVid.play' | translate}}</a>
-    </div>
+    </header>
 
-    
+    @for (item of chooseVid; track $index) {
+    <div>
+        <h3>{{ ('chooseVid.' + item) | translate }}</h3>
+        <div>
+            <video src=""></video>
+            <video></video>
+            <video></video>
+        </div>
+    </div>
+    }
+
 </section>
