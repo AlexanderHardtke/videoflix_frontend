@@ -11,4 +11,5 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class MainPageComponent {
     chooseVid = ["new", "documentary", "Drama", "Sci-Fi", "Action"]
     kekse = ["Keks"]
+
 }
