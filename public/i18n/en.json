@@ -37,5 +37,10 @@
         "Drama":"Drama",
         "Sci-Fi":"Sci-Fi",
         "Action":"Action"
+    },
+    "error": {
+        "registration":"Confirm your email address",
+        "noPasswordMatch":"Passwords don't match",
+        "login":"Incorrect username or password"
     }
 }
