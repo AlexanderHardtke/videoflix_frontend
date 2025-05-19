@@ -1,4 +1,4 @@
-<header>
+<header #header>
     <svg tabindex="3" routerLink="/" class="back" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.69961 17.5L17.0496 28.85C17.3496 29.15 17.4996 29.5 17.4996 29.9C17.4996 30.3 17.3496
                 30.65 17.0496 30.95C16.7496 31.25 16.3996 31.4 15.9996 31.4C15.5996 31.4 15.2496 31.25
@@ -17,6 +17,16 @@
 </header>
 <aside>
 
-    <video></video>
+    <!-- <video #videoRef width="640" height="360" controls>
+        <source [src]="videoSrc" type="video/mp4" />
+        Dein Browser unterstützt das Video-Tag nicht.
+    </video>
+
+    <div class="controls">
+        <button (click)="play()">Play</button>
+        <button (click)="pause()">Pause</button>
+        <button (click)="seekTo(10)">Springe zu 10s</button>
+        <button (click)="seekTo(60)">Springe zu 1:00</button>
+    </div> -->
 
 </aside>

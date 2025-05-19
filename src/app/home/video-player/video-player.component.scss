@@ -1,52 +1,68 @@
 aside {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 11;
-    background: rgb(0, 0, 0);
-    background-color: hotpink;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
+  background: rgb(0, 0, 0);
+  background-color: hotpink;
 }
 
 header {
-    padding: 10px 32px 10px 32px;
-    position: fixed;
-    top: 0;
-    z-index: 12;
-    height: 108px;
-    width: 100%;
-    background: linear-gradient(180deg,rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  padding: 10px 32px 10px 32px;
+  position: fixed;
+  top: 0;
+  z-index: 12;
+  height: 108px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateY(0);
+  transition: transform 0.5s ease, opacity 0.5s ease-in;
 }
 
 p {
-    color: var(--white);
+  color: var(--white);
 }
 
 .back {
-    height: 32px;
-    cursor: pointer;
-    fill: var(--white);
+  height: 32px;
+  cursor: pointer;
+  fill: var(--white);
 
-    &:hover,
-    &:focus {
-        animation: rotateAndMove 1s ease-in-out forwards;
-    }
+  &:hover,
+  &:focus {
+    animation: rotateAndMove 1s ease-in-out forwards;
+  }
 }
 
 @keyframes rotateAndMove {
-    0% {
-      transform: rotate(0deg) translateX(0);
-    }
-    70% {
-      transform: rotate(360deg) translateX(0);
-      fill: var(--white);
-    }
-    100% {
-      transform: rotate(360deg) translateX(-4px);
-      fill: var(--purple);
-    }
+  0% {
+    transform: rotate(0deg) translateX(0);
   }
+
+  70% {
+    transform: rotate(360deg) translateX(0);
+    fill: var(--white);
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(-4px);
+    fill: var(--purple);
+  }
+}
+
+@keyframes fadeOutHeader {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
