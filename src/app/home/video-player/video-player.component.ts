@@ -10,13 +10,17 @@ import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/
 export class VideoPlayerComponent {
     @ViewChild('videoRef') videoElement!: ElementRef<HTMLVideoElement>;
     @ViewChild('header') header!: ElementRef;
-    @Input() videoSrc: string = ''
+    @Input() videoSrc: string = '../assets/aurora_borealis.mp4'
     hidden: boolean = false;
     timer: any = null;
     margin = 75;
 
     ngAfterViewInit() {
         this.resetTimeout();
+        setTimeout(() => {
+            this.play();
+        }, 1000);
+        
     }
 
     @HostListener('document:mousemove', ['$event'])
@@ -62,14 +66,14 @@ export class VideoPlayerComponent {
         if (this.timer) clearTimeout(this.timer);
     }
 
-    play() {
-        this.videoElement.nativeElement.play();
-    }
-    pause() {
-        this.videoElement.nativeElement.pause();
-    }
-
-    seekTo(seconds: number) {
-        this.videoElement.nativeElement.currentTime = seconds;
+    async play() {
+        try {
+            const video = this.videoElement.nativeElement;
+            await video.play();
+        } catch (error) {
+            console.error("Playback failed:", error);
+            this.videoElement.nativeElement.load();
+            setTimeout(() => this.videoElement.nativeElement.play(), 500);
+        }
     }
 }

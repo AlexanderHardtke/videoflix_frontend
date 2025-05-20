@@ -1,12 +1,21 @@
 aside {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0; 
   z-index: 11;
-  background: rgb(0, 0, 0);
+  background: var(--black);
   background-color: hotpink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  max-width: min(1440px, 100%);
+  max-height: min(100svh, 100dvh);
+  aspect-ratio: 16/9;
+  object-fit: contain;
 }
 
 header {
