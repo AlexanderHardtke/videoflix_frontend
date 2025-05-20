@@ -59,7 +59,7 @@ export class VideoPlayerComponent {
     }
     resetTimeout() {
         if (this.timer) clearTimeout(this.timer);
-        this.timer = setTimeout(() => this.hideHeader(), 3000);
+        this.timer = setTimeout(() => this.hideHeader(), 2500);
     }
 
     ngOnDestroy() {
