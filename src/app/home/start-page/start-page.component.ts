@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RegistrationService } from '../../services/registration.service';
 
 @Component({
     selector: 'app-start-page',
@@ -10,9 +12,12 @@ import { TranslatePipe } from '@ngx-translate/core';
     styleUrl: './start-page.component.scss'
 })
 export class StartPageComponent {
-    email:string = "";
+    emailInput:string = ''
 
-    moveToRegister(email:string) {
-        console.log(email);
+    constructor(private regService: RegistrationService, private router: Router) {}
+
+    moveToRegister(email: string) {
+        this.regService.setEmail(email);
+        this.router.navigate(['/signUp']);
     }
 }

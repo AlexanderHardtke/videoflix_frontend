@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
+import { RegistrationService } from '../../services/registration.service';
 
 @Component({
     selector: 'app-sign-up',
@@ -14,11 +15,17 @@ import { SVG_PATHS } from '../../assets/img/svg-paths';
 export class SignUpComponent {
     passwordType: string = "password";
     repeatPasswordType: string = "password";
-
     form = {
         email: "",
         pw: "",
         repeatPw: ""
+    }
+
+    constructor(private regService: RegistrationService) { }
+
+    ngOnInit() {
+        this.form.email = this.regService.getEmail();
+        this.regService.clear();
     }
 
     registerUser() {
