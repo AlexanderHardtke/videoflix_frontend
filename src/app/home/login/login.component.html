@@ -158,9 +158,9 @@
         <a tabindex="7" (click)="loginUser()" (keydown.enter)="loginUser()" (keydown.space)="loginUser()"
             class="button">{{'login.title' | translate}}</a>
 
-        <b><a href="/forgot">{{'main.forgotPw' | translate}}</a></b>
+        <b><a [routerLink]="'/forgot'">{{'main.forgotPw' | translate}}</a></b>
 
-        <div><a>{{'main.newCustomer' | translate}}<b>{{'main.SignUpNow' | translate}}</b></a></div>
+        <div><a [routerLink]="'/signUp'">{{'main.newCustomer' | translate}}<b>{{'main.SignUpNow' | translate}}</b></a></div>
 
     </div>
 </main>

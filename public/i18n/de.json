@@ -20,7 +20,7 @@
         "errorPw":"Min. 8 Zeichen, Zahl, Groß-/Kleinschr.",
         "errorRepeatedPw":"Die Passwörter müssen übereinstimmen",
         "forgotPw": "Passwort vergessen?",
-        "newCustomer": "Neu bei Videoflix?",
+        "newCustomer": "Neu bei Videoflix? ",
         "SignUpNow": "Jetzt registrieren"
     },
     "forgot": {

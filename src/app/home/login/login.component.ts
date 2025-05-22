@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [TranslatePipe, FormsModule, CommonModule],
+    imports: [TranslatePipe, FormsModule, CommonModule, RouterLink],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
 })
