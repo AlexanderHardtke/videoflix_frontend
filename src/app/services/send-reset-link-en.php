@@ -18,14 +18,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $message = "
         <html>
         <head>
-        <title>Reset your password</title>
+        <title>Reset your password</title> 
         </head>
         <body>
         <p>Hello,</p><br>
-        <p>We recently received a request to reset your password. If you made this request,<br>
+        <p>we recently received a request to reset your password. If you made this request,<br>
         please click on the following link to reset your password:<br></p>
         <br>
-        <a href='$resetLink'>Reset password</a>
+        <a href='$resetLink'
+        style='display: inline-block;
+            font-weight: 700;
+            border-radius: 40px;
+            background: linear-gradient(0deg, #121212 0%, #2E3EDF 50%, #2E3EDF 100%);
+            background-size: 100% 200%;
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #2E3EDF;
+        '>
+        Reset password</a>
         <br>
         <br>
         <p>Please note that for security reasons, this link is only valid for 24 hours.</p>
@@ -44,7 +55,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers = array();
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: info@dabubble.com";
+        $headers[] = "From: info@Videflix.com";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
         break;
     default:

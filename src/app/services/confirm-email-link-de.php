@@ -11,43 +11,48 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $resetLink = "https://dabubble.alexander-hardtke.com/reset-password/" . urlencode($token);
+        $activateLink = "https://dabubble.alexander-hardtke.com/reset-password/" . urlencode($token);
         $recipient = $email;
         $logo = "https://dabubble.alexander-hardtke.com/email-logo.png";
-        $subject = "Email bestätigen / Confirm your email";
+        $subject = "Bestätige deine E-Mail";
         $message = "
         <html>
         <head>
-        <title>Passwort zurücksetzen</title>
+        <title>Bestätige deine E-Mail</title> 
         </head>
         <body>
-        <p>Hallo,</p>
-        <p>Wir haben kürzlich eine Anfrage zum Zurücksetzen deines Passworts erhalten. 
-        Falls du diese Anfrage gestellt hast, 
+        <img  style='display:flex; place-self: center;' src='$logo'>
+        <p>Lieber Videoflixnutzer,</p>
+        <p>danke das du dich bei <b style='color:#2E3EDF;'>Videoflix</b> registriert hast</b>.
+        Um deine Registrierung abzuschließen und deine E-Mail zu bestätigen, klicke bitte auf den Link hier unten:<br></p>
         <br>
-        klicke bitte auf den folgenden Link, 
-        um dein Passwort zurückzusetzen:</p>
+        <a href='$activateLink'
+        style='display: inline-block;
+            font-weight: 700;
+            border-radius: 40px;
+            background: linear-gradient(0deg, #121212 0%, #2E3EDF 50%, #2E3EDF 100%);
+            background-size: 100% 200%;
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #2E3EDF;
+        '>
+        Aktiviere Nutzerkonto</a>
         <br>
-        <a href='$resetLink'>Passwort zurücksetzen</a>
         <br>
-        <br>
-        <p>Falls du keine Anfrage zum Zurücksetzen deines Passworts gestellt hast, 
-        ignoriere bitte diese E-Mail.
-        </p>
+        <p>Falls du kein Konto bei uns erstellt hast, ignoriere bitte diese E-Mail.</p>
         <br>
         <p>Beste Grüße,
         <br>
-        Dein DABubble Team!
+        Dein Videoflix Team!
         </p>
-        <br>
-        <img src='$logo'>
         </body>
         </html>
         ";
         $headers = array();
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: info@dabubble.com";
+        $headers[] = "From: info@Videflix.com";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
         break;
     default:

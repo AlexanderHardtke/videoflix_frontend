@@ -14,30 +14,39 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $resetLink = "https://dabubble.alexander-hardtke.com/reset-password/" . urlencode($token);
         $recipient = $email;
         $logo = "https://dabubble.alexander-hardtke.com/email-logo.png";
-        $subject = "Passwort zurücksetzen / Reset your password";
+        $subject = "Passwort zurücksetzen";
         $message = "
         <html>
         <head>
-        <title>Passwort zurücksetzen</title>
+        <title>Passwort zurücksetzen</title> 
         </head>
         <body>
-        <p>Hallo,</p>
-        <p>Wir haben kürzlich eine Anfrage zum Zurücksetzen deines Passworts erhalten. 
-        Falls du diese Anfrage gestellt hast, 
+        <p>Hallo,</p><br>
+        <p>wir haben kürzlich eine Anfrage zum Zurücksetzen deines Passworts erhalten. Falls du diese Anfrage gestellt hast,<br>
+        klicke bitte auf den folgenden Link, um dein Passwort zurückzusetzen: <br></p>
         <br>
-        klicke bitte auf den folgenden Link, 
-        um dein Passwort zurückzusetzen:</p>
+        <a href='$resetLink'
+        style='display: inline-block;
+            font-weight: 700;
+            border-radius: 40px;
+            background: linear-gradient(0deg, #121212 0%, #2E3EDF 50%, #2E3EDF 100%);
+            background-size: 100% 200%;
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #2E3EDF;
+        '>
+        Passwort zurücksetzen</a>
         <br>
-        <a href='$resetLink'>Passwort zurücksetzen</a>
         <br>
+        <p>Bitte beachte, dieser Link ist aus Sicherheitsgründen nur 24 Stunden gültig.</p>
         <br>
         <p>Falls du keine Anfrage zum Zurücksetzen deines Passworts gestellt hast, 
-        ignoriere bitte diese E-Mail.
-        </p>
+        ignoriere bitte diese E-Mail.</p>
         <br>
         <p>Beste Grüße,
         <br>
-        Dein DABubble Team!
+        Dein Videoflix Team!
         </p>
         <br>
         <img src='$logo'>
