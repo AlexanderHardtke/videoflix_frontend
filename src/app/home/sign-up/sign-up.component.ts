@@ -13,6 +13,7 @@ import { RegistrationService } from '../../services/registration.service';
     styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
+    sendMail: boolean = false;
     passwordType: string = "password";
     repeatPasswordType: string = "password";
     form = {
@@ -28,8 +29,24 @@ export class SignUpComponent {
         this.regService.clear();
     }
 
+    enableButton(isValid: boolean | null | undefined): void {
+        this.sendMail = !!isValid;
+    }
+
     registerUser() {
         console.log(this.form)
+        // if (this.sendMail && this.emailText) {
+        //     let token = this.generateToken();
+        //     this.sendEmailWithToken(this.emailText, token);
+        //     this.updateUserWithToken(this.emailText, token);
+        //     this.emailText = '';
+        //     this.enableButton(false)
+        //     this.showError = false;
+        //     this.feedbackOverlay.showFeedback('E-Mail gesendet');
+        //     setTimeout(() => {
+        //         this.router.navigate(['']);
+        //     }, 1500);
+        // }
     }
 
     markAsUntouched(item: NgModel) {
