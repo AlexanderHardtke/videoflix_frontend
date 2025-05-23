@@ -11,9 +11,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $activateLink = "https://dabubble.alexander-hardtke.com/reset-password/" . urlencode($token);
+        $activateLink = "https://videoflix.alexander-hardtke.com/confirm-email/" . urlencode($token);
         $recipient = $email;
-        $logo = "https://dabubble.alexander-hardtke.com/email-logo.png";
+        $logo = "https://videoflix.alexander-hardtke.com/Logo.png";
         $subject = "Bestätige deine E-Mail";
         $message = "
         <html>

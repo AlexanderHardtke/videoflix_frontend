@@ -11,9 +11,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $resetLink = "https://dabubble.alexander-hardtke.com/reset-password/" . urlencode($token);
+        $resetLink = "https://videoflix.alexander-hardtke.com/reset-password/" . urlencode($token);
         $recipient = $email;
-        $logo = "https://dabubble.alexander-hardtke.com/email-logo.png";
+        $logo = "https://videoflix.alexander-hardtke.com/Logo.png";
         $subject = "Passwort zurücksetzen";
         $message = "
         <html>
@@ -56,7 +56,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers = array();
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: info@dabubble.com";
+        $headers[] = "From: info@Videflix.com";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
         break;
     default:
