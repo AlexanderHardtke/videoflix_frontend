@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { RegistrationService } from '../../services/registration.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'app-sign-up',
@@ -18,10 +21,11 @@ export class SignUpComponent {
     form = {
         email: "",
         pw: "",
-        repeatPw: ""
+        repeatPw: "",
+        lang: "",
     }
 
-    constructor(private regService: RegistrationService) { }
+    constructor(private regService: RegistrationService, private http: HttpClient, private translate: TranslateService, private router: Router) { }
 
     ngOnInit() {
         this.form.email = this.regService.getEmail();
@@ -33,19 +37,15 @@ export class SignUpComponent {
     }
 
     registerUser() {
-        console.log(this.form)
-        // if (this.sendMail && this.emailText) {
-        //     let token = this.generateToken();
-        //     this.sendEmailWithToken(this.emailText, token);
-        //     this.updateUserWithToken(this.emailText, token);
-        //     this.emailText = '';
-        //     this.enableButton(false)
-        //     this.showError = false;
-        //     this.feedbackOverlay.showFeedback('E-Mail gesendet');
-        //     setTimeout(() => {
-        //         this.router.navigate(['']);
-        //     }, 1500);
-        // }
+        this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
+        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/register/', this.form)
+            .subscribe(response => {
+                console.log("YEEAAAH");
+                // this.feedbackOverlay.showFeedback(response);
+                setTimeout(() => {
+                    this.router.navigate(['']);
+                }, 1500);
+            });
     }
 
     markAsUntouched(item: NgModel) {
