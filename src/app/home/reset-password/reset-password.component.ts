@@ -35,7 +35,9 @@ export class ResetPasswordComponent {
     }
   }
 
-  resetPassword() { }
+  resetPassword() {
+    console.log(this.form)
+  }
 
   markAsUntouched(item: NgModel) {
     item.control?.markAsUntouched();

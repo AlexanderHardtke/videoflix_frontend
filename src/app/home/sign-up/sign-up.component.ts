@@ -32,15 +32,10 @@ export class SignUpComponent {
         this.regService.clear();
     }
 
-    enableButton(isValid: boolean | null | undefined): void {
-        this.sendMail = !!isValid;
-    }
-
     registerUser() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
         this.http.post('https://videoflix-backend.alexander-hardtke.de/api/register/', this.form)
             .subscribe(response => {
-                console.log("YEEAAAH");
                 // this.feedbackOverlay.showFeedback(response);
                 setTimeout(() => {
                     this.router.navigate(['']);
