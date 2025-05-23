@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -8,10 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './signup-confirm.component.html',
   styleUrl: './signup-confirm.component.scss'
 })
-export class SignupConfirmComponent implements OnInit {
+export class SignupConfirmComponent {
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
+    console.log("test");
+    
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
       this.http.post('/api/confirm-email/', { token }).subscribe({

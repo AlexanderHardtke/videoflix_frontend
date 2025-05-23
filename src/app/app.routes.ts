@@ -9,16 +9,18 @@ import { MainPageComponent } from './home/main-page/main-page.component';
 import { VideoPlayerComponent } from './home/video-player/video-player.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { SignupConfirmComponent } from './home/signup-confirm/signup-confirm.component';
+import { ErrorComponent } from './home/error/error.component';
 
 export const routes: Routes = [
     { path: '', component: StartPageComponent },
     { path: 'login', component: LoginComponent },
     { path: 'forgot', component: ForgotPasswordComponent },
-    { path: 'reset', component: ResetPasswordComponent },
+    { path: 'forgot/:token', component: ResetPasswordComponent },
     { path: 'signUp', component: SignUpComponent },
     { path: 'signUp/:token', component: SignupConfirmComponent },
     { path: 'main', component: MainPageComponent },
     { path: 'video', component: VideoPlayerComponent },
     { path: 'legal', component: LegalNoticeComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
+    { path: 'error', component: ErrorComponent },
 ];
