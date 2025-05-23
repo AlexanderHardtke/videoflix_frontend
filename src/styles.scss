@@ -90,6 +90,22 @@ main {
     }
 }
 
+.button {
+    font-weight: 700;
+    border-radius: 40px;
+    background: linear-gradient(0deg, var(--black) 0%, var(--purple) 50%, var(--purple) 100%);
+    background-size: 100% 200%;
+    padding: 12px 24px 12px 24px;
+    cursor: pointer;
+    border: 1px solid var(--purple);
+
+    &:hover,
+    &:focus {
+        transition: background-position 500ms;
+        background-position: 100% 100%;
+    }
+}
+
 button {
     font-weight: 700;
     border-radius: 40px;

@@ -10,12 +10,12 @@
         <div>
             <input tabindex="4" [(ngModel)]="emailInput" (keydown.enter)="moveToRegister(emailInput)" type="email"
                 placeholder="{{'main.email' | translate}}">
-            <button (click)="moveToRegister(emailInput)" (keydown.enter)="moveToRegister(emailInput)"
+            <a (click)="moveToRegister(emailInput)" (keydown.enter)="moveToRegister(emailInput)"
                 (keydown.space)="moveToRegister(emailInput)" tabindex="5">{{'main.signUp' | translate}}<svg width="8"
                     height="13" viewBox="0 0 8 13" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.6 6.5L0 1.9L1.4 0.5L7.4 6.5L1.4 12.5L0 11.1L4.6 6.5Z" />
                 </svg>
-            </button>
+            </a>
         </div>
 
     </main>

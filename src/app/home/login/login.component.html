@@ -155,8 +155,8 @@
             </p>
         </form>
 
-        <button tabindex="7" (click)="loginUser()" (keydown.enter)="loginUser()"
-            (keydown.space)="loginUser()">{{'login.title' | translate}}</button>
+        <button tabindex="7" (click)="loginUser()" (keydown.enter)="loginUser()" (keydown.space)="loginUser()"
+            [disabled]="!email.valid || !!pw.valid">{{'login.title' | translate}}</button>
 
         <b><a [routerLink]="'/forgot'">{{'main.forgotPw' | translate}}</a></b>
 

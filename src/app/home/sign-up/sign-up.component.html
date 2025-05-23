@@ -267,7 +267,7 @@
             </p>
         </form>
 
-        <button tabindex="7" (click)="registerUser()" (keydown.enter)="registerUser()"
+        <button tabindex="7" (click)="registerUser()" [disabled]="!email.valid || !repeatPw.valid || !pw.valid" (keydown.enter)="registerUser()"
             (keydown.space)="registerUser()">{{'main.getStarted' | translate}}</button>
 
     </div>
