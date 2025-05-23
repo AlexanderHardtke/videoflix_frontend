@@ -27,6 +27,12 @@
         "sendMail":"We will send you an email with instructions to reset your password.",
         "sendButton":"Send Email"
     },
+    "reset": {
+        "password":"Reset password",
+        "text":"Create a new password for your ",
+        "text2":" account.",
+        "error":"An unexpected error has occured. Please try again."
+    },
     "chooseVid": {
         "logout":"Log Out",
         "title":"title",

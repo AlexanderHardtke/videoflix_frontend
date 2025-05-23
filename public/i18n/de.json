@@ -28,6 +28,12 @@
         "sendMail":"Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts.",
         "sendButton":"Email senden"
     },
+    "reset": {
+        "password":"Passwort zurücksetzen",
+        "text":"Erstelle ein neues Passwort für deinen ",
+        "text2":" Account.",
+        "error":"Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
+    },
     "chooseVid": {
         "title":"title",
         "description":"description Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts",
