@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $activateLink = "https://videoflix.alexander-hardtke.com/confirm-email/" . urlencode($token);
+        $activateLink = "https://videoflix.alexander-hardtke.com/signUp/" . urlencode($token);
         $recipient = $email;
         $logo = "https://videoflix.alexander-hardtke.com/Logo.png";
         $subject = "Bestätige deine E-Mail";

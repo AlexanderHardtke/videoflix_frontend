@@ -14,7 +14,6 @@ export class ForgotPasswordComponent {
     form = {
         email: ""
     }
-    
 
 
     sendEmail() {

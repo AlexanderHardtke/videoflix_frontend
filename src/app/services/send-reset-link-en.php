@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $resetLink = "https://videoflix.alexander-hardtke.com/reset-password/" . urlencode($token);
+        $resetLink = "https://videoflix.alexander-hardtke.com/reset/" . urlencode($token);
         $recipient = $email;
         $logo = "https://videoflix.alexander-hardtke.com/Logo.png";
         $subject = "Reset your password";
