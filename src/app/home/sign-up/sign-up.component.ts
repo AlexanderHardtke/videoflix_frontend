@@ -7,7 +7,6 @@ import { RegistrationService } from '../../services/registration.service';
 
 @Component({
     selector: 'app-sign-up',
-    standalone: true,
     imports: [TranslatePipe, FormsModule, CommonModule],
     templateUrl: './sign-up.component.html',
     styleUrl: './sign-up.component.scss'

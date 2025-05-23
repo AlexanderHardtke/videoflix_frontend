@@ -8,6 +8,7 @@ import { SignUpComponent } from './home/sign-up/sign-up.component';
 import { MainPageComponent } from './home/main-page/main-page.component';
 import { VideoPlayerComponent } from './home/video-player/video-player.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
+import { SignupConfirmComponent } from './home/signup-confirm/signup-confirm.component';
 
 export const routes: Routes = [
     { path: '', component: StartPageComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'forgot', component: ForgotPasswordComponent },
     { path: 'reset', component: ResetPasswordComponent },
     { path: 'signUp', component: SignUpComponent },
+    { path: 'signUp/:token', component: SignupConfirmComponent },
     { path: 'main', component: MainPageComponent },
     { path: 'video', component: VideoPlayerComponent },
     { path: 'legal', component: LegalNoticeComponent },

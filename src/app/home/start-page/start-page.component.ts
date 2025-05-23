@@ -6,7 +6,6 @@ import { RegistrationService } from '../../services/registration.service';
 
 @Component({
     selector: 'app-start-page',
-    standalone: true,
     imports: [TranslatePipe, FormsModule],
     templateUrl: './start-page.component.html',
     styleUrl: './start-page.component.scss'

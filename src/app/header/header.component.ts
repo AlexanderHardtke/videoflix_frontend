@@ -8,7 +8,6 @@ import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
   imports: [TranslatePipe, NgStyle, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

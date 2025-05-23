@@ -2,7 +2,6 @@ import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/
 
 @Component({
     selector: 'app-video-player',
-    standalone: true,
     imports: [],
     templateUrl: './video-player.component.html',
     styleUrl: './video-player.component.scss'
