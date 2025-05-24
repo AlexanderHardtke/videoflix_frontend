@@ -14,6 +14,8 @@
         "password": "Passwort eingeben",
         "repeatPassword": "Passwort bestätigen",
         "signUp": "Registrieren",
+        "success": "Deine E-Mail wurde erfolgreich bestätigt",
+        "fail": "Es gab Probleme beim bestätigen deiner Email, bitte versuche es später erneut",
         "logout":"Abmelden",
         "getStarted": "Loslegen",
         "errorName":"Die E-Mail-Adresse ist ungültig",

@@ -1,1 +1,7 @@
-<p>signup-confirm works!</p>
+<main>
+    @if (!errorMsg) {
+    <h1>{{'main.success' | translate}}</h1>
+    } @else {
+    <h1>{{'main.fail' | translate}}</h1>
+    }
+</main>

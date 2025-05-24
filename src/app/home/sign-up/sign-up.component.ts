@@ -37,7 +37,7 @@ export class SignUpComponent {
 
     registerUser() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/register/', this.form)
+        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/registration/', this.form)
             .subscribe(response => {
                 // this.feedbackOverlay.showFeedback(response);
                 setTimeout(() => {

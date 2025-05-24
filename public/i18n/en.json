@@ -14,6 +14,8 @@
         "password": "Enter a password",
         "repeatPassword": "Confirm password",
         "signUp": "Sign Up",
+        "success": "Your email got confirmed successfully",
+        "fail": "The email verification has failed, please try again later.",
         "getStarted": "Get Started",
         "errorName":"The email adress is not valid",
         "errorPw":"Min. 8 chars, number, upper & lowercase",
