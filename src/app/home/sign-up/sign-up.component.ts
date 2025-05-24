@@ -27,6 +27,9 @@ export class SignUpComponent {
 
     constructor(private regService: RegistrationService, private http: HttpClient, private translate: TranslateService, private router: Router) { }
 
+    /**
+     * gets the email from the start-page to the sign-up-page and clears the field
+     */
     ngOnInit() {
         this.form.email = this.regService.getEmail();
         this.regService.clear();
@@ -43,11 +46,23 @@ export class SignUpComponent {
             });
     }
 
+    /**
+     * Controls the input fields in the form and mark it as untouched if the user is not active in the form
+     * 
+     * @param item the item to mark
+     */
     markAsUntouched(item: NgModel) {
         item.control?.markAsUntouched();
     }
 
-    onMouseDown(svg: HTMLElement, pw: string): void {
+    /**
+     * changes the svg of the password or repeatpassword field and shows the password to the user on mousedown
+     * 
+     * @param svg the svg-element that is currently in use
+     * @param pw the string pw or repeatPw to check both input fields
+     * @returns 
+     */
+    showPassword(svg: HTMLElement, pw: string): void {
         if (pw === 'pw') this.passwordType = 'text';
         else this.repeatPasswordType = 'text';
         const path = svg.querySelector('svg path');
@@ -55,7 +70,14 @@ export class SignUpComponent {
         path.setAttribute('d', SVG_PATHS.visible);
     }
 
-    onMouseUp(svg: HTMLElement, pw: string): void {
+    /**
+     * changes the svg of the password field and hides the password to the user on mouseup or mouseleave
+     * 
+     * @param svg the svg-element that is currently in use
+     * @param pw the string pw or repeatPw to check both input fields
+     * @returns 
+     */
+    hidePassword(svg: HTMLElement, pw: string): void {
         if (pw === 'pw') this.passwordType = 'password';
         else this.repeatPasswordType = 'password';
         const path = svg.querySelector('svg path');
