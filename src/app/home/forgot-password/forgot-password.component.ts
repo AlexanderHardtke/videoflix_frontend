@@ -13,60 +13,26 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 })
 export class ForgotPasswordComponent {
     form = {
-        email: ''
+        email: '',
+        lang: '',
     }
-    post = {
-        endPoint: 'https://videoflix.alexander-hardtke.com/send-reset-link.php',
-        body: (payload: any) => JSON.stringify(payload),
-        options: {
-            headers: {
-                'Content-Type': 'text/plain',
-                responseType: 'text',
-            },
-        },
-    };
 
     constructor(private router: Router, private translate: TranslateService, private http: HttpClient,) { }
 
     sendEmail() {
-        const token = this.generateToken();
-        const lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.sendEmailWithToken(this.form.email, token);
-        this.form.email = '';
-
-
-
-        console.log(lang);
-        // this.feedbackOverlay.showFeedback('E-Mail gesendet');
-        // setTimeout(() => {
-        //     this.router.navigate(['']);
-        // }, 1500);
+        this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
+        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/reset/', this.form)
+            .subscribe(response => {
+                this.form.email = '';
+                // this.feedbackOverlay.showFeedback('E-Mail gesendet');
+            })
     }
 
     /**
-    * Generates a random 32-byte token as a hexadecimal string.
-    * @returns {string} - The generated token.
-    */
-    generateToken(): string {
-        let randomBytes = new Uint8Array(32);
-        crypto.getRandomValues(randomBytes);
-        return Array.from(randomBytes)
-            .map((byte) => byte.toString(16).padStart(2, '0'))
-            .join('');
-    }
-
-    /**
-    * Sends an email with the token to the specified address.
-    * @param {string} email - The recipient's email address.
-    * @param {string} token - The token to include in the email.
-    */
-    sendEmailWithToken(email: string, token: string): void {
-        let body = { email, token };
-        this.http.post(this.post.endPoint, this.post.body(body)).subscribe({});
-    }
-
-    // async updateUserWithToken() {}
-
+     * Controls the input fields in the form and mark it as untouched if the user is not active in the form
+     * 
+     * @param item the item to mark
+     */
     markAsUntouched(item: NgModel) {
         item.control?.markAsUntouched();
     }

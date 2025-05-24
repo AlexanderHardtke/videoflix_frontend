@@ -19,10 +19,10 @@ export class SignUpComponent {
     passwordType: string = "password";
     repeatPasswordType: string = "password";
     form = {
-        email: "",
-        pw: "",
-        repeatPw: "",
-        lang: "",
+        email: '',
+        pw: '',
+        repeatPw: '',
+        lang: '',
     }
 
     constructor(private regService: RegistrationService, private http: HttpClient, private translate: TranslateService, private router: Router) { }
