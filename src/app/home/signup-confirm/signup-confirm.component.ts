@@ -14,10 +14,14 @@ export class SignupConfirmComponent {
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
+  /**
+   * sends the token to the backend and confirms the user in the database
+   * 
+   */
   ngOnInit() {
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
-      this.http.post('/api/confirm-email/', { token }).subscribe({
+      this.http.post('/api/confirm/', { token }).subscribe({
         next: () => setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1500),
