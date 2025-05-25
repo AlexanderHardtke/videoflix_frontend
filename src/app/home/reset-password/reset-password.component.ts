@@ -16,27 +16,26 @@ import { SVG_PATHS } from '../../assets/img/svg-paths';
 export class ResetPasswordComponent {
   passwordType: string = "password";
   repeatPasswordType: string = "password";
-      form = {
-        pw: "",
-        repeatPw: ""
-    }
+  form = {
+    pw: "",
+    repeatPw: "",
+    token: ""
+  }
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
-  ngOnInit() {
-    console.log("test");
-
+  resetPassword() {
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
-      this.http.post('/api/reset-password/', { token }).subscribe({
-        next: () => this.router.navigate(['/login']),
-        error: () => this.router.navigate(['/error']),
-      });
+      this.form.token = token;
+      this.http.post('https://videoflix-backend.alexander-hardtke.de/api/change/', this.form)
+        .subscribe(response => {
+          // this.feedbackOverlay.showFeedback(response);
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 1500);
+        });
     }
-  }
-
-  resetPassword() {
-    console.log(this.form)
   }
 
   markAsUntouched(item: NgModel) {
