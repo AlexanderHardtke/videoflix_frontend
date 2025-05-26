@@ -1,0 +1,32 @@
+section {
+    position: absolute;
+    bottom: 60px;
+    right: 20px;
+    height: 80px;
+    width: 540px;
+
+
+    gap: 16px;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.red-side {
+    width: 20px;
+    height: 100%;
+    background-color: var(--error-red);
+}
+
+.feedback-overlay {
+    background-color: var(--purple);
+    border-radius: 0 20px 20px 0;
+    padding: 24px 32px 24px 0px;
+
+    >p {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        text-overflow: ellipsis
+    }
+}
