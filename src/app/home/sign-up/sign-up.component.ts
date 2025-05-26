@@ -35,6 +35,9 @@ export class SignUpComponent {
         this.regService.clear();
     }
 
+    /**
+     * Register the User in the Database and routes them to the starting-page
+     */
     registerUser() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
         this.http.post('https://videoflix-backend.alexander-hardtke.de/api/registration/', this.form)
