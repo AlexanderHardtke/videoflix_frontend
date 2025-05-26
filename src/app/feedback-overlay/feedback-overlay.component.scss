@@ -1,32 +1,55 @@
-section {
+header {
     position: absolute;
     bottom: 60px;
     right: 20px;
-    height: 80px;
     width: 540px;
-
-
-    gap: 16px;
     display: flex;
     align-items: center;
-
-
+    background-color: var(--purple);
+    border-radius: 20px
 }
 
 .red-side {
     width: 20px;
-    height: 100%;
+    height: 80px;
     background-color: var(--error-red);
+    border-radius: 20px 0 0 20px;
 }
 
 .feedback-overlay {
-    background-color: var(--purple);
-    border-radius: 0 20px 20px 0;
     padding: 24px 32px 24px 0px;
+    height: 80px;
+    width: 520px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 
     >p {
         -webkit-line-clamp: 2;
         line-clamp: 2;
         text-overflow: ellipsis
+    }
+
+    >div {
+        height: 32px;
+        margin-left: 8px;
+    }
+
+    >hr {
+        height: 10px;
+        width: 2px;
+        color: var(--white);
+    }
+
+    >a {
+        cursor: pointer;
+
+        >svg {
+            fill: var(--white);
+
+            &:hover {
+                fill: var(--black);
+            }
+        }
     }
 }
