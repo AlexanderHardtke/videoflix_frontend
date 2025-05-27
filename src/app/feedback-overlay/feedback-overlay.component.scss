@@ -7,9 +7,11 @@ header {
     align-items: center;
     background-color: var(--purple);
     border-radius: 20px;
-    transform: translateX(120%);
-    transition: transform 0.5s ease-in-out;
     z-index: 9;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(120%);
+    transition: transform 0.5s ease, opacity 0.4s ease;
 }
 
 .red-side {
@@ -38,6 +40,7 @@ header {
         line-clamp: 2;
         text-overflow: ellipsis;
         font-size: 16px;
+        width: 388px;
     }
 
     >div {
@@ -66,4 +69,5 @@ header {
 
 .moveFeedback {
     transform: translateX(0%);
+    opacity: 1;
 }

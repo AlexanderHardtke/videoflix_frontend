@@ -15,6 +15,9 @@ export class FeedbackOverlayComponent {
 
   constructor(private feedback: FeedbackService) { }
 
+  /**
+   * registers the Feedbackservice for this module
+   */
   ngOnInit() {
     this.feedback.register(this);
   }
@@ -24,8 +27,10 @@ export class FeedbackOverlayComponent {
   * @param message - The feedback message to show.
   */
   showFeedback(message: string) {
-    this.isActive = true;
     this.feedbackText = message;
+    setTimeout(() => {
+      this.isActive = true;
+    }, 50);
   }
 
   /**

@@ -24,4 +24,8 @@ export class StartPageComponent {
     test() {
         this.feedback.showFeedback('TEST');
     }
+
+    test2() {
+        this.feedback.showFeedback('TEST2');
+    }
 }
