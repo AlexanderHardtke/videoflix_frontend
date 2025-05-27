@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
+import { FeedbackService } from '../services/feedback.service';
 
 
 @Component({
@@ -10,7 +11,13 @@ import { Component } from '@angular/core';
 })
 export class FeedbackOverlayComponent {
   feedbackText: string | null = null;
-  isActive: boolean = true;
+  isActive = false;
+
+  constructor(private feedback: FeedbackService) { }
+
+  ngOnInit() {
+    this.feedback.register(this);
+  }
 
   /**
   * Displays the feedback message and animates it into view.

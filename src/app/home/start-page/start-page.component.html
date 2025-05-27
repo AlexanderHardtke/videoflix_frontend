@@ -6,6 +6,7 @@
         <b>{{'main.watch' | translate}}</b>
 
         <p>{{'main.info' | translate}}</p>
+        <button (click)="test()">TEST</button>
 
         <div>
             <input tabindex="4" [(ngModel)]="emailInput" (keydown.enter)="moveToRegister(emailInput)" type="email"
