@@ -24,10 +24,17 @@ header {
     align-items: center;
     gap: 16px;
 
+    >div {
+        >svg {
+            fill: var(--white);
+        }
+    }
+
     >p {
         -webkit-line-clamp: 2;
         line-clamp: 2;
-        text-overflow: ellipsis
+        text-overflow: ellipsis;
+        font-size: 16px;
     }
 
     >div {
@@ -36,7 +43,7 @@ header {
     }
 
     >hr {
-        height: 10px;
+        height: 32px;
         width: 2px;
         color: var(--white);
     }
@@ -44,12 +51,12 @@ header {
     >a {
         cursor: pointer;
 
+        &:hover>svg {
+            fill: var(--black);
+        }
+
         >svg {
             fill: var(--white);
-
-            &:hover {
-                fill: var(--black);
-            }
         }
     }
 }
