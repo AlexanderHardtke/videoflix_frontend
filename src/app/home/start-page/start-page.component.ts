@@ -22,7 +22,7 @@ export class StartPageComponent {
     }
 
     test() {
-        this.feedback.showFeedback('TEST');
+        this.feedback.showFeedback('TEST  Langer test bnüöakdgfklö dsjkhgjklasd sdfjkghjaskld sdjklghws jklasdghklj');
     }
 
     test2() {

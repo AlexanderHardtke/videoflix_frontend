@@ -1,8 +1,8 @@
 header {
     position: absolute;
     bottom: 60px;
-    right: 20px;
-    width: 540px;
+    right: 96px;
+    min-width: 540px;
     display: flex;
     align-items: center;
     background-color: var(--purple);
@@ -70,4 +70,107 @@ header {
 .moveFeedback {
     transform: translateX(0%);
     opacity: 1;
+}
+
+@media screen and (min-width: 1921px) {
+    header {
+        right: calc(50vw - 864px);
+    }
+
+    .red-side {
+        height: 94px;
+        width: 24px;
+    }
+
+    .feedback-overlay {
+        height: 94px;
+        width: 598px;
+
+        >div {
+            >svg {
+                margin-left: 10px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        >p {
+            font-size: 22px;
+            width: 470px;
+        }
+
+        >hr {
+            height: 38px;
+        }
+
+        >a {
+            >svg {
+                height: 14px;
+                width: 14px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        right: 48px;
+    }
+}
+
+@media screen and (max-width: 636px) {
+    header {
+        width: 80%;
+        min-width: calc(100vw - 96px);
+    }
+
+    .feedback-overlay {
+        height: 112px;
+        width: 100%;
+        padding: 24px 40px 24px 0px;
+
+        >hr {
+            height: 58px;
+        }
+    }
+
+    .red-side {
+        min-width: 20px;
+        height: 112px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        right: 16px;
+        min-width: calc(100vw - 32px);
+    }
+
+    .feedback-overlay {
+        height: 140px;
+
+        >hr {
+            height: 92px;
+        }
+    }
+
+    .red-side {
+        min-width: 20px;
+        height: 140px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .feedback-overlay {
+        height: 160px;
+
+        >hr {
+            height: 102px;
+        }
+    }
+
+    .red-side {
+        min-width: 14px;
+        height: 160px;
+    }
 }
