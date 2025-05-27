@@ -12,6 +12,7 @@ import { FeedbackService } from '../services/feedback.service';
 export class FeedbackOverlayComponent {
   feedbackText: string | null = null;
   isActive = false;
+  visible = false;
 
   constructor(private feedback: FeedbackService) { }
 
@@ -23,14 +24,29 @@ export class FeedbackOverlayComponent {
   }
 
   /**
+   * Checks if a feedback message is already open and closes it before openeing the next one
+   * 
+   * @param message the message from the backend
+   */
+  checkFeedback(message: string) {
+    if (this.visible) {
+      this.closeFeedback();
+      setTimeout(() => {
+        this.showFeedback(message);
+      }, 251);
+    } else this.showFeedback(message);
+  }
+
+  /**
   * Displays the feedback message and animates it into view.
   * @param message - The feedback message to show.
   */
   showFeedback(message: string) {
     this.feedbackText = message;
+    this.visible = true;
     setTimeout(() => {
       this.isActive = true;
-    }, 50);
+    }, 30);
   }
 
   /**
@@ -38,9 +54,10 @@ export class FeedbackOverlayComponent {
    */
   closeFeedback() {
     this.isActive = false;
+    this.visible = false;
     setTimeout(() => {
       this.feedbackText = null;
-    }, 500);
+    }, 250);
   }
 
 }
