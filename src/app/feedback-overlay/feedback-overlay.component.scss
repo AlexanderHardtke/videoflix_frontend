@@ -6,7 +6,9 @@ header {
     display: flex;
     align-items: center;
     background-color: var(--purple);
-    border-radius: 20px
+    border-radius: 20px;
+    transform: translateX(120%);
+    transition: transform 0.5s ease-in-out;
 }
 
 .red-side {
@@ -59,4 +61,8 @@ header {
             fill: var(--white);
         }
     }
+}
+
+.moveFeedback {
+    transform: translateX(0%);
 }
