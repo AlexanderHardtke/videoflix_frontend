@@ -10,6 +10,10 @@ export class FeedbackService {
   }
 
   showFeedback(message: string) {
-    this.overlayRef?.checkFeedback(message);
+    this.overlayRef?.showFeedback(message);
+  }
+
+  showError(message: string) {
+    this.overlayRef?.checkError(message);
   }
 }

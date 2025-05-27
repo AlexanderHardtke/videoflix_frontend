@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
 
 @Component({
     selector: 'app-forgot-password',
@@ -17,15 +18,22 @@ export class ForgotPasswordComponent {
         lang: '',
     }
 
-    constructor(private router: Router, private translate: TranslateService, private http: HttpClient,) { }
+    constructor(private router: Router, private translate: TranslateService, private http: HttpClient, private feedback: FeedbackOverlayComponent) { }
 
     sendEmail() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/reset/', this.form)
-            .subscribe(response => {
+
+        this.http.post('https://.../api/reset/', this.form).subscribe({
+            next: (response: any) => {
+                const msg = response?.message || 'E-Mail erfolgreich gesendet.';
+                this.feedback.showFeedback(msg);
                 this.form.email = '';
-                // this.feedbackOverlay.showFeedback('E-Mail gesendet');
-            })
+            },
+            error: (err) => {
+                const error = err.response.error;
+                this.feedback.showFeedback(error);
+            }
+        });
     }
 
     /**

@@ -10,6 +10,7 @@ import { FeedbackService } from '../services/feedback.service';
   styleUrl: './feedback-overlay.component.scss'
 })
 export class FeedbackOverlayComponent {
+  errorText: string | null = null;
   feedbackText: string | null = null;
   isActive = false;
   visible = false;
@@ -24,40 +25,49 @@ export class FeedbackOverlayComponent {
   }
 
   /**
-   * Checks if a feedback message is already open and closes it before openeing the next one
-   * 
-   * @param message the message from the backend
-   */
-  checkFeedback(message: string) {
-    if (this.visible) {
-      this.closeFeedback();
-      setTimeout(() => {
-        this.showFeedback(message);
-      }, 251);
-    } else this.showFeedback(message);
-  }
-
-  /**
   * Displays the feedback message and animates it into view.
+  * 
   * @param message - The feedback message to show.
   */
   showFeedback(message: string) {
     this.feedbackText = message;
     this.visible = true;
-    setTimeout(() => {
-      this.isActive = true;
-    }, 30);
+    setTimeout(() => this.isActive = true, 30);
+    setTimeout(() => this.closeFeedback(), 3000);
   }
 
   /**
-   * Closes the feedback message and animates it out of view.
+   * Displays the error message and animates it into view.
+   * 
+   * @param message 
+   */
+  showErrorText(message: string) {
+    this.errorText = message;
+    this.visible = true;
+    setTimeout(() => this.isActive = true, 30);
+  }
+
+  /**
+   * Closes the feedback message and clears the text, also starts the animation to slide out of view.
    */
   closeFeedback() {
     this.isActive = false;
     this.visible = false;
     setTimeout(() => {
       this.feedbackText = null;
+      this.errorText = null;
     }, 250);
   }
 
+  /**
+   * Checks if a error message is already open and closes it before openeing the next one
+   * 
+   * @param message the message from the backend
+   */
+  checkError(message: string) {
+    if (this.visible) {
+      this.closeFeedback();
+      setTimeout(() => this.showErrorText(message), 251);
+    } else this.showErrorText(message);
+  }
 }

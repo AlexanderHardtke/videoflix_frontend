@@ -26,6 +26,6 @@ export class StartPageComponent {
     }
 
     test2() {
-        this.feedback.showFeedback('TEST2');
+        this.feedback.showError('TEST2');
     }
 }

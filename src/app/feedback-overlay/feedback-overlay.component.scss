@@ -14,11 +14,19 @@ header {
     transition: transform 0.25s ease, opacity 0.2s ease;
 }
 
-.red-side {
+.side {
     width: 20px;
     height: 80px;
     background-color: var(--error-red);
     border-radius: 20px 0 0 20px;
+}
+
+.red {
+    background-color: var(--error-red);
+}
+
+.green {
+    background-color: var(--green);
 }
 
 .feedback-overlay {
@@ -77,7 +85,7 @@ header {
         right: calc(50vw - 864px);
     }
 
-    .red-side {
+    .side {
         height: 94px;
         width: 24px;
     }
@@ -134,7 +142,7 @@ header {
         }
     }
 
-    .red-side {
+    .side {
         min-width: 20px;
         height: 112px;
     }
@@ -154,7 +162,7 @@ header {
         }
     }
 
-    .red-side {
+    .side {
         min-width: 20px;
         height: 140px;
     }
@@ -169,7 +177,7 @@ header {
         }
     }
 
-    .red-side {
+    .side {
         min-width: 14px;
         height: 160px;
     }
