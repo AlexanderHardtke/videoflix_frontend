@@ -17,3 +17,9 @@ export class FeedbackService {
     this.overlayRef?.checkError(message);
   }
 }
+
+
+// Erstelle Morgen alle post get und patch Funktionen zur API
+// Erstelle Dokumentation
+// Docker überarbeiten?
+// UNIT Tests

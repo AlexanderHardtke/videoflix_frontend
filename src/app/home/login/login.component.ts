@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +20,23 @@ export class LoginComponent {
         pw: ""
     }
 
-    loginUser() { }
+    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackOverlayComponent) {}
+
+    loginUser() {
+        this.http.post('https://.../api/login/', this.form).subscribe({
+            next: (response: any) => {
+                const msg = response?.message || 'Erfolgreich angemeldet';
+                this.feedback.showFeedback(msg);
+                this.form.email = '';
+                this.form.pw = '';
+                this.router.navigate(['/main']);
+            },
+            error: (err) => {
+                const error = err.response.error;
+                this.feedback.showFeedback(error);
+            }
+        });
+    }
 
     markAsUntouched(item: NgModel) {
         item.control?.markAsUntouched();
