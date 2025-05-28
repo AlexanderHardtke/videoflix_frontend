@@ -1,6 +1,7 @@
 {
-    "login": {
-        "title": "Login"
+    "header": {
+        "login": "Login",
+        "logout": "Log Out"
     },
     "footer": {
         "legal": "Legal Notice",
@@ -17,38 +18,37 @@
         "success": "Your email got confirmed successfully",
         "fail": "The email verification has failed, please try again later.",
         "getStarted": "Get Started",
-        "errorName":"The email adress is not valid",
-        "errorPw":"Min. 8 chars, number, upper & lowercase",
-        "errorRepeatedPw":"Passwords must match.",
+        "errorName": "The email adress is not valid",
+        "errorPw": "Min. 8 chars, number, upper & lowercase",
+        "errorRepeatedPw": "Passwords must match.",
         "forgotPw": "Forgot password?",
         "newCustomer": "New to Videoflix? ",
         "SignUpNow": "Sign Up now"
     },
     "forgot": {
-        "title":"Forgot your password?",
-        "sendMail":"We will send you an email with instructions to reset your password.",
-        "sendButton":"Send Email"
+        "title": "Forgot your password?",
+        "sendMail": "We will send you an email with instructions to reset your password.",
+        "sendButton": "Send Email"
     },
     "reset": {
-        "password":"Reset password",
-        "text":"Create a new password for your ",
-        "text2":" account.",
-        "error":"An unexpected error has occured. Please try again."
+        "password": "Reset password",
+        "text": "Create a new password for your ",
+        "text2": " account.",
+        "error": "An unexpected error has occured. Please try again."
     },
     "chooseVid": {
-        "logout":"Log Out",
-        "title":"title",
-        "description":"description",
+        "title": "title",
+        "description": "description",
         "play": "Play",
-        "new":"New on Videoflix",
-        "documentary":"Documentary",
-        "Drama":"Drama",
-        "Sci-Fi":"Sci-Fi",
-        "Action":"Action"
+        "new": "New on Videoflix",
+        "documentary": "Documentary",
+        "Drama": "Drama",
+        "Sci-Fi": "Sci-Fi",
+        "Action": "Action"
     },
     "error": {
-        "registration":"Confirm your email address",
-        "noPasswordMatch":"Passwords don't match",
-        "login":"Incorrect username or password"
+        "registration": "Confirm your email address",
+        "noPasswordMatch": "Passwords don't match",
+        "login": "Incorrect username or password"
     }
 }

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
+import { FeedbackService } from '../../services/feedback.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -18,7 +18,7 @@ export class ForgotPasswordComponent {
         lang: '',
     }
 
-    constructor(private router: Router, private translate: TranslateService, private http: HttpClient, private feedback: FeedbackOverlayComponent) { }
+    constructor(private router: Router, private translate: TranslateService, private http: HttpClient, private feedback: FeedbackService) { }
 
     sendEmail() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();

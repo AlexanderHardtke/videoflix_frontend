@@ -6,7 +6,7 @@ import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { RegistrationService } from '../../services/registration.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
+import { FeedbackService } from '../../services/feedback.service';
 
 
 @Component({
@@ -31,7 +31,7 @@ export class SignUpComponent {
         private http: HttpClient,
         private translate: TranslateService,
         private router: Router,
-        private feedback: FeedbackOverlayComponent
+        private feedback: FeedbackService
     ) { }
 
     /**
@@ -57,7 +57,7 @@ export class SignUpComponent {
             },
             error: (err) => {
                 const error = err.response.error;
-                this.feedback.showFeedback(error);
+                this.feedback.showError(error);
             }
         })
     }

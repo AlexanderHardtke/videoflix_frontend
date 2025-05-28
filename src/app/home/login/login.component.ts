@@ -5,7 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
+import { FeedbackService } from '../../services/feedback.service';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent {
         pw: ""
     }
 
-    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackOverlayComponent) {}
+    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) {}
 
     loginUser() {
         this.http.post('https://.../api/login/', this.form).subscribe({
@@ -34,7 +34,7 @@ export class LoginComponent {
             },
             error: (err) => {
                 const error = err.response.error;
-                this.feedback.showFeedback(error);
+                this.feedback.showError(error);
             }
         });
     }

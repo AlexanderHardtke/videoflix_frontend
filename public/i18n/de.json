@@ -1,6 +1,7 @@
 {
-    "login": {
-        "title": "Anmelden"
+    "header": {
+        "login": "Anmelden",
+        "logout":"Abmelden"
     },
     "footer": {
         "legal": "Impressum",
@@ -16,7 +17,6 @@
         "signUp": "Registrieren",
         "success": "Deine E-Mail wurde erfolgreich bestätigt",
         "fail": "Es gab Probleme beim bestätigen deiner Email, bitte versuche es später erneut",
-        "logout":"Abmelden",
         "getStarted": "Loslegen",
         "errorName":"Die E-Mail-Adresse ist ungültig",
         "errorPw":"Min. 8 Zeichen, Zahl, Groß-/Kleinschr.",

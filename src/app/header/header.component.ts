@@ -15,10 +15,11 @@ import { filter } from 'rxjs/operators';
 export class HeaderComponent {
   @ViewChild('langBox') langBox!: ElementRef<HTMLDivElement>;
   @ViewChild('toggleBox') toggleBox!: ElementRef<HTMLDivElement>;
-  darkmode: boolean = true;
+  darkmode = true;
   public currentLang = 'de';
-  selectLang: boolean = false;
-  currentUrl: string = '';
+  selectLang = false;
+  currentUrl = '';
+  token: string | null = null;
 
   constructor(private translate: TranslateService, private router: Router) {
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
@@ -43,6 +44,13 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
+    let auth = localStorage.getItem("auth")
+    if (auth) this.token = auth;
+    else this.token = null;
+    this.checkDarkmode();
+  }
+
+  checkDarkmode() {
     switch (localStorage.getItem("color")) {
       case "dark":
         this.setDarkMode();
@@ -107,7 +115,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('auth');
     this.router.navigate(['/login']);
   }
 }

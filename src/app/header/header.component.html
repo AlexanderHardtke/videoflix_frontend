@@ -27,7 +27,8 @@
                     720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57
                     59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z" />
         </svg>
-        } @else {
+        }
+        @else {
         <svg tabindex="2" (click)="switchColorScheme()" (keydown.enter)="switchColorScheme()"
             (keydown.space)="switchColorScheme()" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
             <path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41
@@ -61,7 +62,12 @@
                     16.4333 31.8579 16.7916 31.5746 17.075C31.2913 17.3583 30.9329 17.5 30.4996 17.5H5.69961Z" />
         </svg>
         } @else {
-        <a class="button" tabindex="3" [routerLink]="'/login'">{{ 'login.title' | translate }}</a>
+        @if (token) {
+        <a class="button" tabindex="4" (click)="logout()" (keydown.enter)="logout()" (keydown.space)="logout()">{{
+            'header.logout' | translate }}</a>
+        }@else {
+        <a class="button" tabindex="4" [routerLink]="'/login'">{{ 'header.login' | translate }}</a>
+        }
         }
     </div>
 
