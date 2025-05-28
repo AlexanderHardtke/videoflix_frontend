@@ -14,18 +14,10 @@ import { FeedbackService } from '../../services/feedback.service';
 export class StartPageComponent {
     emailInput:string = ''
 
-    constructor(private regService: RegistrationService, private router: Router, private feedback: FeedbackService) {}
+    constructor(private regService: RegistrationService, private router: Router) {}
 
     moveToRegister(email: string) {
         this.regService.setEmail(email);
         this.router.navigate(['/signUp']);
-    }
-
-    test() {
-        this.feedback.showFeedback('TEST  Langer test bnüöakdgfklö dsjkhgjklasd sdfjkghjaskld sdjklghws jklasdghklj');
-    }
-
-    test2() {
-        this.feedback.showError('TEST2');
     }
 }
