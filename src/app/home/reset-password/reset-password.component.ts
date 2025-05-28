@@ -38,9 +38,7 @@ export class ResetPasswordComponent {
         next: (response: any) => {
           const msg = response?.message || 'Passwort erfolgreich geändert';
           this.feedback.showFeedback(msg);
-          setTimeout(() => {
-            this.router.navigate(['']);
-          }, 1500);
+          setTimeout(() => this.router.navigate(['']), 1500);
         },
         error: (err) => {
           const error = err.response.error;
