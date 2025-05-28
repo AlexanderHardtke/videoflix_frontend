@@ -29,6 +29,7 @@ export class LoginComponent {
                 this.feedback.showFeedback(msg);
                 this.form.email = '';
                 this.form.pw = '';
+                localStorage.setItem('auth', response.token);
                 this.router.navigate(['/main']);
             },
             error: (err) => {

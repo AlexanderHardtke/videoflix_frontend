@@ -105,4 +105,9 @@ export class HeaderComponent {
   toggleLang() {
     this.selectLang = !this.selectLang;
   }
+
+  logout() {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
+  }
 }
