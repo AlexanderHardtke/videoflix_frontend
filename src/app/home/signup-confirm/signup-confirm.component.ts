@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { env } from '../../../../src/environments/environment';
+
 
 @Component({
   selector: 'app-signup-confirm',
@@ -15,13 +17,14 @@ export class SignupConfirmComponent {
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   /**
-   * sends the token to the backend and confirms the user in the database
+   * sends the token to the backend and confirms the user in the database,
+   * then moves the user to the login page
    * 
    */
   ngOnInit() {
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
-      this.http.post('/api/confirm/', { token }).subscribe({
+      this.http.post(env.url + '/api/confirm/', { token }).subscribe({
         next: () => setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1500),

@@ -5,6 +5,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FeedbackService } from '../../services/feedback.service';
+import { env } from '../../../../src/environments/environment';
+
 
 @Component({
     selector: 'app-forgot-password',
@@ -26,7 +28,7 @@ export class ForgotPasswordComponent {
     sendEmail() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
 
-        this.http.post('https://.../api/reset/', this.form).subscribe({
+        this.http.post(env.url + 'api/reset/', this.form).subscribe({
             next: (response: any) => {
                 const msg = response?.message || 'E-Mail erfolgreich gesendet.';
                 this.feedback.showFeedback(msg);

@@ -7,6 +7,7 @@ import { RegistrationService } from '../../services/registration.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
+import { env } from '../../../../src/environments/environment';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class SignUpComponent {
      */
     registerUser() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.http.post('https://videoflix-backend.alexander-hardtke.de/api/registration/', this.form).subscribe({
+        this.http.post(env.url + 'api/registration/', this.form).subscribe({
             next: (response: any) => {
                 const msg = response?.message || 'Erfolgreich registriert';
                 this.feedback.showFeedback(msg);
@@ -56,8 +57,7 @@ export class SignUpComponent {
                 }, 1500);
             },
             error: (err) => {
-                const error = err.response.error;
-                this.feedback.showError(error);
+                this.feedback.showError(err.response.error);
             }
         })
     }

@@ -6,6 +6,8 @@ import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackService } from '../../services/feedback.service';
+import { env } from '../../../../src/environments/environment';
+
 
 @Component({
     selector: 'app-login',
@@ -26,7 +28,7 @@ export class LoginComponent {
      * requests a login token from the api and routes the user to the main page
      */
     loginUser() {
-        this.http.post('https://.../api/login/', this.form).subscribe({
+        this.http.post(env.url + 'api/login/', this.form).subscribe({
             next: (response: any) => {
                 const msg = response?.message || 'Erfolgreich angemeldet';
                 this.feedback.showFeedback(msg);

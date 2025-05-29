@@ -40,3 +40,10 @@ export class MainPageComponent implements OnInit {
         })
     }
 }
+
+// Erstelle Morgen alle get und patch Funktionen zur API
+// Erstelle Dokumentation
+// Docker überarbeiten?
+// UNIT Tests
+//main.ts
+// Video-player

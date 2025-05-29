@@ -16,6 +16,11 @@ export class StartPageComponent {
 
     constructor(private regService: RegistrationService, private router: Router) {}
 
+    /**
+     * moves the user to the signUp page
+     * 
+     * @param email the email that the user has typed in already
+     */
     moveToRegister(email: string) {
         this.regService.setEmail(email);
         this.router.navigate(['/signUp']);
