@@ -29,6 +29,21 @@ export class HeaderComponent {
     this.setTranslation();
   }
 
+  /**
+   * gets the token from the local storage and checks if user is set on darkmode
+   */
+  ngOnInit() {
+    let auth = localStorage.getItem("auth")
+    if (auth) this.token = auth;
+    else this.token = null;
+    this.checkDarkmode();
+  }
+
+  /**
+   * closes the language selector box if the user clicks outside
+   * 
+   * @param target the language selector box
+   */
   @HostListener('document:mouseup', ['$event.target'])
   onClickOutsideLanBox(target: HTMLElement): void {
     if (this.selectLang) {
@@ -37,19 +52,21 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * changes the language to the selected language from the user
+   * 
+   * @param lang the language code
+   */
   public changeLang(lang: string) {
     this.translate.use(lang);
     this.currentLang = lang === 'en' ? 'en' : 'de';
     localStorage.setItem("lang", this.currentLang);
   }
 
-  ngOnInit() {
-    let auth = localStorage.getItem("auth")
-    if (auth) this.token = auth;
-    else this.token = null;
-    this.checkDarkmode();
-  }
-
+  /**
+   * checks the localstorage for dark mode and displays the colors needed
+   * if local storage is empty sets the color scheme
+   */
   checkDarkmode() {
     switch (localStorage.getItem("color")) {
       case "dark":
@@ -64,6 +81,9 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * checks the prefered color scheme of the user and sets it into the local storage
+   */
   setColorScheme() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       localStorage.setItem("color", "dark")
@@ -74,16 +94,25 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * sets the colors to darkmode
+   */
   setDarkMode() {
     document.documentElement.classList.add('darkmode');
     document.documentElement.classList.remove('lightmode');
   }
 
+  /**
+   * sets the colors to lightmode
+   */
   setLightMode() {
     document.documentElement.classList.add('lightmode');
     document.documentElement.classList.remove('darkmode');
   }
 
+  /**
+   * switches the color theme to either dark or light mode
+   */
   switchColorScheme() {
     this.darkmode = !this.darkmode;
     if (this.darkmode) {
@@ -95,6 +124,9 @@ export class HeaderComponent {
     }
   }
 
+  /**
+   * sets the Translation JSON and the local storage language setting
+   */
   setTranslation() {
     this.translate.setTranslation('de', translateionsDE);
     this.translate.setTranslation('en', translateionsEN);
@@ -110,10 +142,16 @@ export class HeaderComponent {
     }
   }
 
-  toggleLang() {
+  /**
+   * toggles the language selector box
+   */
+  toggleLangBox() {
     this.selectLang = !this.selectLang;
   }
 
+  /**
+   * removes the token from the localstorage and navigates the user to the login-page
+   */
   logout() {
     localStorage.removeItem('auth');
     this.router.navigate(['/login']);

@@ -20,6 +20,9 @@ export class ForgotPasswordComponent {
 
     constructor(private router: Router, private translate: TranslateService, private http: HttpClient, private feedback: FeedbackService) { }
 
+    /**
+     * requests an email from the backend to reset the users password
+     */
     sendEmail() {
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
 

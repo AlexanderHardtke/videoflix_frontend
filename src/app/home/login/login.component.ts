@@ -22,6 +22,9 @@ export class LoginComponent {
 
     constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) {}
 
+    /**
+     * requests a login token from the api and routes the user to the main page
+     */
     loginUser() {
         this.http.post('https://.../api/login/', this.form).subscribe({
             next: (response: any) => {
@@ -33,24 +36,40 @@ export class LoginComponent {
                 this.router.navigate(['/main']);
             },
             error: (err) => {
-                const error = err.response.error;
-                this.feedback.showError(error);
+                this.feedback.showError(err.response.error);
             }
         });
     }
 
+    /**
+     * marks the input field as untouched
+     * 
+     * @param item an input field
+     */
     markAsUntouched(item: NgModel) {
         item.control?.markAsUntouched();
     }
 
-    onMouseDown(svg: HTMLElement): void {
+    /**
+     * shows the passwort input typed in by the user
+     * 
+     * @param svg the icon that is changed
+     * @returns 
+     */
+    showPassword(svg: HTMLElement): void {
         this.passwordType = 'text';
         const path = svg.querySelector('svg path');
         if (!path) return;
         path.setAttribute('d', SVG_PATHS.visible);
     }
 
-    onMouseUp(svg: HTMLElement): void {
+    /**
+     * hides the password input typed in by the user
+     * 
+     * @param svg the icon that is changed
+     * @returns 
+     */
+    hidePassword(svg: HTMLElement): void {
         this.passwordType = 'password';
         const path = svg.querySelector('svg path');
         if (!path) return;

@@ -88,9 +88,9 @@
                     (keydown.enter)="loginUser()" [type]="passwordType" name="pw"
                     placeholder="{{'main.password' | translate}}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
                     required>
-                <svg #visiblePw width="22" height="15" viewBox="0 0 22 15" fill="none" (mouseup)="onMouseUp(visiblePw)"
-                    xmlns="http://www.w3.org/2000/svg" (mousedown)="onMouseDown(visiblePw)"
-                    (mouseleave)="onMouseUp(visiblePw)">
+                <svg #visiblePw width="22" height="15" viewBox="0 0 22 15" fill="none" (mouseup)="hidePassword(visiblePw)"
+                    xmlns="http://www.w3.org/2000/svg" (mousedown)="showPassword(visiblePw)"
+                    (mouseleave)="hidePassword(visiblePw)">
                     <path d="M14.175 5.3251C14.6583 5.80843 15.0125 6.35843 15.2375 6.9751C15.4625 7.59176
                     15.5417 8.2251 15.475 8.8751C15.475 9.1251 15.3833 9.3376 15.2 9.5126C15.0167
                     9.6876 14.8 9.7751 14.55 9.7751C14.3 9.7751 14.0875 9.6876 13.9125 9.5126C13.7375
