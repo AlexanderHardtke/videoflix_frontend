@@ -4,6 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
+import { env } from '../../../../src/environments/environment';
 
 @Component({
     selector: 'app-main-page',
@@ -29,7 +30,7 @@ export class MainPageComponent implements OnInit {
             return
         }
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        this.http.get('https://videoflix-backend.alexander-hardtke.de/api/videos/', { headers }).subscribe({
+        this.http.get(env.url + 'api/videos/', { headers }).subscribe({
             next: (response: any) => {
                 console.log(response);// Setze hier die Videos
             },
@@ -41,9 +42,6 @@ export class MainPageComponent implements OnInit {
     }
 }
 
-// Erstelle Morgen alle get und patch Funktionen zur API
-// Erstelle Dokumentation
-// Docker überarbeiten?
 // UNIT Tests
 //main.ts
 // Video-player
