@@ -86,7 +86,7 @@
                 </svg>
                 <input (focus)="markAsUntouched(pw)" #pw="ngModel" tabindex="5" [(ngModel)]="form.pw"
                     (keydown.enter)="loginUser()" [type]="passwordType" name="pw"
-                    placeholder="{{'main.password' | translate}}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                    placeholder="{{'main.password' | translate}}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$#!%*?&]{8,}$"
                     required>
                 <svg #visiblePw width="22" height="15" viewBox="0 0 22 15" fill="none" (mouseup)="hidePassword(visiblePw)"
                     xmlns="http://www.w3.org/2000/svg" (mousedown)="showPassword(visiblePw)"
@@ -156,7 +156,7 @@
         </form>
 
         <button tabindex="7" (click)="loginUser()" (keydown.enter)="loginUser()" (keydown.space)="loginUser()"
-            [disabled]="!email.valid || !!pw.valid">{{'header.login' | translate}}</button>
+            [disabled]="!email.valid || !pw.valid">{{'header.login' | translate}}</button>
 
         <b><a [routerLink]="'/forgot'">{{'main.forgotPw' | translate}}</a></b>
 

@@ -22,8 +22,8 @@ export class SignUpComponent {
     repeatPasswordType: string = "password";
     form = {
         email: '',
-        pw: '',
-        repeatPw: '',
+        password: '',
+        repeated_password: '',
         lang: '',
     }
 

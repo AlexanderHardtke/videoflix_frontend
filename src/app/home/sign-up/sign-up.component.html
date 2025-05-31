@@ -84,7 +84,7 @@
                     20.9 4.9249 20.85 5.1249C20.8 5.3249 20.6833 5.4749 20.5 5.5749C20.3167 5.6749 20.125 5.6999 19.925 5.6499C19.725 5.5999
                     19.575 5.48324 19.475 5.2999L19 4.4499Z" />
                 </svg>
-                <input (focus)="markAsUntouched(pw)" #pw="ngModel" tabindex="5" [(ngModel)]="form.pw"
+                <input (focus)="markAsUntouched(pw)" #pw="ngModel" tabindex="5" [(ngModel)]="form.password"
                     (keydown.enter)="registerUser()" [type]="passwordType" name="pw"
                     placeholder="{{'main.password' | translate}}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$#!%*?&]{8,}$"
                     required>
@@ -155,7 +155,7 @@
             </p>
 
             <div
-                [ngClass]="{'redBorder': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled || (form.pw !== form.repeatPw && repeatPw.touched)}">
+                [ngClass]="{'redBorder': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled || (form.password !== form.repeated_password && repeatPw.touched)}">
                 <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 9.9999H20C20.2833 9.9999 20.5208 10.0957 20.7125 10.2874C20.9042 10.4791 21 10.7166
                         21 10.9999C21 11.2832 20.9042 11.5207 20.7125 11.7124C20.5208 11.9041 20.2833 11.9999 20
@@ -195,7 +195,7 @@
                         20.9 4.9249 20.85 5.1249C20.8 5.3249 20.6833 5.4749 20.5 5.5749C20.3167 5.6749 20.125 5.6999 19.925 5.6499C19.725 5.5999
                         19.575 5.48324 19.475 5.2999L19 4.4499Z" />
                 </svg>
-                <input (focus)="markAsUntouched(repeatPw)" #repeatPw="ngModel" tabindex="6" [(ngModel)]="form.repeatPw"
+                <input (focus)="markAsUntouched(repeatPw)" #repeatPw="ngModel" tabindex="6" [(ngModel)]="form.repeated_password"
                     (keydown.enter)="registerUser()" placeholder="{{'main.repeatPassword' | translate}}" name="repeatPw"
                     [type]="repeatPasswordType" required>
                 <svg #visibleRepeatPw width="22" height="15" viewBox="0 0 22 15" fill="none"
@@ -244,7 +244,7 @@
             </div>
 
             <p class="error"
-                [ngClass]="{'errorVisible': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled || (form.pw !== form.repeatPw && repeatPw.touched)}">
+                [ngClass]="{'errorVisible': !repeatPw.valid && repeatPw.touched && !repeatPw.disabled || (form.password !== form.repeated_password && repeatPw.touched)}">
                 <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.817055 12C0.694833 12 0.583722 11.9694 0.483722 11.9083C0.383722 11.8472 0.305944
                     11.7667 0.250389 11.6667C0.194833 11.5667 0.164278 11.4583 0.158722 11.3417C0.153167 11.225
