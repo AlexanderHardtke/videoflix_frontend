@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { env } from '../../../../src/environments/environment';
+import { FeedbackService } from '../../services/feedback.service';
 
 
 @Component({
@@ -14,7 +15,12 @@ import { env } from '../../../../src/environments/environment';
 export class SignupConfirmComponent {
   errorMsg = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router,
+    private feedback: FeedbackService
+  ) { }
 
   /**
    * sends the token to the backend and confirms the user in the database,
@@ -24,10 +30,14 @@ export class SignupConfirmComponent {
   ngOnInit() {
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
-      this.http.post(env.url + '/api/confirm/', { token }).subscribe({
-        next: () => setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 1500),
+      this.http.post(env.url + 'api/confirm/', { token }).subscribe({
+        next: (response: any) => {
+          const msg = response?.message || 'Erfolgreich bestätigt';
+          this.feedback.showFeedback(msg);
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 1500);
+        },
         error: () => this.errorMsg = true
       });
     }
