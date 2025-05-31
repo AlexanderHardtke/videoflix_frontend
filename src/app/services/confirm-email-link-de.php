@@ -11,9 +11,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $activateLink = "https://videoflix.alexander-hardtke.com/signUp/" . urlencode($token);
+        $frontendUrl = $params->frontend_url
+        $logo = $params->logo;
+        $activateLink = $frontendUrl . urlencode($token);
         $recipient = $email;
-        $logo = "https://videoflix.alexander-hardtke.com/Logo.png";
         $subject = "Bestätige deine E-Mail";
         $message = "
         <html>
@@ -52,7 +53,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers = array();
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: info@Videflix.com";
+        $headers[] = "From: info@Videoflix.com";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
         break;
     default:
