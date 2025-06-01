@@ -22,6 +22,11 @@ export class MainPageComponent implements OnInit {
         private feedback: FeedbackService
     ) { }
 
+    /**
+     * gets the Videos for the main-page and displays them for the user
+     * 
+     * @returns 
+     */
     ngOnInit() {
         const token = localStorage.getItem('auth');
         if (!token) {
@@ -42,6 +47,6 @@ export class MainPageComponent implements OnInit {
     }
 }
 
-// UNIT Tests
+// UNIT Tests KARMA
 //main.ts
 // Video-player
