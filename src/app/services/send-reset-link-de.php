@@ -11,7 +11,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $params = json_decode($json);
         $email = $params->email;
         $token = $params->token;
-        $frontendUrl = $params->frontend_url
+        $frontendUrl = $params->frontend_url;
         $logo = $params->logo;
         $activateLink = $frontendUrl . urlencode($token);
         $recipient = $email;
