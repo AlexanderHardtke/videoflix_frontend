@@ -31,6 +31,7 @@
         "sendButton": "Send Email"
     },
     "reset": {
+        "check": "Please check your email, we've send you a link to verify",
         "password": "Reset password",
         "text": "Create a new password for your ",
         "text2": " account.",

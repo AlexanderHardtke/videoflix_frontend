@@ -16,7 +16,7 @@
         "repeatPassword": "Passwort bestätigen",
         "signUp": "Registrieren",
         "success": "Deine E-Mail wurde erfolgreich bestätigt",
-        "fail": "Es gab Probleme beim Bestätigen deiner Email, bitte versuche es später erneut",
+        "fail": "Es gab Probleme beim Bestätigen deiner E-mail, bitte versuche es später erneut",
         "getStarted": "Loslegen",
         "errorName":"Die E-Mail-Adresse ist ungültig",
         "errorPw":"Min. 8 Zeichen, Zahl, Groß-/Kleinschr.",
@@ -28,9 +28,10 @@
     "forgot": {
         "title":"Passwort vergessen?",
         "sendMail":"Wir senden Ihnen eine E-Mail mit den Anweisungen zum Zurücksetzen Ihres Passworts.",
-        "sendButton":"Email senden"
+        "sendButton":"E-mail senden"
     },
     "reset": {
+        "check": "Bitte überprüfe deine E-mail, wir haben dir einen Link zur Bestätigung gesendet.",
         "password":"Passwort zurücksetzen",
         "text":"Erstelle ein neues Passwort für deinen ",
         "text2":" Account.",

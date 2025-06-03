@@ -9,6 +9,7 @@ import { MainPageComponent } from './home/main-page/main-page.component';
 import { VideoPlayerComponent } from './home/video-player/video-player.component';
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { SignupConfirmComponent } from './home/signup-confirm/signup-confirm.component';
+import { CheckEmailComponent } from './home/check-email/check-email.component';
 
 export const routes: Routes = [
     { path: '', component: StartPageComponent },
@@ -21,4 +22,5 @@ export const routes: Routes = [
     { path: 'video', component: VideoPlayerComponent },
     { path: 'legal', component: LegalNoticeComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
+    { path: 'check', component: CheckEmailComponent },
 ];
