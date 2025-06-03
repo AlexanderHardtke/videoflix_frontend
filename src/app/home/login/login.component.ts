@@ -36,7 +36,9 @@ export class LoginComponent {
                 this.successLogin(response)
             },
             error: (err) => {
-                this.feedback.showError(err.response.error);
+                console.log(err);
+                
+                this.feedback.showError(err.error.error);
                 this.isLoading = false;
             }
         });

@@ -56,7 +56,7 @@ export class SignUpComponent {
                 this.successReg(response)
             },
             error: (err) => {
-                this.feedback.showError(err.statusText);
+                this.feedback.showError(err.error.error);
                 this.isLoading = false;
             }
         })

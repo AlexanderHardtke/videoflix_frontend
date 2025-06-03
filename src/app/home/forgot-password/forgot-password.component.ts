@@ -35,7 +35,7 @@ export class ForgotPasswordComponent {
                 this.successMail(response)
             },
             error: (err) => {
-                this.feedback.showFeedback(err.statusText);
+                this.feedback.showError(err.error.error);
                 this.isLoading = false;
             }
         });
