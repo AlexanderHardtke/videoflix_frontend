@@ -44,10 +44,8 @@ export class ResetPasswordComponent {
           this.feedback.showFeedback(msg);
           setTimeout(() => this.router.navigate(['']), 1500);
         },
-        error: (err) => {
-          this.feedback.showError(err.error.error);
-        }
-      })
+        error: (err) => this.feedback.showError(err.error.error)
+      });
     }
   }
 

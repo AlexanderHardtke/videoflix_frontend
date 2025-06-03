@@ -23,7 +23,7 @@ export class MainPageComponent implements OnInit {
     ) { }
 
     /**
-     * gets the Videos for the main-page and displays them for the user
+     * checks for a token and either rejects the user or gets the videos
      * 
      * @returns 
      */
@@ -34,16 +34,31 @@ export class MainPageComponent implements OnInit {
             this.router.navigate(['']);
             return
         }
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        this.getVideos(token);
+    }
+
+    /**
+     * gets the video from the backend
+     */
+    getVideos(token: string) {
+        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
         this.http.get(env.url + 'api/videos/', { headers }).subscribe({
             next: (response: any) => {
                 console.log(response);// Setze hier die Videos
             },
-            error: (err) => {
-                const error = err?.error?.detail || 'Fehler beim laden der Videos';
-                this.feedback.showError(error);
-            }
-        })
+            error: (err) => this.errorMessage(err)
+        });
+    }
+
+    /**
+     * shows the error message for the user and moves him to the start page
+     * 
+     * @param err 
+     */
+    errorMessage(err: any) {
+        const error = err?.error?.error || 'Fehler beim laden der Videos';
+        this.feedback.showError(error);
+        this.router.navigate(['']);
     }
 }
 

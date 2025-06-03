@@ -17,10 +17,10 @@ import { env } from '../../../../src/environments/environment';
 })
 export class LoginComponent {
     isLoading = false;
-    passwordType: string = "password";
+    passwordType: string = 'password';
     form = {
-        email: "",
-        pw: ""
+        username: "",
+        password: ""
     }
 
     constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) { }
@@ -54,8 +54,8 @@ export class LoginComponent {
         this.feedback.showFeedback(msg);
         localStorage.setItem('auth', response.token);
         this.router.navigate(['/main']);
-        this.form.email = '';
-        this.form.pw = '';
+        this.form.username = '';
+        this.form.password = '';
         this.isLoading = false;
     }
 
