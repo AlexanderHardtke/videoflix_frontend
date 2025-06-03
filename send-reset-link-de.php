@@ -14,21 +14,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $mailServer = $params->mail_server;
         $frontendUrl = $params->frontend_url;
         $logo = $params->logo;
-        $activateLink = $frontendUrl . urlencode($token);
+        $resetLink = $frontendUrl . urlencode($token);
         $recipient = $email;
-        $subject = "Confirm your email";
+        $subject = "Passwort zurücksetzen";
         $message = "
         <html>
         <head>
-        <title>Confirm your email</title> 
+        <title>Passwort zurücksetzen</title> 
         </head>
         <body>
-        <img  style='display:flex; place-self: center;' src='$logo'>
-        <p>Dear Videoflixuser,</p>
-        <p>thank you for registering with <b style='color:#2E3EDF;'>Videoflix</b>.
-        To complete your registration and verify your email address, please click the link below:<br></p>
+        <p>Hallo,</p><br>
+        <p>wir haben kürzlich eine Anfrage zum Zurücksetzen deines Passworts erhalten. Falls du diese Anfrage gestellt hast,<br>
+        klicke bitte auf den folgenden Link, um dein Passwort zurückzusetzen: <br></p>
         <br>
-        <a href='$activateLink'
+        <a href='$resetLink'
         style='display: inline-block;
             font-weight: 700;
             border-radius: 40px;
@@ -39,15 +38,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
             text-decoration: none;
             border: 1px solid #2E3EDF;
         '>
-        Activate account</a>
+        Passwort zurücksetzen</a>
         <br>
         <br>
-        <p>If you did not create an account with us, please disregard this email.</p>
+        <p>Bitte beachte, dieser Link ist aus Sicherheitsgründen nur 24 Stunden gültig.</p>
         <br>
-        <p>Best Regards,
+        <p>Falls du keine Anfrage zum Zurücksetzen deines Passworts gestellt hast, 
+        ignoriere bitte diese E-Mail.</p>
         <br>
-        Your Videoflix team!
+        <p>Beste Grüße,
+        <br>
+        Dein Videoflix Team!
         </p>
+        <br>
+        <img src='$logo'>
         </body>
         </html>
         ";
@@ -56,12 +60,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers[] = 'Content-type: text/html; charset=utf-8';
         $headers[] = "From: Videoflix <$mailServer>";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
-        $success = mail($recipient, $subject, $message, implode("\r\n", $headers));
-        if (!$success) {
-            error_log("Mailversand fehlgeschlagen an $recipient");
-        } else {
-            error_log("Mail erfolgreich versendet an $recipient");
-        }
         break;
     default:
         header("Allow: POST", true, 405);

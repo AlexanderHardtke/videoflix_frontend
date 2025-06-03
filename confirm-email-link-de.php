@@ -16,18 +16,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $logo = $params->logo;
         $activateLink = $frontendUrl . urlencode($token);
         $recipient = $email;
-        $subject = "Reset your password";
+        $subject = "Bestätige deine E-Mail";
         $message = "
         <html>
         <head>
-        <title>Reset your password</title> 
+        <title>Bestätige deine E-Mail</title> 
         </head>
         <body>
-        <p>Hello,</p><br>
-        <p>we recently received a request to reset your password. If you made this request,<br>
-        please click on the following link to reset your password:<br></p>
+        <img  style='display:flex; place-self: center;' src='$logo'>
+        <p>Lieber Videoflixnutzer,</p>
+        <p>danke das du dich bei <b style='color:#2E3EDF;'>Videoflix</b> registriert hast</b>.
+        Um deine Registrierung abzuschließen und deine E-Mail zu bestätigen, klicke bitte auf den Link hier unten:<br></p>
         <br>
-        <a href='$resetLink'
+        <a href='$activateLink'
         style='display: inline-block;
             font-weight: 700;
             border-radius: 40px;
@@ -38,19 +39,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
             text-decoration: none;
             border: 1px solid #2E3EDF;
         '>
-        Reset password</a>
+        Aktiviere Nutzerkonto</a>
         <br>
         <br>
-        <p>Please note that for security reasons, this link is only valid for 24 hours.</p>
+        <p>Falls du kein Konto bei uns erstellt hast, ignoriere bitte diese E-Mail.</p>
         <br>
-        <p>If you did not request a password reset, please ignore this email.</p>
+        <p>Beste Grüße,
         <br>
-        <p>Best Regards,
-        <br>
-        Your Videoflix team!
+        Dein Videoflix Team!
         </p>
-        <br>
-        <img src='$logo'>
         </body>
         </html>
         ";
@@ -59,12 +56,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers[] = 'Content-type: text/html; charset=utf-8';
         $headers[] = "From: Videoflix <$mailServer>";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
-        $success = mail($recipient, $subject, $message, implode("\r\n", $headers));
-        if (!$success) {
-            error_log("Mailversand fehlgeschlagen an $recipient");
-        } else {
-            error_log("Mail erfolgreich versendet an $recipient");
-        }
         break;
     default:
         header("Allow: POST", true, 405);

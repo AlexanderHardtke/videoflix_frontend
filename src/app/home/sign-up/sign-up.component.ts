@@ -52,7 +52,7 @@ export class SignUpComponent {
             next: (response: any) => {
                 const msg = response?.message || 'Erfolgreich registriert';
                 this.feedback.showFeedback(msg);
-                this.router.navigate(['/login']);
+                this.router.navigate(['/check']);
             },
             error: (err) => {
                 console.log(err);

@@ -32,6 +32,7 @@ export class ForgotPasswordComponent {
             next: (response: any) => {
                 const msg = response?.message || 'E-Mail erfolgreich gesendet.';
                 this.feedback.showFeedback(msg);
+                this.router.navigate(['/check']);
                 this.form.email = '';
             },
             error: (err) => {

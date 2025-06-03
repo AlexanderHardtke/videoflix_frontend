@@ -16,17 +16,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $logo = $params->logo;
         $activateLink = $frontendUrl . urlencode($token);
         $recipient = $email;
-        $subject = "Bestätige deine E-Mail";
+        $subject = "Confirm your email";
         $message = "
         <html>
         <head>
-        <title>Bestätige deine E-Mail</title> 
+        <title>Confirm your email</title> 
         </head>
         <body>
         <img  style='display:flex; place-self: center;' src='$logo'>
-        <p>Lieber Videoflixnutzer,</p>
-        <p>danke das du dich bei <b style='color:#2E3EDF;'>Videoflix</b> registriert hast</b>.
-        Um deine Registrierung abzuschließen und deine E-Mail zu bestätigen, klicke bitte auf den Link hier unten:<br></p>
+        <p>Dear Videoflixuser,</p>
+        <p>thank you for registering with <b style='color:#2E3EDF;'>Videoflix</b>.
+        To complete your registration and verify your email address, please click the link below:<br></p>
         <br>
         <a href='$activateLink'
         style='display: inline-block;
@@ -39,14 +39,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
             text-decoration: none;
             border: 1px solid #2E3EDF;
         '>
-        Aktiviere Nutzerkonto</a>
+        Activate account</a>
         <br>
         <br>
-        <p>Falls du kein Konto bei uns erstellt hast, ignoriere bitte diese E-Mail.</p>
+        <p>If you did not create an account with us, please disregard this email.</p>
         <br>
-        <p>Beste Grüße,
+        <p>Best Regards,
         <br>
-        Dein Videoflix Team!
+        Your Videoflix team!
         </p>
         </body>
         </html>
@@ -56,12 +56,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers[] = 'Content-type: text/html; charset=utf-8';
         $headers[] = "From: Videoflix <$mailServer>";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
-        $success = mail($recipient, $subject, $message, implode("\r\n", $headers));
-        if (!$success) {
-            error_log("Mailversand fehlgeschlagen an $recipient");
-        } else {
-            error_log("Mail erfolgreich versendet an $recipient");
-        }
         break;
     default:
         header("Allow: POST", true, 405);
