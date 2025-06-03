@@ -58,8 +58,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $headers = array();
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: $mailServer";
+        $headers[] = "From: Videoflix <$mailServer>";
         mail($recipient, $subject, $message, implode("\r\n", $headers));
+        $success = mail($recipient, $subject, $message, implode("\r\n", $headers));
+        if (!$success) {
+            error_log("Mailversand fehlgeschlagen an $recipient");
+        } else {
+            error_log("Mail erfolgreich versendet an $recipient");
+        }
         break;
     default:
         header("Allow: POST", true, 405);
