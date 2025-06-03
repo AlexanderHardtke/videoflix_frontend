@@ -17,7 +17,8 @@ import { env } from '../../../../src/environments/environment';
     styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
-    sendMail: boolean = false;
+    isLoading = false;
+    sendMail = false;
     passwordType: string = "password";
     repeatPasswordType: string = "password";
     form = {
@@ -47,19 +48,30 @@ export class SignUpComponent {
      * Register the User in the Database and routes them to the starting-page
      */
     registerUser() {
+        if (this.isLoading) return;
+        this.isLoading = true;
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
         this.http.post(env.url + 'api/registration/', this.form).subscribe({
             next: (response: any) => {
-                const msg = response?.message || 'Erfolgreich registriert';
-                this.feedback.showFeedback(msg);
-                this.router.navigate(['/check']);
+                this.successReg(response)
             },
             error: (err) => {
-                console.log(err);
-                
                 this.feedback.showError(err.statusText);
+                this.isLoading = false;
             }
         })
+    }
+
+    /**
+     * shows the successfull registration in the backend and navigates the user to /check
+     * 
+     * @param response the response from the backend
+     */
+    successReg(response: any) {
+        const msg = response?.message || 'Erfolgreich registriert';
+        this.feedback.showFeedback(msg);
+        this.router.navigate(['/check']);
+        this.isLoading = false;
     }
 
     /**
