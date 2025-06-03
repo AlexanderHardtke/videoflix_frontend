@@ -16,31 +16,45 @@ import { env } from '../../../../src/environments/environment';
     styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+    isLoading = false;
     passwordType: string = "password";
     form = {
         email: "",
         pw: ""
     }
 
-    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) {}
+    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) { }
 
     /**
      * requests a login token from the api and routes the user to the main page
      */
     loginUser() {
+        if (this.isLoading) return;
+        this.isLoading = true;
         this.http.post(env.url + 'api/login/', this.form).subscribe({
             next: (response: any) => {
-                const msg = response?.message || 'Erfolgreich angemeldet';
-                this.feedback.showFeedback(msg);
-                this.form.email = '';
-                this.form.pw = '';
-                localStorage.setItem('auth', response.token);
-                this.router.navigate(['/main']);
+                this.successLogin(response)
             },
             error: (err) => {
                 this.feedback.showError(err.response.error);
+                this.isLoading = false;
             }
         });
+    }
+
+    /**
+     * successfully logs in the user and moves him to the /main page
+     * 
+     * @param response 
+     */
+    successLogin(response: any) {
+        const msg = response?.message || 'Erfolgreich angemeldet';
+        this.feedback.showFeedback(msg);
+        localStorage.setItem('auth', response.token);
+        this.router.navigate(['/main']);
+        this.form.email = '';
+        this.form.pw = '';
+        this.isLoading = false;
     }
 
     /**

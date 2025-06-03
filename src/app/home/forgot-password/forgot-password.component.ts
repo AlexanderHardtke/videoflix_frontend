@@ -15,6 +15,7 @@ import { env } from '../../../../src/environments/environment';
     styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
+    isLoading = false;
     form = {
         email: '',
         lang: '',
@@ -26,20 +27,31 @@ export class ForgotPasswordComponent {
      * requests an email from the backend to reset the users password
      */
     sendEmail() {
+        if (this.isLoading) return;
+        this.isLoading = true;
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-
         this.http.post(env.url + 'api/reset/', this.form).subscribe({
             next: (response: any) => {
-                const msg = response?.message || 'E-Mail erfolgreich gesendet.';
-                this.feedback.showFeedback(msg);
-                this.router.navigate(['/check']);
-                this.form.email = '';
+                this.successMail(response)
             },
             error: (err) => {
-                const error = err.response.error;
-                this.feedback.showFeedback(error);
+                this.feedback.showFeedback(err.statusText);
+                this.isLoading = false;
             }
         });
+    }
+
+    /**
+     * shows the successfull sending of the email in the backend and navigates the user to /check
+     * 
+     * @param response 
+     */
+    successMail(response: any) {
+        const msg = response?.message || 'E-Mail erfolgreich gesendet.';
+        this.feedback.showFeedback(msg);
+        this.router.navigate(['/check']);
+        this.form.email = '';
+        this.isLoading = false;
     }
 
     /**
