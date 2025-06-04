@@ -42,10 +42,10 @@
         "description": "description",
         "play": "Play",
         "new": "New on Videoflix",
-        "documentary": "Documentary",
-        "Drama": "Drama",
-        "Sci-Fi": "Sci-Fi",
-        "Action": "Action"
+        "animals": "Animals",
+        "nature": "Nature",
+        "training": "Training",
+        "tutorials": "Tutorials"
     },
     "error": {
         "registration": "Confirm your email address",

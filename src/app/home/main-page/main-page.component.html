@@ -8,20 +8,32 @@
         <a class="button">{{'chooseVid.play' | translate}}</a>
     </header>
 
-    @for (item of chooseVid; track $index) {
-    <div>
-        <h3>{{ ('chooseVid.' + item) | translate }}</h3>
-        <div data-animated="true">
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
-            <video></video>
+    @for (category of categories; track category) {
+    <div class="category-section">
+        <h3>{{ 'chooseVid.' + category | translate }}</h3>
+        
+        @if (videosByCategory[category].length > 0) {
+        <div class="video-grid" data-animated="true">
+            @for (video of videosByCategory[category]; track video.url) {
+            <div class="video-item"
+                 (mouseenter)="playPreview($event)"
+                 (mouseleave)="stopPreview($event)">
+                
+                <div class="video-thumbnail">
+                    <img [src]="video.image" [alt]="video.name" loading="lazy">
+                    <video preload="none" [attr.data-src]="video.filePreview144p" loop></video>
+                </div>
+                
+                <div class="video-info">
+                    <h4>{{ video.name }}</h4>
+                    <p>{{ getDescriptionLang(video) }}</p>
+                </div>
+            </div>
+            }
         </div>
+        } @else {
+        <p class="empty-message">{{ 'chooseVid.empty' | translate }}</p>
+        }
     </div>
     }
 
