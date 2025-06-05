@@ -22,21 +22,29 @@ export class HeaderComponent {
   token: string | null = null;
 
   constructor(private translate: TranslateService, private router: Router) {
+    this.setTranslation();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
+        this.checkAuthentication();
       });
-    this.setTranslation();
   }
 
   /**
-   * gets the token from the local storage and checks if user is set on darkmode
+   * checks authentication and darkmode
    */
   ngOnInit() {
-    let auth = localStorage.getItem("auth")
+    this.checkAuthentication();
+    this.checkDarkmode();
+  }
+
+  /**
+   * gets the token from the local storage or sets it to null
+   */
+  checkAuthentication() {
+    let auth = localStorage.getItem("auth");
     if (auth) this.token = auth;
     else this.token = null;
-    this.checkDarkmode();
   }
 
   /**
