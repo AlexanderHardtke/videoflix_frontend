@@ -17,18 +17,16 @@
         <h3>{{ 'chooseVid.' + category | translate }}</h3>
         
         @if (videosByCategory[category].length > 0) {
-        <div class="video-grid" data-animated="true">
+        <div data-animated="true">
             @for (video of videosByCategory[category]; track video.url) {
-            <div class="video-item"
+            <div class="preview"
                  (mouseenter)="playPreview($event)"
                  (mouseleave)="stopPreview($event)">
                 
-                <div class="video-thumbnail">
                     <img [src]="video.image" [alt]="video.name" loading="lazy">
-                    <video preload="none" [attr.data-src]="video.filePreview144p" loop></video>
-                </div>
+                    <video class="dNone" preload="none" [attr.data-src]="video.filePreview144p" loop></video>
                 
-                <div class="video-info">
+                <div>
                     <h4>{{ video.name }}</h4>
                     <p>{{ getDescriptionLang(video) }}</p>
                 </div>
@@ -36,7 +34,7 @@
             }
         </div>
         } @else {
-        <p class="empty-message">{{ 'chooseVid.empty' | translate }}</p>
+        <p>{{ 'chooseVid.empty' | translate }}</p>
         }
     </div>
     }

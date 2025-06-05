@@ -44,7 +44,8 @@
         "animals": "Tiere",
         "nature": "Natur",
         "training": "Training",
-        "tutorials": "Erklärvideos"
+        "tutorials": "Erklärvideos",
+        "empty": "Bisher keine Videos in dieser Kategorie"
     },
     "error": {
         "registration":"Bestätigen Sie Ihre E-Mail-Adresse",

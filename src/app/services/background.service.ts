@@ -9,7 +9,9 @@ export class BackgroundService {
     public setBackgroundForRoute(route: string) {
         const backgrounds: Record<string, string> = {
             '/login': '../assets/img/background2.jpg',
+            '/forgot': '../assets/img/background2.jpg',
             '/signUp': '../assets/img/background3.jpg',
+            '/check': '../assets/img/background3.jpg',
         };
         const fallback = '../assets/img/background.jpg';
         const bg = backgrounds[route] ?? fallback;

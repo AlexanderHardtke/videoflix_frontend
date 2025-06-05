@@ -44,7 +44,8 @@
         "animals": "Animals",
         "nature": "Nature",
         "training": "Training",
-        "tutorials": "Tutorials"
+        "tutorials": "Tutorials",
+        "empty": "No Videos in this category yet"
     },
     "error": {
         "registration": "Confirm your email address",

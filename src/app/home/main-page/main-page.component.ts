@@ -126,8 +126,11 @@ export class MainPageComponent implements OnInit {
      */
     playPreview(event: MouseEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
+        const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video && video.dataset['src']) {
             video.src = video.dataset['src'];
+            img?.classList.add('dNone');
+            video.classList.remove('dNone');
             video.play();
         }
     }
@@ -139,8 +142,11 @@ export class MainPageComponent implements OnInit {
      */
     stopPreview(event: MouseEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
+        const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video) {
             video.pause();
+            video.classList.add('dNone')
+            img?.classList.remove('dNone');
             video.currentTime = 0;
             video.removeAttribute('src');
         }
