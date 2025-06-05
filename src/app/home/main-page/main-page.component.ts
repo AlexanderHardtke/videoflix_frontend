@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
 import { Video, VIDEO_CATEGORIES } from '../../services/video.model';
+import { BackgroundService } from '../../services/background.service';
 
 
 @Component({
@@ -23,12 +24,14 @@ export class MainPageComponent implements OnInit {
         training: [],
         tutorials: []
     };
+    public backgroundImg = '';
 
     constructor(
         private router: Router,
         private http: HttpClient,
         private feedback: FeedbackService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private backgroundService: BackgroundService
     ) { }
 
     /**
@@ -68,10 +71,18 @@ export class MainPageComponent implements OnInit {
         videos.forEach(video => {
             const uploadedDate = new Date(video.uploaded_at);
             if (uploadedDate >= sevenDaysAgo) this.videosByCategory['new'].push(video);
-            if (this.isValidCategory(video.type)) {
-                this.videosByCategory[video.type].push(video);
-            }
+            if (this.isValidCategory(video.type)) this.videosByCategory[video.type].push(video);
         });
+        this.getNewestVideo();
+    }
+
+    /**
+     * gets the newest video and send it to the backgroundservice
+     */
+    getNewestVideo() {
+        let videoIndex = this.videosByCategory['new'].length - 1;
+        this.backgroundImg = this.videosByCategory['new'][videoIndex].image
+        this.backgroundService.setDynamicBackground(this.backgroundImg);
     }
 
     /**
