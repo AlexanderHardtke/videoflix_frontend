@@ -27,6 +27,7 @@ header {
     h2 {
         font-size: 88px;
         margin-bottom: -12px;
+        z-index: 2;
     }
 
     p {
@@ -36,6 +37,7 @@ header {
         line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        z-index: 2;
     }
 }
 

@@ -1,0 +1,18 @@
+img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    max-height: 100svh;
+    height: 100svh;
+    min-width: 100svw;
+    width: 100svw;
+    object-fit: cover;
+}
+
+div {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 7);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.95) 100%);
+}
