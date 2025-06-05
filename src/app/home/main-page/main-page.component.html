@@ -3,38 +3,30 @@
 
 <section>
     @for (video of videosByCategory['new']; let i = $index; track video.name) {
-        @if (i === videosByCategory['new'].length - 1) {
-            <header>
-                <h2>{{ video.name }}</h2>
-                <p>{{ getDescriptionLang(video)}}</p>
-                <a class="button">{{'chooseVid.play' | translate}}</a>
-            </header>
-        }
+    @if (i === videosByCategory['new'].length - 1) {
+    <header>
+        <h2>{{ video.name }}</h2>
+        <p>{{ getDescriptionLang(video)}}</p>
+        <a class="button">{{'chooseVid.play' | translate}}</a>
+    </header>
+    }
     }
 
     @for (category of categories; track category) {
-    <div class="category-section">
+    <div>
         <h3>{{ 'chooseVid.' + category | translate }}</h3>
-        
+
         @if (videosByCategory[category].length > 0) {
         <div data-animated="true">
             @for (video of videosByCategory[category]; track video.url) {
-            <div class="preview"
-                 (mouseenter)="playPreview($event)"
-                 (mouseleave)="stopPreview($event)">
-                
-                    <img [src]="video.image" [alt]="video.name" loading="lazy">
-                    <video class="dNone" preload="none" [attr.data-src]="video.filePreview144p" loop></video>
-                
-                <div>
-                    <h4>{{ video.name }}</h4>
-                    <p>{{ getDescriptionLang(video) }}</p>
-                </div>
+            <div class="preview" (mouseenter)="playPreview($event)" (mouseleave)="stopPreview($event)">
+
+                <img [src]="video.image" [alt]="video.name" loading="lazy">
+                <video class="dNone" preload="none" [attr.data-src]="video.filePreview144p" loop></video>
+                <h4>{{ video.name }}</h4>
             </div>
             }
         </div>
-        } @else {
-        <p>{{ 'chooseVid.empty' | translate }}</p>
         }
     </div>
     }
