@@ -82,19 +82,36 @@ nav {
     }
 }
 
+.logoutSvg {
+    fill: var(--white) !important;
+    border-radius: 0 !important;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    transition: none !important;
+    background: none !important;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+}
+
 @keyframes rotateAndMove {
     0% {
-      transform: rotate(0deg) translateX(0);
+        transform: rotate(0deg) translateX(0);
     }
+
     70% {
-      transform: rotate(360deg) translateX(0);
-      fill: var(--white);
+        transform: rotate(360deg) translateX(0);
+        fill: var(--white);
     }
+
     100% {
-      transform: rotate(360deg) translateX(-4px);
-      fill: var(--purple);
+        transform: rotate(360deg) translateX(-4px);
+        fill: var(--purple);
     }
-  }
+}
 
 @media screen and (min-width: 1921px) {
     section {
