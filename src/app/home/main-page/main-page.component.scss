@@ -1,5 +1,5 @@
 .invisHeader {
-    background: linear-gradient(180deg,var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(180deg, var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
     position: fixed;
     top: 0;
     z-index: 3;
@@ -54,6 +54,12 @@ section {
         scroll-snap-align: start;
         padding-inline: 8px;
         cursor: pointer;
+
+        &:hover {
+            h4 {
+                display: flex;
+            }
+        }
     }
 
     .preview:nth-child(1) {
@@ -68,18 +74,21 @@ section {
         object-fit: cover;
     }
 
+    h4 {
+        font-size: 16px;
+        position: relative;
+        bottom: 28px;
+        color: var(--white);
+        display: none;
+        justify-content: center;
+    }
+
     video {
         min-width: 100%;
         max-height: 100%;
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    h4 {
-        position: relative;
-        bottom: 28px;
-        color: var(--white);
     }
 
     >div {
@@ -100,6 +109,12 @@ section {
             flex-wrap: nowrap;
         }
     }
+}
+
+.dNone {
+    visibility: hidden;
+    position: absolute;
+    z-index: -2;
 }
 
 //To do Scroll hidden shadow on left side
