@@ -1,5 +1,6 @@
 <aside class="invisHeader"></aside>
 <aside class="invisSide"></aside>
+<aside class="invisBottom"></aside>
 
 <section>
     @for (video of videosByCategory['new']; let i = $index; track video.name) {
@@ -22,7 +23,7 @@
             <div class="preview" (mouseenter)="playPreview($event)" (mouseleave)="stopPreview($event)">
 
                 <img [src]="video.image" [alt]="video.name" loading="lazy">
-                <video class="dNone" preload="none" [attr.data-src]="video.filePreview144p" loop muted playsinline></video>
+                <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted playsinline></video>
                 <h4>{{ video.name }}</h4>
             </div>
             }

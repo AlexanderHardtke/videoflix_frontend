@@ -15,12 +15,21 @@
     width: 96px;
 }
 
+.invisBottom {
+    background: linear-gradient(0deg, var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
+    position: absolute;
+    bottom: -20px;
+    z-index: 0;
+    height: 50px;
+    width: 100%;
+}
+
 header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    height: calc(100svh - 292px);
+    height: calc(100svh - 316px);
     width: 440px;
     padding-bottom: 32px;
 
@@ -111,7 +120,7 @@ section {
     }
 }
 
-.dNone {
+.hide {
     visibility: hidden;
     position: absolute;
     z-index: -2;

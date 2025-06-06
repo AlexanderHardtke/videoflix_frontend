@@ -129,8 +129,8 @@ export class MainPageComponent implements OnInit {
         const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video && video.dataset['src']) {
             video.src = video.dataset['src'];
-            img?.classList.add('dNone');
-            video.classList.remove('dNone');
+            img?.classList.add('hide');
+            video.classList.remove('hide');
             video.play();
         }
     }
@@ -145,8 +145,8 @@ export class MainPageComponent implements OnInit {
         const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video) {
             video.pause();
-            video.classList.add('dNone')
-            img?.classList.remove('dNone');
+            video.classList.add('hide')
+            img?.classList.remove('hide');
             video.currentTime = 0;
             video.removeAttribute('src');
         }
@@ -164,6 +164,5 @@ export class MainPageComponent implements OnInit {
     }
 }
 
-// Title Video/ wenn kein neues dann erstes in x if logged in move to main
 // UNIT Tests KARMA
 // Video-player
