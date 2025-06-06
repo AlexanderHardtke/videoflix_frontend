@@ -23,7 +23,8 @@
             <div class="preview" (mouseenter)="playPreview($event)" (mouseleave)="stopPreview($event)">
 
                 <img [src]="video.image" [alt]="video.name" loading="lazy">
-                <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted playsinline></video>
+                <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted
+                    playsinline></video>
                 <h4>{{ video.name }}</h4>
             </div>
             }
