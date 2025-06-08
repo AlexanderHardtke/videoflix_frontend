@@ -11,3 +11,13 @@ export interface Video {
   descriptionDE: string;
   uploaded_at: string;
 }
+
+export interface VideoDetail {
+    id: number;
+    name: string;
+    file1080p: string;
+    file720p: string;
+    file360p: string;
+    file240p: string;
+    watched_until: number;
+}

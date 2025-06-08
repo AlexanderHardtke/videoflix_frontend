@@ -11,14 +11,14 @@
                 16.4333 31.8579 16.7916 31.5746 17.075C31.2913 17.3583 30.9329 17.5 30.4996 17.5H5.69961Z" />
     </svg>
 
-    <p>Füge Hier Videodescription ein</p>
+    <p>{{ videoTitle }}</p>
 
     <img class="smallLogo" src="../assets/img/logo_small.svg">
 </header>
 <aside>
 
     <video #videoRef controls>
-        <source [src]="videoSrc" type="video/mp4" />
+        <source [src]="videoUrl" type="video/mp4" />
         Dein Browser unterstützt das Video-Tag nicht.
     </video>
 

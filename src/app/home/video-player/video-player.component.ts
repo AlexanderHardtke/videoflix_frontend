@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-video-player',
@@ -10,12 +12,92 @@ import { FeedbackService } from '../../services/feedback.service';
 export class VideoPlayerComponent {
     @ViewChild('videoRef') videoElement!: ElementRef<HTMLVideoElement>;
     @ViewChild('header') header!: ElementRef;
-    @Input() videoSrc: string = '../assets/aurora_borealis.mp4'
+    @Input() videoUrl: string = ''
     hidden: boolean = false;
     timer: any = null;
     margin = 75;
+    // videoUrl: string | null = null;
+    video: any = null;
+    videoTitle: string = 'Lade Videoinformationen...';
+    loading: boolean = true;
 
-    constructor(private feedback: FeedbackService) {}
+
+    constructor(
+        private router: Router,
+        private feedback: FeedbackService,
+        private route: ActivatedRoute,
+        private http: HttpClient
+    ) { }
+
+    ngOnInit() {
+        this.route.queryParamMap.subscribe(params => {
+            const url = params.get('url');
+            if (url) {
+                this.videoUrl = url;
+                this.getVideoDetails(url);
+            } else {
+                this.feedback.showError('Keine Videodaten gefunden');
+                this.router.navigate(['/main']);
+            }
+        });
+    }
+
+    getVideoDetails(url: string) {
+        this.loading = true;
+        this.http.get(url).subscribe({
+            next: data => {
+                this.video = data;
+                if (this.video.title) this.videoTitle = this.video.title;
+                this.setVideoUrl();
+                this.loadVideo();
+            },
+            error: (error) => {
+                console.error('Failed to load video details:', error);
+                this.feedback.showError(error.error.error);
+                this.router.navigate(['/main']);
+            }
+        });
+    }
+
+    setVideoUrl() {
+        const nav = navigator as any;
+        const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
+        const net = connection?.effectiveType || '4g';
+
+        if (net === '4g' && this.video.file1080p) this.videoUrl = this.video.file1080p;
+        else if (net === '3g' && this.video.file720p) this.videoUrl = this.video.file720p;
+        else if (net === '2g' && this.video.file360p) this.videoUrl = this.video.file360p;
+        else if (this.video.file240p) this.videoUrl = this.video.file240p;
+        else {
+            this.videoUrl = this.video.file1080p || this.video.file720p ||
+                this.video.file360p || this.video.file240p;
+        }
+        console.log(`Network: ${net}, Selected video: ${this.videoUrl}`);
+    }
+
+    loadVideo() {
+        if (this.videoUrl && this.videoElement) {
+            const video = this.videoElement.nativeElement;
+            video.src = this.videoUrl;
+
+            // Event Listener für Video-Status
+            video.addEventListener('loadedmetadata', () => {
+                console.log('Video metadata loaded');
+                this.loading = false;
+            });
+
+            video.addEventListener('error', (e) => {
+                console.error('Video loading error:', e);
+                this.loading = false;
+                this.feedback.showError('Fehler beim Laden des Videos');
+            });
+
+            video.load(); // ✨ WICHTIG: Video neu laden
+        } else if (!this.videoUrl) {
+            this.loading = false;
+            this.feedback.showError('Keine gültige Video-URL gefunden');
+        }
+    }
 
     /**
      * starts the video after the component si fully loaded
@@ -23,6 +105,14 @@ export class VideoPlayerComponent {
     ngAfterViewInit() {
         this.resetTimeout();
         setTimeout(() => this.play(), 1000);
+        const video = this.videoElement.nativeElement;
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                this.play();
+            } else {
+                video.pause();
+            }
+        });
     }
 
     /**
@@ -46,6 +136,19 @@ export class VideoPlayerComponent {
     @HostListener('document:touchstart', ['$event'])
     onTouchStart(event: TouchEvent) {
         this.showHeader();
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    onKeyDown(event: KeyboardEvent) {
+        if (event.code === 'Space') {
+            event.preventDefault();
+            const video = this.videoElement.nativeElement;
+            if (video.paused) {
+                this.play();
+            } else {
+                video.pause();
+            }
+        }
     }
 
     /**
@@ -99,11 +202,19 @@ export class VideoPlayerComponent {
         try {
             const video = this.videoElement.nativeElement;
             await video.play();
+            console.log('Video started playing');
         } catch (error) {
             console.error('Playback failed:', error);
-            this.feedback.showError('Playback failed:');
+            this.feedback.showError('Wiedergabe fehlgeschlagen');
+
+            // ✨ VERBESSERTE FEHLERBEHANDLUNG
             this.videoElement.nativeElement.load();
-            setTimeout(() => this.videoElement.nativeElement.play(), 500);
+            setTimeout(() => {
+                this.videoElement.nativeElement.play().catch(e => {
+                    console.error('Retry playback failed:', e);
+                    this.feedback.showError('Wiedergabe konnte nicht gestartet werden');
+                });
+            }, 500);
         }
     }
 }

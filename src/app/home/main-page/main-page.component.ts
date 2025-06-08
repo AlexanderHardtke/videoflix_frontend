@@ -162,7 +162,12 @@ export class MainPageComponent implements OnInit {
         const currentLang = this.translate.currentLang || this.translate.defaultLang || 'de';
         return currentLang === 'en' ? video.descriptionEN : video.descriptionDE;
     }
+
+    playVideo(videoUrl: string) {
+        this.router.navigate(['/video'], {
+            queryParams: { url: videoUrl }
+        });
+    }
 }
 
 // UNIT Tests KARMA
-// Video-player
