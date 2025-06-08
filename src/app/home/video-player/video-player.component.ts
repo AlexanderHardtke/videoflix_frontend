@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/
 import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { VideoDetail } from '../../services/video.model';
+
 
 @Component({
     selector: 'app-video-player',
@@ -16,10 +18,8 @@ export class VideoPlayerComponent {
     hidden: boolean = false;
     timer: any = null;
     margin = 75;
-    // videoUrl: string | null = null;
-    video: any = null;
+    video!: VideoDetail;
     videoTitle: string = 'Lade Videoinformationen...';
-    loading: boolean = true;
 
 
     constructor(
@@ -50,11 +50,10 @@ export class VideoPlayerComponent {
             return
         }
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.loading = true;
-        this.http.get(url, { headers }).subscribe({
+        this.http.get<VideoDetail>(url, { headers }).subscribe({
             next: data => {
                 this.video = data;
-                if (this.video.title) this.videoTitle = this.video.title;
+                if (this.video.name) this.videoTitle = this.video.name;
                 this.setVideoUrl();
                 this.loadVideo();
             },
@@ -90,18 +89,15 @@ export class VideoPlayerComponent {
             // Event Listener für Video-Status
             video.addEventListener('loadedmetadata', () => {
                 console.log('Video metadata loaded');
-                this.loading = false;
             });
 
             video.addEventListener('error', (e) => {
                 console.error('Video loading error:', e);
-                this.loading = false;
                 this.feedback.showError('Fehler beim Laden des Videos');
             });
 
             video.load(); // ✨ WICHTIG: Video neu laden
         } else if (!this.videoUrl) {
-            this.loading = false;
             this.feedback.showError('Keine gültige Video-URL gefunden');
         }
     }
@@ -114,11 +110,8 @@ export class VideoPlayerComponent {
         setTimeout(() => this.play(), 1000);
         const video = this.videoElement.nativeElement;
         video.addEventListener('click', () => {
-            if (video.paused) {
-                this.play();
-            } else {
-                video.pause();
-            }
+            if (video.paused) this.play();
+            else video.pause();
         });
     }
 
@@ -206,22 +199,13 @@ export class VideoPlayerComponent {
      * starts the video for the user
      */
     async play() {
+        if (!this.video) return
         try {
             const video = this.videoElement.nativeElement;
             await video.play();
-            console.log('Video started playing');
         } catch (error) {
             console.error('Playback failed:', error);
             this.feedback.showError('Wiedergabe fehlgeschlagen');
-
-            // ✨ VERBESSERTE FEHLERBEHANDLUNG
-            this.videoElement.nativeElement.load();
-            setTimeout(() => {
-                this.videoElement.nativeElement.play().catch(e => {
-                    console.error('Retry playback failed:', e);
-                    this.feedback.showError('Wiedergabe konnte nicht gestartet werden');
-                });
-            }, 500);
         }
     }
 }
