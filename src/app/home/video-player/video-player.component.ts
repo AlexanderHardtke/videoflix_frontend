@@ -1,13 +1,13 @@
 import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VideoDetail } from '../../services/video.model';
 
 
 @Component({
     selector: 'app-video-player',
-    imports: [],
+    imports: [RouterLink],
     templateUrl: './video-player.component.html',
     styleUrl: './video-player.component.scss'
 })
