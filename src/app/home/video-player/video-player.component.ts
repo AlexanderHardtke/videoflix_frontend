@@ -29,6 +29,9 @@ export class VideoPlayerComponent {
         private http: HttpClient
     ) { }
 
+    /**
+     * checks the url and gets the videodetails, if the user tries to enter nothing, moves to the main page
+     */
     ngOnInit() {
         this.route.queryParamMap.subscribe(params => {
             const url = params.get('url');
@@ -42,34 +45,52 @@ export class VideoPlayerComponent {
         });
     }
 
+    /**
+     * checks the authentication and gets the video-detail from the backend and loads the video
+     * 
+     * @param url the url from the http
+     */
     getVideoDetails(url: string) {
         const token = localStorage.getItem('auth');
-        if (!token) {
-            this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
-            this.router.navigate(['']);
-            return
-        }
-        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.get<VideoDetail>(url, { headers }).subscribe({
-            next: data => {
-                this.video = data;
-                if (this.video.name) this.videoTitle = this.video.name;
-                this.setVideoUrl();
-                this.loadVideo();
-            },
-            error: (error) => {
-                console.error('Failed to load video details:', error);
-                this.feedback.showError(error.error.error);
-                this.router.navigate(['/main']);
-            }
-        });
+        if (token) {
+            const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+            this.http.get<VideoDetail>(url, { headers }).subscribe({
+                next: data => {
+                    this.video = data;
+                    if (this.video.name) this.videoTitle = this.video.name;
+                    this.setVideoUrl();
+                    this.loadVideo();
+                }, error: (err) => this.failedVideo(err)
+            });
+        } else this.removeUserFromPage()
     }
 
+    /**
+     * removes the user from the page and brings him to the start page
+     */
+    removeUserFromPage() {
+        this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
+        this.router.navigate(['']);
+    }
+
+    /**
+     * shows the error message and brings the user to the start page
+     * 
+     * @param err 
+     */
+    failedVideo(err: any) {
+        console.error('Failed to load video details:', err);
+        this.feedback.showError(err.error.error);
+        this.router.navigate(['/main']);
+    }
+
+    /**
+     * checks the connection speed from the user and displays the appropiate video size
+     */
     setVideoUrl() {
         const nav = navigator as any;
         const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
         const net = connection?.effectiveType || '4g';
-
         if (net === '4g' && this.video.file1080p) this.videoUrl = this.video.file1080p;
         else if (net === '3g' && this.video.file720p) this.videoUrl = this.video.file720p;
         else if (net === '2g' && this.video.file360p) this.videoUrl = this.video.file360p;
@@ -78,32 +99,23 @@ export class VideoPlayerComponent {
             this.videoUrl = this.video.file1080p || this.video.file720p ||
                 this.video.file360p || this.video.file240p;
         }
-        console.log(`Network: ${net}, Selected video: ${this.videoUrl}`);
     }
 
+    /**
+     * loads the video in the video-player or shows an error message
+     */
     loadVideo() {
         if (this.videoUrl && this.videoElement) {
             const video = this.videoElement.nativeElement;
             video.src = this.videoUrl;
-
-            // Event Listener für Video-Status
-            video.addEventListener('loadedmetadata', () => {
-                console.log('Video metadata loaded');
-            });
-
-            video.addEventListener('error', (e) => {
-                console.error('Video loading error:', e);
-                this.feedback.showError('Fehler beim Laden des Videos');
-            });
-
-            video.load(); // ✨ WICHTIG: Video neu laden
+            video.load();
         } else if (!this.videoUrl) {
             this.feedback.showError('Keine gültige Video-URL gefunden');
         }
     }
 
     /**
-     * starts the video after the component si fully loaded
+     * starts the video after the component is fully loaded
      */
     ngAfterViewInit() {
         this.resetTimeout();
@@ -138,16 +150,18 @@ export class VideoPlayerComponent {
         this.showHeader();
     }
 
+    /**
+     * checks if the user pressed the space button to pause/unpause the video
+     * 
+     * @param event 
+     */
     @HostListener('document:keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         if (event.code === 'Space') {
             event.preventDefault();
             const video = this.videoElement.nativeElement;
-            if (video.paused) {
-                this.play();
-            } else {
-                video.pause();
-            }
+            if (video.paused) this.play();
+            else video.pause();
         }
     }
 
