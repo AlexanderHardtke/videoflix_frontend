@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, HostListener } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
     selector: 'app-video-player',
@@ -43,8 +43,15 @@ export class VideoPlayerComponent {
     }
 
     getVideoDetails(url: string) {
+        const token = localStorage.getItem('auth');
+        if (!token) {
+            this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
+            this.router.navigate(['']);
+            return
+        }
+        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
         this.loading = true;
-        this.http.get(url).subscribe({
+        this.http.get(url, { headers }).subscribe({
             next: data => {
                 this.video = data;
                 if (this.video.title) this.videoTitle = this.video.title;
