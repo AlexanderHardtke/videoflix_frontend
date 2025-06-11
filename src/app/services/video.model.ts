@@ -6,6 +6,7 @@ export interface Video {
   url: string;
   type: VideoCategory | string;
   image: string;
+  bigImage: string;
   filePreview144p: string;
   descriptionEN: string;
   descriptionDE: string;

@@ -81,7 +81,7 @@ export class MainPageComponent implements OnInit {
      */
     getNewestVideo() {
         let videoIndex = this.videosByCategory['new'].length - 1;
-        this.backgroundImg = this.videosByCategory['new'][videoIndex].image
+        this.backgroundImg = this.videosByCategory['new'][videoIndex].bigImage
         this.backgroundService.setDynamicBackground(this.backgroundImg);
     }
 
