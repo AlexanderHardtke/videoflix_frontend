@@ -43,8 +43,10 @@ export class HeaderComponent {
    */
   checkAuthentication() {
     let auth = localStorage.getItem("auth");
-    if (auth) this.token = auth;
-    else this.token = null;
+    if (auth) {
+      this.token = auth;
+      if (this.router.url === '/') this.router.navigate(['/main']);
+    } else this.token = null;
   }
 
   /**

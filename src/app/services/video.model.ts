@@ -1,4 +1,4 @@
-export const VIDEO_CATEGORIES = ['training', 'animals', 'nature', 'tutorials'];
+export const VIDEO_CATEGORIES = ['new', 'training', 'animals', 'nature', 'tutorials'];
 type VideoCategory = typeof VIDEO_CATEGORIES[number];
 
 export interface Video {
