@@ -122,7 +122,7 @@ export class MainPageComponent implements OnInit {
     /**
      * plays the preview for the video
      * 
-     * @param event mousehover over the video
+     * @param event mousehover or focus over on the video
      */
     playPreview(event: MouseEvent | FocusEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
@@ -138,7 +138,7 @@ export class MainPageComponent implements OnInit {
     /**
      * stops the preview for the video
      * 
-     * @param event leaving mousehover over the video
+     * @param event leaving mousehover or the focus over the video
      */
     stopPreview(event: MouseEvent | FocusEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
@@ -163,11 +163,19 @@ export class MainPageComponent implements OnInit {
         return currentLang === 'en' ? video.descriptionEN : video.descriptionDE;
     }
 
+    /**
+     * navigates to a single video with thr url
+     * 
+     * @param videoUrl the url for the choosen video
+     */
     playVideo(videoUrl: string) {
         this.router.navigate(['/video'], {
             queryParams: { url: videoUrl }
         });
     }
-}
 
-// UNIT Tests KARMA
+    navigateVideos(category: any, direction: any) {
+        console.log(category);
+        console.log(direction);
+    }
+}

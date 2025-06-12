@@ -24,6 +24,10 @@
     width: 100%;
 }
 
+section {
+    padding-inline: 66px;
+}
+
 header {
     display: flex;
     flex-direction: column;
@@ -32,6 +36,7 @@ header {
     width: 440px;
     padding-bottom: 32px;
     gap: 32px;
+    padding-left: 30px;
 
     h2 {
         font-size: 88px;
@@ -54,6 +59,7 @@ section {
 
     h3 {
         margin-block: 16px;
+        padding-left: 30px;
     }
 
     .preview {
@@ -102,16 +108,8 @@ section {
     >div {
         width: 100%;
         overflow: hidden;
-        position: relative;
-        -webkit-mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 95%, transparent);
-        mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 95%, transparent);
-
-        >div {
-            display: flex;
-            width: auto;
-            padding-block: 8px;
-            flex-wrap: nowrap;
-        }
+        -webkit-mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 97%, transparent);
+        mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 97%, transparent);
     }
 }
 
@@ -119,6 +117,39 @@ section {
     visibility: hidden;
     position: absolute;
     z-index: -2;
+}
+
+.carousel {
+    width: auto;
+    padding-block: 8px;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-inline: 30px;
+}
+
+.arrow {
+    width: 32px;
+    fill: var(--white);
+    cursor: pointer;
+    margin-inline: 8px;
+    height: 120px;
+    align-content: center;
+    opacity: 0;
+    position: absolute;
+    left: -9px;
+
+    &:hover {
+        transition: opacity 250ms ease-in;
+        opacity: 1;
+    }
+}
+
+.reverse {
+    left: auto;
+    right: -2px;
+    rotate: 180deg;
 }
 
 @media screen and (min-width: 1921px) {
