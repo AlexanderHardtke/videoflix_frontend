@@ -59,9 +59,8 @@ section {
     .preview {
         width: 213px;
         height: 120px;
-        background-color: purple;
         scroll-snap-align: start;
-        padding-inline: 8px;
+        margin-inline: 8px;
         cursor: pointer;
 
         &:hover {
@@ -70,10 +69,6 @@ section {
                 background-color: var(--black);
             }
         }
-    }
-
-    .preview:nth-child(1) {
-        margin-left: 25px;
     }
 
     img {
@@ -126,6 +121,62 @@ section {
     visibility: hidden;
     position: absolute;
     z-index: -2;
+}
+
+@media screen and (min-width: 1921px) {
+    .invisSide {
+        width: 116px;
+    }
+
+    .invisBottom {
+        height: 62px;
+    }
+
+    header {
+        width: 35vw;
+        padding-bottom: 48px;
+        gap: 48px;
+        height: calc(100svh - 420px);
+
+        h2 {
+            font-size: 116px;
+            margin-block: 48px;
+        }
+
+        p {
+            font-size: 26px;
+        }
+    }
+
+    section {
+        h3 {
+            margin-block: 20px;
+        }
+
+        .preview {
+            width: 352px;
+            height: 198px;
+            margin-inline: 20px;
+        }
+
+        h4 {
+            font-size: 22px;
+        }
+    }
+}
+
+@media screen and (min-width: 3000px) {
+    header {
+        height: calc(100svh - 472px);
+    }
+
+    section {
+        .preview {
+            width: 448px;
+            height: 252px;
+            margin-inline: 22px;
+        }
+    }
 }
 
 //To do Scroll hidden shadow on left side + play failed
