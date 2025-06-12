@@ -6,14 +6,17 @@ aside {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-height: 100%;
 }
 
 video {
+  max-width: 100%;
+  height: auto;
+}
+
+.video-js {
   width: 100%;
   height: auto;
-  max-width: min(1440px, 100%);
-  max-height: min(100svh, 100dvh);
-  aspect-ratio: 16/9;
   object-fit: contain;
 }
 

@@ -67,6 +67,7 @@ section {
         &:hover {
             h4 {
                 display: flex;
+                background-color: var(--black);
             }
         }
     }
@@ -86,10 +87,11 @@ section {
     h4 {
         font-size: 16px;
         position: relative;
-        bottom: 28px;
+        bottom: 27px;
         color: var(--white);
         display: none;
         justify-content: center;
+        border-radius: 26px 26px 0 0;
     }
 
     video {

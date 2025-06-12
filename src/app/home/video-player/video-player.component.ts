@@ -3,6 +3,10 @@ import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VideoDetail } from '../../services/video.model';
+import Player from "video.js/dist/types/player";
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import "videojs-hotkeys";
 
 
 @Component({
@@ -20,6 +24,7 @@ export class VideoPlayerComponent {
     margin = 75;
     video!: VideoDetail;
     videoTitle: string = 'Lade Videoinformationen...';
+    player!: Player
 
 
     constructor(
@@ -38,6 +43,7 @@ export class VideoPlayerComponent {
             if (url) {
                 this.videoUrl = url;
                 this.getVideoDetails(url);
+
             } else {
                 this.feedback.showError('Keine Videodaten gefunden');
                 this.router.navigate(['/main']);
@@ -106,9 +112,22 @@ export class VideoPlayerComponent {
      */
     loadVideo() {
         if (this.videoUrl && this.videoElement) {
-            const video = this.videoElement.nativeElement;
-            video.src = this.videoUrl;
-            video.load();
+            if (this.player) this.player.dispose();
+            this.player = videojs(this.videoElement.nativeElement, {
+                sources: [{ src: this.videoUrl, type: 'video/mp4' }],
+                controls: true,
+                preload: 'auto',
+                autoplay: true,
+                responsive: true,
+                fluid: true
+            });
+            this.player.ready(() => {
+                this.player!.hotkeys({
+                    volumeStep: 0.1,
+                    seekStep: 5,
+                    enableModifiersForNumbers: false
+                });
+            });
         } else if (!this.videoUrl) {
             this.feedback.showError('Keine gültige Video-URL gefunden');
         }
@@ -119,12 +138,22 @@ export class VideoPlayerComponent {
      */
     ngAfterViewInit() {
         this.resetTimeout();
-        setTimeout(() => this.play(), 1000);
-        const video = this.videoElement.nativeElement;
-        video.addEventListener('click', () => {
-            if (video.paused) this.play();
-            else video.pause();
-        });
+    }
+
+    /**
+     * toggles stop and play if the video is clicked
+     * 
+     * @returns if no video is loaded
+     */
+    togglePlay() {
+        if (!this.player) return;
+        if (this.player.paused()) {
+            const space = new KeyboardEvent('keydown', { keyCode: 32 });
+            document.dispatchEvent(space);
+        } else {
+            const space = new KeyboardEvent('keydown', { keyCode: 32 });
+            document.dispatchEvent(space);
+        }
     }
 
     /**
@@ -148,21 +177,6 @@ export class VideoPlayerComponent {
     @HostListener('document:touchstart', ['$event'])
     onTouchStart(event: TouchEvent) {
         this.showHeader();
-    }
-
-    /**
-     * checks if the user pressed the space button to pause/unpause the video
-     * 
-     * @param event 
-     */
-    @HostListener('document:keydown', ['$event'])
-    onKeyDown(event: KeyboardEvent) {
-        if (event.code === 'Space') {
-            event.preventDefault();
-            const video = this.videoElement.nativeElement;
-            if (video.paused) this.play();
-            else video.pause();
-        }
     }
 
     /**
@@ -206,20 +220,7 @@ export class VideoPlayerComponent {
      * clears the timeout on leaving the component
      */
     ngOnDestroy() {
+        if (this.player) this.player.dispose();
         if (this.timer) clearTimeout(this.timer);
-    }
-
-    /**
-     * starts the video for the user
-     */
-    async play() {
-        if (!this.video) return
-        try {
-            const video = this.videoElement.nativeElement;
-            await video.play();
-        } catch (error) {
-            console.error('Playback failed:', error);
-            this.feedback.showError('Wiedergabe fehlgeschlagen');
-        }
     }
 }
