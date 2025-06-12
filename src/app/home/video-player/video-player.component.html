@@ -1,6 +1,6 @@
 <header #header>
-    <svg tabindex="3" [routerLink]="'/main'" class="back" viewBox="0 0 32 32"
-    xmlns="http://www.w3.org/2000/svg" aria-label="Zurück zur Übersicht" >
+    <svg tabindex="3" [routerLink]="'/main'" class="back" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"
+        aria-label="Zurück zur Übersicht">
         <path d="M5.69961 17.5L17.0496 28.85C17.3496 29.15 17.4996 29.5 17.4996 29.9C17.4996 30.3 17.3496
                 30.65 17.0496 30.95C16.7496 31.25 16.3996 31.4 15.9996 31.4C15.5996 31.4 15.2496 31.25
                 14.9496 30.95L1.04961 17.05C0.882943 16.8833 0.766276 16.7166 0.699609 16.55C0.632943
@@ -18,6 +18,8 @@
 </header>
 <aside>
 
-    <video #videoRef controls class="video-js" preload="auto" (click)="togglePlay()"></video>
-
+    <div>
+        <video #videoRef controls class="video-js" preload="auto" (click)="togglePlay()"></video>
+    </div>
+    
 </aside>
