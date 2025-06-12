@@ -8,7 +8,7 @@
     <header>
         <h2>{{ video.name }}</h2>
         <p>{{ getDescriptionLang(video)}}</p>
-        <a (click)="playVideo(video.url)" class="button">{{'chooseVid.play' | translate}}</a>
+        <a (click)="playVideo(video.url)" tabindex="4" class="button">{{'chooseVid.play' | translate}}</a>
     </header>
     }
     }
@@ -20,7 +20,8 @@
         @if (videosByCategory[category].length > 0) {
         <div data-animated="true">
             @for (video of videosByCategory[category]; track video.url) {
-            <div (click)="playVideo(video.url)" class="preview" (mouseenter)="playPreview($event)" (mouseleave)="stopPreview($event)">
+            <div (click)="playVideo(video.url)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
+                (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)">
 
                 <img [src]="video.image" [alt]="video.name" loading="lazy">
                 <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted

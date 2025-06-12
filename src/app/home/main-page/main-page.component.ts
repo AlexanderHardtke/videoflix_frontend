@@ -124,7 +124,7 @@ export class MainPageComponent implements OnInit {
      * 
      * @param event mousehover over the video
      */
-    playPreview(event: MouseEvent) {
+    playPreview(event: MouseEvent | FocusEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
         const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video && video.dataset['src']) {
@@ -140,7 +140,7 @@ export class MainPageComponent implements OnInit {
      * 
      * @param event leaving mousehover over the video
      */
-    stopPreview(event: MouseEvent) {
+    stopPreview(event: MouseEvent | FocusEvent) {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
         const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video) {
