@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
@@ -33,6 +32,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     visibleVideoIndex: { [category: string]: number } = {};
     videosPerView = 8;
     nextPageUrls: { [category: string]: string | null } = {};
+    currentScreenWidth = 0;
+    minVideosForSlider = {
+        mobile: 2,
+        tablet: 3, 
+        desktop: 4,
+        large: 5,
+        xlarge: 6
+    };
 
     constructor(
         private router: Router,
@@ -57,16 +64,12 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.getVideos(token);
     }
 
+    /**
+     * subscribes to changes in the sliderRefs and initializes the sliders
+     */
     ngAfterViewInit() {
-        this.sliderRefs.changes.subscribe(() => {
-            console.log('sliderRefs changed, reinitializing sliders');
-            this.initializeSliders();
-        });
+        this.sliderRefs.changes.subscribe(() => this.initializeSliders());
         if (this.hasVideosLoaded()) this.initializeSliders();
-    }
-
-    hasVideosLoaded(): boolean {
-        return Object.values(this.videosByCategory).some(videos => videos.length > 0);
     }
 
     initializeSliders() {
@@ -74,7 +77,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.sliderRefs.forEach((sliderRef, index) => {
             try {
                 const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: false,
+                    loop: true,
                     mode: "free-snap",
                     slides: {
                         perView: "auto",
@@ -87,12 +90,10 @@ export class MainPageComponent implements OnInit, AfterViewInit {
                     }
                 });
                 this.sliders.push(slider);
-                console.log(`Slider ${index} initialized successfully:`, slider);
             } catch (error) {
                 console.error(`Error initializing slider ${index}:`, error);
             }
         });
-        console.log('All sliders initialized:', this.sliders);
     }
 
     ngOnDestroy() {
@@ -237,5 +238,71 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/video'], {
             queryParams: { url: videoUrl }
         });
+    }
+
+    /**
+     * checks if the videos for each category are loaded
+     * 
+     * @returns boolean
+     */
+    hasVideosLoaded(): boolean {
+        return Object.values(this.videosByCategory).some(videos => videos.length > 0);
+    }
+    
+    /**
+     * Listener für das verändern der Browsergröße
+     */
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.updateScreenWidth();
+        // Slider neu initialisieren bei Bildschirmgrößenänderung
+        this.reinitializeSliders();
+    }
+
+    /**
+     * Aktualisiert die aktuelle Browsergröße
+     */
+    updateScreenWidth() {
+        this.currentScreenWidth = window.innerWidth;
+    }
+
+    /**
+     * Bestimmt die minimale Anzahl Videos basierend auf der Browsergröße
+     */
+    private getMinVideosForCurrentScreen(): number {
+        if (this.currentScreenWidth <= 480) {
+            return this.minVideosForSlider.mobile;
+        } else if (this.currentScreenWidth <= 768) {
+            return this.minVideosForSlider.tablet;
+        } else if (this.currentScreenWidth <= 1920) {
+            return this.minVideosForSlider.desktop;
+        } else if (this.currentScreenWidth <= 3000) {
+            return this.minVideosForSlider.large;
+        } else {
+            return this.minVideosForSlider.xlarge;
+        }
+    }
+
+    /**
+     * Prüft ob für eine Kategorie genügend Videos für Slider vorhanden sind
+     */
+    shouldShowSlider(category: string): boolean {
+        const videos = this.videosByCategory[category];
+        const minVideos = this.getMinVideosForCurrentScreen();
+        return videos && videos.length >= minVideos;
+    }
+
+    /**
+     * Slider neu initialisieren
+     */
+    private reinitializeSliders() {
+        // Bestehende Slider zerstören
+        this.sliders.forEach(slider => slider.destroy());
+        this.sliders = [];
+        
+        // Kurz warten und dann neu initialisieren
+        setTimeout(() => {
+            this.initializeSliders();
+        }, 100);
     }
 }

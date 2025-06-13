@@ -91,8 +91,16 @@ section {
     display: flex;
     align-items: center;
     padding-inline: 30px;
-    -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 92%, transparent);
-    mask-image: linear-gradient(90deg, black -5%, var(--black) 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 92%, transparent);
+}
+
+.carousel-no-slider {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    -webkit-mask-image: none;
+    mask-image: none;
 }
 
 .categorys {
@@ -105,7 +113,6 @@ section {
     min-width: 213px;
     max-width: 213px;
     height: 120px;
-    margin-right: 16px;
     cursor: pointer;
 
     &:hover,
@@ -148,7 +155,6 @@ section {
         min-width: 352px;
         max-width: 352px;
         height: 198px;
-        margin-right: 22px;
     }
 
     .arrow {
@@ -183,8 +189,8 @@ section {
     }
 
     .carousel {
-        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 94%, transparent);
-        mask-image: linear-gradient(90deg, black -5%, var(--black) 94%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
+        mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
     }
 }
 
@@ -202,19 +208,22 @@ section {
         max-width: 448px;
         min-width: 448px;
         height: 252px;
-        margin-right: 32px;
     }
 
     .carousel {
-        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 96%, transparent);
-        mask-image: linear-gradient(90deg, black -5%, var(--black) 96%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 96%, transparent);
+        mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 96%, transparent);
     }
 }
 
 @media screen and (max-width: 768px) {
+    section {
+        padding-inline: 18px;
+    }
+
     .carousel {
-        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 90%, transparent);
-        mask-image: linear-gradient(90deg, black -5%, var(--black) 90%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
+        mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
     }
 
     .arrow {
@@ -223,8 +232,17 @@ section {
 }
 
 @media screen and (max-width: 480px) {
+    section {
+        padding-inline: 0;
+    }
+
+    header {
+        padding-left: 16px;
+    }
+
     .carousel {
-        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 85%, transparent);
-        mask-image: linear-gradient(90deg, black -5%, var(--black) 85%, transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent 8px, var(--black) 22px, var(--black) 85%, transparent);
+        mask-image: linear-gradient(90deg, transparent 8px, var(--black) 22px, var(--black) 85%, transparent);
+        padding-inline: 16px;
     }
 }
