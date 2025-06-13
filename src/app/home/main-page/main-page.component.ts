@@ -20,6 +20,7 @@ import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 export class MainPageComponent implements OnInit, AfterViewInit {
     @ViewChildren("sliderRef") sliderRefs!: QueryList<ElementRef<HTMLElement>>
     sliders: KeenSliderInstance[] = [];
+    nextPageUrls: { [category: string]: string | null } = {};
     readonly categories = VIDEO_CATEGORIES;
     videosByCategory: Record<string, Video[]> = {
         new: [],
@@ -29,14 +30,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         tutorials: []
     };
     backgroundImg = '';
-    visibleVideoIndex: { [category: string]: number } = {};
-    videosPerView = 8;
-    nextPageUrls: { [category: string]: string | null } = {};
-    currentScreenWidth = 0;
-    minVideosForSlider = {
-        mobile: 2,
-        tablet: 3, 
-        desktop: 4,
+    currScreenWidth = 0;
+    minVidForRes = {
+        xsmall: 2,
+        small: 3,
+        medium: 4,
         large: 5,
         xlarge: 6
     };
@@ -72,35 +70,20 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         if (this.hasVideosLoaded()) this.initializeSliders();
     }
 
-    initializeSliders() {
-        if (!this.sliderRefs) return;
-        this.sliderRefs.forEach((sliderRef, index) => {
-            try {
-                const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: true,
-                    mode: "free-snap",
-                    slides: {
-                        perView: "auto",
-                        spacing: 16,
-                    },
-                    breakpoints: {
-                        "(max-width: 768px)": {
-                            slides: { perView: "auto", spacing: 16 }
-                        }
-                    }
-                });
-                this.sliders.push(slider);
-            } catch (error) {
-                console.error(`Error initializing slider ${index}:`, error);
-            }
-        });
-    }
-
+    /**
+     * destroys all sliders on exiting the main-page
+     */
     ngOnDestroy() {
         this.sliders.forEach(slider => slider.destroy());
         this.sliders = [];
     }
 
+    /**
+     * navigates the the video left or right
+     * 
+     * @param category 
+     * @param direction 
+     */
     navigateVideos(category: any, direction: 'left' | 'right') {
         const categoryIndex = this.categories.indexOf(category);
         if (categoryIndex >= 0 && this.sliders[categoryIndex]) {
@@ -112,8 +95,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     getVisibleVideos(category: string): Video[] {
         return this.videosByCategory[category] || [];
     }
-
-
 
     /**
      * gets the video from the backend
@@ -248,7 +229,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     hasVideosLoaded(): boolean {
         return Object.values(this.videosByCategory).some(videos => videos.length > 0);
     }
-    
+
     /**
      * Listener für das verändern der Browsergröße
      */
@@ -263,24 +244,18 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * Aktualisiert die aktuelle Browsergröße
      */
     updateScreenWidth() {
-        this.currentScreenWidth = window.innerWidth;
+        this.currScreenWidth = window.innerWidth;
     }
 
     /**
      * Bestimmt die minimale Anzahl Videos basierend auf der Browsergröße
      */
-    private getMinVideosForCurrentScreen(): number {
-        if (this.currentScreenWidth <= 480) {
-            return this.minVideosForSlider.mobile;
-        } else if (this.currentScreenWidth <= 768) {
-            return this.minVideosForSlider.tablet;
-        } else if (this.currentScreenWidth <= 1920) {
-            return this.minVideosForSlider.desktop;
-        } else if (this.currentScreenWidth <= 3000) {
-            return this.minVideosForSlider.large;
-        } else {
-            return this.minVideosForSlider.xlarge;
-        }
+    getMinVideosForCurrentScreen(): number {
+        if (this.currScreenWidth <= 400) return this.minVidForRes.xsmall;
+        else if (this.currScreenWidth <= 700) return this.minVidForRes.small;
+        else if (this.currScreenWidth <= 1100) return this.minVidForRes.medium;
+        else if (this.currScreenWidth <= 1340) return this.minVidForRes.large;
+        else return this.minVidForRes.xlarge;
     }
 
     /**
@@ -295,14 +270,38 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     /**
      * Slider neu initialisieren
      */
-    private reinitializeSliders() {
+    reinitializeSliders() {
         // Bestehende Slider zerstören
         this.sliders.forEach(slider => slider.destroy());
         this.sliders = [];
-        
+
         // Kurz warten und dann neu initialisieren
         setTimeout(() => {
             this.initializeSliders();
         }, 100);
+    }
+
+    initializeSliders() {
+        if (!this.sliderRefs) return;
+        this.sliderRefs.forEach((sliderRef, index) => {
+            try {
+                const slider = new KeenSlider(sliderRef.nativeElement, {
+                    loop: true,
+                    mode: "snap",
+                    slides: {
+                        perView: "auto",
+                        spacing: 16,
+                    },
+                    breakpoints: {
+                        "(max-width: 768px)": {
+                            slides: { perView: "auto", spacing: 16 }
+                        }
+                    }
+                });
+                this.sliders.push(slider);
+            } catch (error) {
+                console.error(`Error initializing slider ${index}:`, error);
+            }
+        });
     }
 }

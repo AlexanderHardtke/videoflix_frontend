@@ -97,7 +97,6 @@ section {
 
 .carousel-no-slider {
     justify-content: flex-start;
-    flex-wrap: wrap;
     gap: 16px;
     -webkit-mask-image: none;
     mask-image: none;
@@ -216,6 +215,22 @@ section {
     }
 }
 
+@media screen and (max-width: 840px) {
+    header {
+        height: calc(100svh - 306px);
+
+        h2 {
+            font-size: 64px;
+        }
+    }
+
+    .preview {
+        min-width: 192px;
+        max-width: 192px;
+        height: 108px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     section {
         padding-inline: 18px;
@@ -232,17 +247,28 @@ section {
 }
 
 @media screen and (max-width: 480px) {
-    section {
-        padding-inline: 0;
-    }
-
     header {
         padding-left: 16px;
+        height: calc(100svh - 296px);
+
+        h2 {
+            font-size: 48px;
+        }
+    }
+
+    section {
+        padding-inline: 0;
     }
 
     .carousel {
         -webkit-mask-image: linear-gradient(90deg, transparent 8px, var(--black) 22px, var(--black) 85%, transparent);
         mask-image: linear-gradient(90deg, transparent 8px, var(--black) 22px, var(--black) 85%, transparent);
         padding-inline: 16px;
+    }
+
+    .preview {
+        min-width: 170px;
+        max-width: 170px;
+        height: 96px;
     }
 }

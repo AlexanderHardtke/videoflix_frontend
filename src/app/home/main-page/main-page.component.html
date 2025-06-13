@@ -7,7 +7,11 @@
             <header>
                 <h2>{{ video.name }}</h2>
                 <p>{{ getDescriptionLang(video)}}</p>
-                <a (click)="playVideo(video.url)" tabindex="4" class="button">{{'chooseVid.play' | translate}}</a>
+                <a (click)="playVideo(video.url)" tabindex="4" class="button"
+                    (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
+
+                    {{'chooseVid.play' | translate}}
+                </a>
             </header>
         }
     }
@@ -19,8 +23,7 @@
 
             @if (videosByCategory[category].length > 0) {
                 @if (shouldShowSlider(category)) {
-                    <a class="arrow" (click)="navigateVideos(category, 'left')" tabindex="5"
-                        [attr.aria-label]="'Navigate left for ' + category">
+                    <a (click)="navigateVideos(category, 'left')" class="arrow" [attr.aria-label]="'Navigate left for ' + category">
                         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.69961 17.5L17.0496 28.85C17.3496 29.15 17.4996 29.5 17.4996 29.9C17.4996 30.3 17.3496
                                     30.65 17.0496 30.95C16.7496 31.25 16.3996 31.4 15.9996 31.4C15.5996 31.4 15.2496 31.25
@@ -38,7 +41,8 @@
                     <div #sliderRef class="carousel keen-slider" data-animated="true">
                         @for (video of getVisibleVideos(category); track video.url) {
                         <div (click)="playVideo(video.url)" class="preview keen-slider__slide" tabIndex="5" (mouseenter)="playPreview($event)"
-                            (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)">
+                            (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
+                            (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
                             <img [src]="video.image" [alt]="video.name" loading="lazy">
                             <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted
                                 playsinline></video>
@@ -50,7 +54,8 @@
                     <div class="carousel carousel-no-slider">
                         @for (video of getVisibleVideos(category); track video.url) {
                             <div (click)="playVideo(video.url)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
-                                (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)">
+                                (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
+                                (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
                             
                                 <img [src]="video.image" [alt]="video.name" loading="lazy">
                                 <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted
@@ -58,11 +63,10 @@
                                 <h4>{{ video.name }}</h4>
                             </div>
                         }
-                    </div>
+                    </div>      
                 }
                 @if (shouldShowSlider(category)) {
-                    <a class="arrow reverse" (click)="navigateVideos(category, 'right')" tabindex="5"
-                        [attr.aria-label]="'Navigate right for ' + category">
+                    <a (click)="navigateVideos(category, 'right')" class="arrow reverse" [attr.aria-label]="'Navigate right for ' + category">
                         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.69961 17.5L17.0496 28.85C17.3496 29.15 17.4996 29.5 17.4996 29.9C17.4996 30.3 17.3496
                                     30.65 17.0496 30.95C16.7496 31.25 16.3996 31.4 15.9996 31.4C15.5996 31.4 15.2496 31.25
