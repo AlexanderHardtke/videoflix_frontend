@@ -36,7 +36,7 @@
                 </svg>
             </a>
 
-            @for (video of videosByCategory[category]; track video.url) {
+            @for (video of getVisibleVideos(category); track video.url) {
             <div (click)="playVideo(video.url)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
                 (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)">
 

@@ -127,6 +127,7 @@ section {
     align-items: center;
     position: relative;
     padding-inline: 30px;
+    overflow: hidden;
 }
 
 .arrow {
@@ -140,7 +141,8 @@ section {
     position: absolute;
     left: -9px;
 
-    &:hover {
+    &:hover,
+    &:focus {
         transition: opacity 250ms ease-in;
         opacity: 1;
     }

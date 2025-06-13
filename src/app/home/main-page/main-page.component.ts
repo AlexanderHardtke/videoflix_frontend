@@ -24,7 +24,10 @@ export class MainPageComponent implements OnInit {
         training: [],
         tutorials: []
     };
-    public backgroundImg = '';
+    backgroundImg = '';
+    visibleVideoIndex: { [category: string]: number } = {};
+    videosPerView = 4;
+    nextPageUrls: { [category: string]: string | null } = {};
 
     constructor(
         private router: Router,
@@ -174,8 +177,22 @@ export class MainPageComponent implements OnInit {
         });
     }
 
-    navigateVideos(category: any, direction: any) {
-        console.log(category);
-        console.log(direction);
+    navigateVideos(category: any, direction: 'left' | 'right') {
+        const index = this.visibleVideoIndex[category] ?? 0;
+        const max = this.videosByCategory[category].length;
+        const step = this.videosPerView;
+        if (max <= step) return;
+        if (direction === 'left') this.visibleVideoIndex[category] = (index - step + max) % max;
+        else if (direction === 'right') this.visibleVideoIndex[category] = (index + step) % max;
+    }
+
+    getVisibleVideos(category: string): Video[] {
+        const all = this.videosByCategory[category] || [];
+        const start = this.visibleVideoIndex[category] || 0;
+        const step = this.videosPerView;
+        if (all.length <= step) return all;
+        const end = start + step;
+        if (end <= all.length) return all.slice(start, end);
+        else return all.slice(start).concat(all.slice(0, end - all.length));
     }
 }
