@@ -7,14 +7,6 @@
     width: 100%;
 }
 
-.invisSide {
-    background-color: linear-gradient(90deg, var(--black) 95%, transparent);
-    position: fixed;
-    left: 0;
-    height: 100%;
-    width: 96px;
-}
-
 .invisBottom {
     background: linear-gradient(0deg, var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
     position: absolute;
@@ -22,10 +14,6 @@
     z-index: 0;
     height: 50px;
     width: 100%;
-}
-
-section {
-    padding-inline: 66px;
 }
 
 header {
@@ -56,27 +44,11 @@ header {
 }
 
 section {
+    padding-inline: 66px;
 
     h3 {
         margin-block: 16px;
         padding-left: 30px;
-    }
-
-    .preview {
-        width: 213px;
-        height: 120px;
-        min-width: 213px;
-        scroll-snap-align: start;
-        margin-right: 16px;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-            h4 {
-                display: flex;
-                background-color: var(--black);
-            }
-        }
     }
 
     img {
@@ -104,13 +76,6 @@ section {
         height: 100%;
         object-fit: cover;
     }
-
-    >div {
-        width: 100%;
-        overflow: hidden;
-        -webkit-mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 97%, transparent);
-        mask-image: linear-gradient(90deg, transparent, black -5%, var(--black) 97%, transparent);
-    }
 }
 
 .hide {
@@ -125,21 +90,41 @@ section {
     flex-wrap: nowrap;
     display: flex;
     align-items: center;
-    position: relative;
     padding-inline: 30px;
+    -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 92%, transparent);
+    mask-image: linear-gradient(90deg, black -5%, var(--black) 92%, transparent);
+}
+
+.categorys {
+    width: 100%;
     overflow: hidden;
+    position: relative;
+}
+
+.preview {
+    min-width: 213px;
+    max-width: 213px;
+    height: 120px;
+    margin-right: 16px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        h4 {
+            display: flex;
+            background-color: var(--black);
+        }
+    }
 }
 
 .arrow {
     width: 32px;
     fill: var(--white);
     cursor: pointer;
-    margin-inline: 8px;
-    height: 120px;
-    align-content: center;
     opacity: 0;
     position: absolute;
-    left: -9px;
+    z-index: 2;
+    bottom: 44px;
 
     &:hover,
     &:focus {
@@ -150,17 +135,25 @@ section {
 
 .reverse {
     left: auto;
-    right: -2px;
+    right: 0px;
     rotate: 180deg;
 }
 
 @media screen and (min-width: 1921px) {
-    .invisSide {
-        width: 116px;
-    }
-
     .invisBottom {
         height: 62px;
+    }
+
+    .preview {
+        min-width: 352px;
+        max-width: 352px;
+        height: 198px;
+        margin-right: 22px;
+    }
+
+    .arrow {
+        width: 46px;
+        bottom: 76px;
     }
 
     header {
@@ -184,15 +177,14 @@ section {
             margin-block: 20px;
         }
 
-        .preview {
-            width: 352px;
-            height: 198px;
-            margin-right: 22px;
-        }
-
         h4 {
             font-size: 22px;
         }
+    }
+
+    .carousel {
+        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 94%, transparent);
+        mask-image: linear-gradient(90deg, black -5%, var(--black) 94%, transparent);
     }
 }
 
@@ -201,11 +193,38 @@ section {
         height: calc(100svh - 472px);
     }
 
-    section {
-        .preview {
-            width: 448px;
-            height: 252px;
-            margin-right: 32px;
-        }
+    .arrow {
+        width: 56px;
+        bottom: 96px;
+    }
+
+    .preview {
+        max-width: 448px;
+        min-width: 448px;
+        height: 252px;
+        margin-right: 32px;
+    }
+
+    .carousel {
+        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 96%, transparent);
+        mask-image: linear-gradient(90deg, black -5%, var(--black) 96%, transparent);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .carousel {
+        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 90%, transparent);
+        mask-image: linear-gradient(90deg, black -5%, var(--black) 90%, transparent);
+    }
+
+    .arrow {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel {
+        -webkit-mask-image: linear-gradient(90deg, black -5%, var(--black) 85%, transparent);
+        mask-image: linear-gradient(90deg, black -5%, var(--black) 85%, transparent);
     }
 }

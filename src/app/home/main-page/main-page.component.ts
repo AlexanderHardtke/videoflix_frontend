@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { FeedbackOverlayComponent } from '../../feedback-overlay/feedback-overlay.component';
 import { Router } from '@angular/router';
@@ -7,15 +7,20 @@ import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
 import { Video, VIDEO_CATEGORIES } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
+import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 
 
 @Component({
     selector: 'app-main-page',
     imports: [TranslatePipe],
     templateUrl: './main-page.component.html',
-    styleUrl: './main-page.component.scss'
+    styleUrls: [
+        './main-page.component.scss',
+        '../../../../node_modules/keen-slider/keen-slider.min.css']
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent implements OnInit, AfterViewInit {
+    @ViewChildren("sliderRef") sliderRefs!: QueryList<ElementRef<HTMLElement>>
+    sliders: KeenSliderInstance[] = [];
     readonly categories = VIDEO_CATEGORIES;
     videosByCategory: Record<string, Video[]> = {
         new: [],
@@ -26,7 +31,7 @@ export class MainPageComponent implements OnInit {
     };
     backgroundImg = '';
     visibleVideoIndex: { [category: string]: number } = {};
-    videosPerView = 4;
+    videosPerView = 8;
     nextPageUrls: { [category: string]: string | null } = {};
 
     constructor(
@@ -51,6 +56,63 @@ export class MainPageComponent implements OnInit {
         }
         this.getVideos(token);
     }
+
+    ngAfterViewInit() {
+        this.sliderRefs.changes.subscribe(() => {
+            console.log('sliderRefs changed, reinitializing sliders');
+            this.initializeSliders();
+        });
+        if (this.hasVideosLoaded()) this.initializeSliders();
+    }
+
+    hasVideosLoaded(): boolean {
+        return Object.values(this.videosByCategory).some(videos => videos.length > 0);
+    }
+
+    initializeSliders() {
+        if (!this.sliderRefs) return;
+        this.sliderRefs.forEach((sliderRef, index) => {
+            try {
+                const slider = new KeenSlider(sliderRef.nativeElement, {
+                    loop: false,
+                    mode: "free-snap",
+                    slides: {
+                        perView: "auto",
+                        spacing: 16,
+                    },
+                    breakpoints: {
+                        "(max-width: 768px)": {
+                            slides: { perView: "auto", spacing: 16 }
+                        }
+                    }
+                });
+                this.sliders.push(slider);
+                console.log(`Slider ${index} initialized successfully:`, slider);
+            } catch (error) {
+                console.error(`Error initializing slider ${index}:`, error);
+            }
+        });
+        console.log('All sliders initialized:', this.sliders);
+    }
+
+    ngOnDestroy() {
+        this.sliders.forEach(slider => slider.destroy());
+        this.sliders = [];
+    }
+
+    navigateVideos(category: any, direction: 'left' | 'right') {
+        const categoryIndex = this.categories.indexOf(category);
+        if (categoryIndex >= 0 && this.sliders[categoryIndex]) {
+            if (direction === 'left') this.sliders[categoryIndex].prev();
+            else this.sliders[categoryIndex].next();
+        }
+    }
+
+    getVisibleVideos(category: string): Video[] {
+        return this.videosByCategory[category] || [];
+    }
+
+
 
     /**
      * gets the video from the backend
@@ -175,24 +237,5 @@ export class MainPageComponent implements OnInit {
         this.router.navigate(['/video'], {
             queryParams: { url: videoUrl }
         });
-    }
-
-    navigateVideos(category: any, direction: 'left' | 'right') {
-        const index = this.visibleVideoIndex[category] ?? 0;
-        const max = this.videosByCategory[category].length;
-        const step = this.videosPerView;
-        if (max <= step) return;
-        if (direction === 'left') this.visibleVideoIndex[category] = (index - step + max) % max;
-        else if (direction === 'right') this.visibleVideoIndex[category] = (index + step) % max;
-    }
-
-    getVisibleVideos(category: string): Video[] {
-        const all = this.videosByCategory[category] || [];
-        const start = this.visibleVideoIndex[category] || 0;
-        const step = this.videosPerView;
-        if (all.length <= step) return all;
-        const end = start + step;
-        if (end <= all.length) return all.slice(start, end);
-        else return all.slice(start).concat(all.slice(0, end - all.length));
     }
 }
