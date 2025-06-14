@@ -44,8 +44,8 @@
                             (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
                             (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
                             <img [src]="video.image" [alt]="video.name" loading="lazy">
-                            <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted
-                                playsinline></video>
+                            <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.filePreview144p"
+                                loop muted playsinline></video>
                             <h4>{{ video.name }}</h4>
                         </div>
                         }
@@ -58,8 +58,8 @@
                                 (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
                             
                                 <img [src]="video.image" [alt]="video.name" loading="lazy">
-                                <video class="hide" preload="none" [attr.data-src]="video.filePreview144p" loop muted
-                                    playsinline></video>
+                                <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.filePreview144p"
+                                    loop muted playsinline></video>
                                 <h4>{{ video.name }}</h4>
                             </div>
                         }

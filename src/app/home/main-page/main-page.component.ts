@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener, Directive } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
@@ -7,6 +7,7 @@ import { env } from '../../../../src/environments/environment';
 import { Video, VIDEO_CATEGORIES } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
+import { debounceTime } from 'rxjs';
 
 
 @Component({
@@ -18,6 +19,7 @@ import KeenSlider, { KeenSliderInstance } from 'keen-slider';
         '../../../../node_modules/keen-slider/keen-slider.min.css']
 })
 export class MainPageComponent implements OnInit, AfterViewInit {
+    @ViewChildren('lazyVideo') lazyVideos!: QueryList<ElementRef<HTMLVideoElement>>;
     @ViewChildren("sliderRef") sliderRefs!: QueryList<ElementRef<HTMLElement>>
     sliders: KeenSliderInstance[] = [];
     nextPageUrls: { [category: string]: string | null } = {};
@@ -44,7 +46,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         private http: HttpClient,
         private feedback: FeedbackService,
         private translate: TranslateService,
-        private backgroundService: BackgroundService
+        private backgroundService: BackgroundService,
     ) { }
 
     /**
@@ -63,11 +65,28 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * subscribes to changes in the sliderRefs and initializes the sliders
+     * initializes lazyloading and sliders and then subscribes to changes in the sliderRefs and initializes the sliders
      */
     ngAfterViewInit() {
-        this.sliderRefs.changes.subscribe(() => this.initializeSliders());
-        if (this.hasVideosLoaded()) this.initializeSliders();
+        this.initLazyVideoLoading();
+        this.initializeSliders();
+        this.sliderRefs.changes.subscribe(() => this.reinitializeSliders());
+    }
+
+    /**
+     * initializes lazy video loading
+     */
+    initLazyVideoLoading() {
+        const observer = new IntersectionObserver(([entry], obs) => {
+            const video = entry.target as HTMLVideoElement;
+            if (entry.isIntersecting) {
+                const src = video.dataset['src'];
+                if (src) video.src = src;
+                console.log('📹 Lazy loading video:', src);
+                obs.unobserve(video);
+            }
+        }, { threshold: 0.25 });
+        this.lazyVideos.forEach(ref => observer.observe(ref.nativeElement));
     }
 
     /**
@@ -84,7 +103,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param category 
      * @param direction 
      */
-    navigateVideos(category: any, direction: 'left' | 'right') {
+    navigateVideos(category: string, direction: 'left' | 'right') {
         const categoryIndex = this.categories.indexOf(category);
         if (categoryIndex >= 0 && this.sliders[categoryIndex]) {
             if (direction === 'left') this.sliders[categoryIndex].prev();
@@ -160,7 +179,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * 
      * @param err 
      */
-    errorMessage(err: any) {
+    errorMessage(err: HttpErrorResponse) {
         const error = err?.error?.error || 'Fehler beim laden der Videos';
         this.feedback.showError(error);
         this.router.navigate(['']);
@@ -222,21 +241,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * checks if the videos for each category are loaded
-     * 
-     * @returns boolean
-     */
-    hasVideosLoaded(): boolean {
-        return Object.values(this.videosByCategory).some(videos => videos.length > 0);
-    }
-
-    /**
      * Listener für das verändern der Browsergröße
      */
     @HostListener('window:resize', ['$event'])
     onResize(event: Event) {
         this.updateScreenWidth();
-        // Slider neu initialisieren bei Bildschirmgrößenänderung
         this.reinitializeSliders();
     }
 
@@ -254,7 +263,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         if (this.currScreenWidth <= 400) return this.minVidForRes.xsmall;
         else if (this.currScreenWidth <= 700) return this.minVidForRes.small;
         else if (this.currScreenWidth <= 1100) return this.minVidForRes.medium;
-        else if (this.currScreenWidth <= 1340) return this.minVidForRes.large;
+        else if (this.currScreenWidth <= 1920) return this.minVidForRes.large;
         else return this.minVidForRes.xlarge;
     }
 
@@ -271,14 +280,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * Slider neu initialisieren
      */
     reinitializeSliders() {
-        // Bestehende Slider zerstören
         this.sliders.forEach(slider => slider.destroy());
         this.sliders = [];
-
-        // Kurz warten und dann neu initialisieren
-        setTimeout(() => {
-            this.initializeSliders();
-        }, 100);
+        setTimeout(() => this.initializeSliders(), 100);
     }
 
     initializeSliders() {

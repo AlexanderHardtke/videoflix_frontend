@@ -151,9 +151,9 @@ section {
     }
 
     .preview {
-        min-width: 352px;
-        max-width: 352px;
-        height: 198px;
+        min-width: 288px;
+        max-width: 288px;
+        height: 162px;
     }
 
     .arrow {
@@ -165,7 +165,7 @@ section {
         width: 35vw;
         padding-bottom: 48px;
         gap: 48px;
-        height: calc(100svh - 420px);
+        height: calc(100svh - 382px);
 
         h2 {
             font-size: 116px;
@@ -190,6 +190,21 @@ section {
     .carousel {
         -webkit-mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
         mask-image: linear-gradient(90deg, transparent 12px, var(--black) 33px, var(--black) 94%, transparent);
+    }
+}
+
+@media screen and (min-width: 2640px) {
+    .preview {
+        min-width: 352px;
+        max-width: 352px;
+        height: 198px;
+    }
+
+    header {
+        width: 35vw;
+        padding-bottom: 48px;
+        gap: 48px;
+        height: calc(100svh - 416px);
     }
 }
 
