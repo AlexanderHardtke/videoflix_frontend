@@ -4,7 +4,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
-import { Video, VIDEO_CATEGORIES } from '../../services/video.model';
+import { Video, VideoApiResponse, VIDEO_CATEGORIES } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { debounceTime } from 'rxjs';
@@ -120,7 +120,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getVideos(token: string) {
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.get<Video[]>(env.url + 'api/videos/', { headers }).subscribe({
+        this.http.get<VideoApiResponse>(env.url + 'api/videos/', { headers }).subscribe({
             next: (videos) => this.sortVideos(videos),
             error: (err) => this.errorMessage(err)
         });
@@ -131,13 +131,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * 
      * @param videos the list of videos from the db
      */
-    sortVideos(videos: Video[]) {
+    sortVideos(data: VideoApiResponse) {
+        const videos: Video[] = data.list;
         this.resetCategories();
         const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
         videos.forEach(video => {
             const uploadedDate = new Date(video.uploaded_at);
             if (uploadedDate >= sevenDaysAgo) this.videosByCategory['new'].push(video);
-            if (this.isValidCategory(video.type)) this.videosByCategory[video.type].push(video);
+            if (this.isValidCategory(video.video_type)) this.videosByCategory[video.video_type].push(video);
         });
         this.getNewestVideo();
     }
@@ -147,7 +148,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getNewestVideo() {
         let videoIndex = this.videosByCategory['new'].length - 1;
-        this.backgroundImg = this.videosByCategory['new'][videoIndex].bigImage
+        this.backgroundImg = this.videosByCategory['new'][videoIndex].big_image
         this.backgroundService.setDynamicBackground(this.backgroundImg);
     }
 
@@ -226,7 +227,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getDescriptionLang(video: Video): string {
         const currentLang = this.translate.currentLang || this.translate.defaultLang || 'de';
-        return currentLang === 'en' ? video.descriptionEN : video.descriptionDE;
+        return currentLang === 'en' ? video.description_en : video.description_de;
     }
 
     /**

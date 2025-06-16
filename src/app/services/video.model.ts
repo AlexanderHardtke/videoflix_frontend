@@ -1,15 +1,16 @@
+// DO not change the 'new' category
 export const VIDEO_CATEGORIES = ['new', 'training', 'animals', 'nature', 'tutorials'];
 type VideoCategory = typeof VIDEO_CATEGORIES[number];
 
 export interface Video {
   name: string;
   url: string;
-  type: VideoCategory | string;
+  video_type: VideoCategory | string;
   image: string;
-  bigImage: string;
-  filePreview144p: string;
-  descriptionEN: string;
-  descriptionDE: string;
+  big_image: string;
+  file_preview144p: string;
+  description_en: string;
+  description_de: string;
   uploaded_at: string;
 }
 
@@ -21,4 +22,13 @@ export interface VideoDetail {
     file360p: string;
     file240p: string;
     watched_until: number;
+}
+
+export interface VideoApiResponse {
+    list: Video[];
+    count: number;
+    list_size: number;
+    list_page: number;
+    has_next: boolean;
+    next: string;
 }
