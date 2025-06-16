@@ -21,25 +21,22 @@ import { debounceTime } from 'rxjs';
 export class MainPageComponent implements OnInit, AfterViewInit {
     @ViewChildren('lazyVideo') lazyVideos!: QueryList<ElementRef<HTMLVideoElement>>;
     @ViewChildren("sliderRef") sliderRefs!: QueryList<ElementRef<HTMLElement>>
+    categorySliders: { [category: string]: KeenSliderInstance } = {};
     sliders: KeenSliderInstance[] = [];
     nextPageUrls: { [category: string]: string | null } = {};
-    readonly categories = VIDEO_CATEGORIES;
-    videosByCategory: Record<string, Video[]> = {
-        new: [],
-        animals: [],
-        nature: [],
-        training: [],
-        tutorials: []
-    };
+    categories = VIDEO_CATEGORIES;
+    videosByCategory: Record<string, Video[]> = Object.fromEntries(
+        VIDEO_CATEGORIES.map(category => [category, []])
+    );
+    minVidForRes = [
+        { maxWidth: 400, minVideos: 2 },
+        { maxWidth: 700, minVideos: 3 },
+        { maxWidth: 1100, minVideos: 4 },
+        { maxWidth: 1920, minVideos: 5 },
+        { maxWidth: Infinity, minVideos: 6 }
+    ];
     backgroundImg = '';
     currScreenWidth = 0;
-    minVidForRes = {
-        xsmall: 2,
-        small: 3,
-        medium: 4,
-        large: 5,
-        xlarge: 6
-    };
 
     constructor(
         private router: Router,
@@ -104,11 +101,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param direction 
      */
     navigateVideos(category: string, direction: 'left' | 'right') {
-        const categoryIndex = this.categories.indexOf(category);
-        if (categoryIndex >= 0 && this.sliders[categoryIndex]) {
-            if (direction === 'left') this.sliders[categoryIndex].prev();
-            else this.sliders[categoryIndex].next();
-        }
+        const slider = this.categorySliders[category];
+        if (slider) {
+            if (direction === 'left') slider.prev();
+            else slider.next();
+        } else console.warn(`No slider found for category ${category}`);
     }
 
     getVisibleVideos(category: string): Video[] {
@@ -198,7 +195,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             video.src = video.dataset['src'];
             img?.classList.add('hide');
             video.classList.remove('hide');
-            video.play();
+            video.play().catch(err => {
+                if (err.name !== 'AbortError') {
+                    console.warn('Video konnte nicht abgespielt werden:', err);
+                }
+            });
         }
     }
 
@@ -261,18 +262,18 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * Bestimmt die minimale Anzahl Videos basierend auf der Browsergröße
      */
     getMinVideosForCurrentScreen(): number {
-        if (this.currScreenWidth <= 400) return this.minVidForRes.xsmall;
-        else if (this.currScreenWidth <= 700) return this.minVidForRes.small;
-        else if (this.currScreenWidth <= 1100) return this.minVidForRes.medium;
-        else if (this.currScreenWidth <= 1920) return this.minVidForRes.large;
-        else return this.minVidForRes.xlarge;
+        const screenWidth = this.currScreenWidth;
+        for (const breakpoint of this.minVidForRes) {
+            if (screenWidth <= breakpoint.maxWidth) return breakpoint.minVideos;
+        }
+        return 0;
     }
 
     /**
      * Prüft ob für eine Kategorie genügend Videos für Slider vorhanden sind
      */
-    shouldShowSlider(category: string): boolean {
-        const videos = this.videosByCategory[category];
+    shouldShowSlider(cat: string): boolean {
+        const videos = this.videosByCategory[cat];
         const minVideos = this.getMinVideosForCurrentScreen();
         return videos && videos.length >= minVideos;
     }
@@ -286,24 +287,22 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.initializeSliders(), 100);
     }
 
+    /**
+     * initialize the keensliders for each category
+     * 
+     * @returns null if slider haqs no ref
+     */
     initializeSliders() {
         if (!this.sliderRefs) return;
+        const sliderCategories = this.categories.filter(cat => this.shouldShowSlider(cat));
         this.sliderRefs.forEach((sliderRef, index) => {
             try {
+                const category = sliderCategories[index];
                 const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: true,
-                    mode: "snap",
-                    slides: {
-                        perView: "auto",
-                        spacing: 16,
-                    },
-                    breakpoints: {
-                        "(max-width: 768px)": {
-                            slides: { perView: "auto", spacing: 16 }
-                        }
-                    }
+                    loop: true, mode: "snap",
+                    slides: { perView: "auto", spacing: 16, }
                 });
-                this.sliders.push(slider);
+                this.categorySliders[category] = slider;
             } catch (error) {
                 console.error(`Error initializing slider ${index}:`, error);
             }
