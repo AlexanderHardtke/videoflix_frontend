@@ -180,6 +180,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     errorMessage(err: HttpErrorResponse) {
         const error = err?.error?.error || 'Fehler beim laden der Videos';
         this.feedback.showError(error);
+        localStorage.removeItem('auth');
         this.router.navigate(['']);
     }
 

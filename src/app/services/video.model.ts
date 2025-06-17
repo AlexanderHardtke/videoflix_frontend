@@ -15,20 +15,21 @@ export interface Video {
 }
 
 export interface VideoDetail {
-    id: number;
-    name: string;
-    file1080p: string;
-    file720p: string;
-    file360p: string;
-    file240p: string;
-    watched_until: number;
+  name: string;
+  video_urls: {
+    "1080p": string;
+    "720p": string;
+    "360p": string;
+    "240p": string;
+  };
+  watched_until: number;
 }
 
 export interface VideoApiResponse {
-    list: Video[];
-    count: number;
-    list_size: number;
-    list_page: number;
-    has_next: boolean;
-    next: string;
+  list: Video[];
+  count: number;
+  list_size: number;
+  list_page: number;
+  has_next: boolean;
+  next: string;
 }

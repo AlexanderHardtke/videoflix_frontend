@@ -97,14 +97,11 @@ export class VideoPlayerComponent {
         const nav = navigator as any;
         const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
         const net = connection?.effectiveType || '4g';
-        if (net === '4g' && this.video.file1080p) this.videoUrl = this.video.file1080p;
-        else if (net === '3g' && this.video.file720p) this.videoUrl = this.video.file720p;
-        else if (net === '2g' && this.video.file360p) this.videoUrl = this.video.file360p;
-        else if (this.video.file240p) this.videoUrl = this.video.file240p;
-        else {
-            this.videoUrl = this.video.file1080p || this.video.file720p ||
-                this.video.file360p || this.video.file240p;
-        }
+        const urls = this.video.video_urls;
+        if (net === '4g' && urls['1080p']) this.videoUrl = urls['1080p'];
+        else if (net === '3g' && urls['720p']) this.videoUrl = urls['720p'];
+        else if (net === '2g' && urls['360p']) this.videoUrl = urls['360p'];
+        else this.videoUrl = urls['240p'] || urls['360p'] || urls['720p'] || urls['1080p'];
     }
 
     /**
