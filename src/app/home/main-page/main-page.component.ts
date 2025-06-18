@@ -22,7 +22,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     @ViewChildren("sliderRef") sliderRefs!: QueryList<ElementRef<HTMLElement>>
     categorySliders: { [category: string]: KeenSliderInstance } = {};
     sliders: KeenSliderInstance[] = [];
-    nextPageUrls: { [category: string]: string | null } = {};
     categories = VIDEO_CATEGORIES;
     videosByCategory: Record<string, Video[]> = Object.fromEntries(
         VIDEO_CATEGORIES.map(category => [category, []])
@@ -34,8 +33,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         { maxWidth: 1920, minVideos: 5 },
         { maxWidth: Infinity, minVideos: 6 }
     ];
-    backgroundImg = '';
+    nextPage: string | null = null;
     currScreenWidth = 0;
+    atfVideo:any
 
     constructor(
         private router: Router,
@@ -57,6 +57,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             this.router.navigate(['']);
             return
         }
+        this.resetCategories();
         this.getVideos(token);
     }
 
@@ -114,9 +115,10 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     /**
      * gets the video from the backend
      */
-    getVideos(token: string) {
+    async getVideos(token: string) {
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.get<VideoApiResponse>(env.url + 'api/videos/', { headers }).subscribe({
+        if (!this.nextPage) this.nextPage = env.url + 'api/videos/';
+        this.http.get<VideoApiResponse>(this.nextPage, { headers }).subscribe({
             next: (videos) => this.sortVideos(videos),
             error: (err) => this.errorMessage(err)
         });
@@ -128,13 +130,20 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param videos the list of videos from the db
      */
     sortVideos(data: VideoApiResponse) {
+        this.nextPage = data.next;
         const videos: Video[] = data.list;
-        this.resetCategories();
         const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
         videos.forEach(video => {
             const uploadedDate = new Date(video.uploaded_at);
-            if (uploadedDate >= sevenDaysAgo) this.videosByCategory['new'].push(video);
-            if (this.isValidCategory(video.video_type)) this.videosByCategory[video.video_type].push(video);
+            if (uploadedDate >= sevenDaysAgo && this.videosByCategory['new'].length < 10) {
+                this.videosByCategory['new'].push(video);
+            }
+            if (this.isValidCategory(video.video_type)) {
+                this.videosByCategory[video.video_type].push(video);
+                setTimeout(() => {
+                    this.categorySliders[video.video_type]?.update();
+                }, 0);
+            }
         });
         this.getNewestVideo();
     }
@@ -143,9 +152,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * gets the newest video and send it to the backgroundservice
      */
     getNewestVideo() {
-        let videoIndex = this.videosByCategory['new'].length - 1;
-        this.backgroundImg = this.videosByCategory['new'][videoIndex].big_image
-        this.backgroundService.setDynamicBackground(this.backgroundImg);
+        this.atfVideo = this.videosByCategory['new'][0];
+        this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
     }
 
     /**
@@ -243,6 +251,16 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * puts the Video the user has choosen to the atf section
+     * 
+     * @param video a video for display
+     */
+    putVideoAtf(video: Video) {
+        this.atfVideo = video;
+        this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+    }
+
+    /**
      * Listener für das verändern der Browsergröße
      */
     @HostListener('window:resize', ['$event'])
@@ -298,14 +316,35 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.sliderRefs.forEach((sliderRef, index) => {
             try {
                 const category = sliderCategories[index];
+                const loopEnabled = this.nextPage === null;
                 const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: true, mode: "snap",
-                    slides: { perView: "auto", spacing: 16, }
+                    loop: loopEnabled, mode: "snap",
+                    slides: { perView: "auto", spacing: 16, },
+                    created: (slider) => { slider.track.details.slides.length - 1 && this.observeLastSlide(sliderRef.nativeElement); }
                 });
                 this.categorySliders[category] = slider;
             } catch (error) {
                 console.error(`Error initializing slider ${index}:`, error);
             }
         });
+    }
+
+    observeLastSlide(sliderElement: HTMLElement) {
+        const slides = sliderElement.querySelectorAll('.keen-slider__slide');
+        const lastSlide = slides[slides.length - 1];
+        if (!lastSlide) return;
+
+        const observer = new IntersectionObserver(async (entries, obs) => {
+            if (entries[0].isIntersecting && this.nextPage) {
+                obs.disconnect();
+                const token = localStorage.getItem('auth');
+                if (token) {
+                    await this.getVideos(token);
+                }
+                this.reinitializeSliders();
+            }
+        }, { threshold: 1.0 });
+
+        observer.observe(lastSlide);
     }
 }

@@ -2,19 +2,15 @@
 <aside class="invisBottom"></aside>
 
 <section>
-    @for (video of videosByCategory['new']; let i = $index; track video.url) {
-        @if (i === videosByCategory['new'].length - 1) {
-            <header>
-                <h2>{{ video.name }}</h2>
-                <p>{{ getDescriptionLang(video)}}</p>
-                <a (click)="playVideo(video.url)" tabindex="4" class="button"
-                    (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
 
-                    {{'chooseVid.play' | translate}}
-                </a>
-            </header>
-        }
-    }
+    <header>
+        <h2>{{ atfVideo.name }}</h2>
+        <p>{{ getDescriptionLang(atfVideo)}}</p>
+        <a (click)="playVideo(atfVideo.url)" tabindex="4" class="button"
+            (keydown.enter)="playVideo(atfVideo.url)" (keydown.space)="playVideo(atfVideo.url)">
+            {{'chooseVid.play' | translate}}
+        </a>
+    </header>
 
     @for (category of categories; track category) {
 
@@ -40,9 +36,9 @@
                 @if (shouldShowSlider(category)) {
                     <div #sliderRef class="carousel keen-slider" data-animated="true">
                         @for (video of getVisibleVideos(category); track video.url) {
-                        <div (click)="playVideo(video.url)" class="preview keen-slider__slide" tabIndex="5" (mouseenter)="playPreview($event)"
+                        <div (click)="putVideoAtf(video)" class="preview keen-slider__slide" tabIndex="5" (mouseenter)="playPreview($event)"
                             (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
-                            (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
+                            (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)">
                             <img [src]="video.image" [alt]="video.name" loading="lazy">
                             <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.file_preview144p"
                                 loop muted playsinline></video>
@@ -53,9 +49,9 @@
                 } @else {
                     <div class="carousel carousel-no-slider">
                         @for (video of getVisibleVideos(category); track video.url) {
-                            <div (click)="playVideo(video.url)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
+                            <div (click)="putVideoAtf(video)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
                                 (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
-                                (keydown.enter)="playVideo(video.url)" (keydown.space)="playVideo(video.url)">
+                                (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)">
                             
                                 <img [src]="video.image" [alt]="video.name" loading="lazy">
                                 <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.file_preview144p"
