@@ -7,7 +7,6 @@ import { env } from '../../../../src/environments/environment';
 import { Video, VideoApiResponse, VIDEO_CATEGORIES } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
-import { debounceTime } from 'rxjs';
 
 
 @Component({

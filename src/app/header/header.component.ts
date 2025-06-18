@@ -34,7 +34,6 @@ export class HeaderComponent {
    * checks authentication and darkmode
    */
   ngOnInit() {
-    this.checkAuthentication();
     this.checkDarkmode();
   }
 
@@ -45,7 +44,11 @@ export class HeaderComponent {
     let auth = localStorage.getItem("auth");
     if (auth) {
       this.token = auth;
-      if (this.router.url === '/') this.router.navigate(['/main']);
+      const currentUrl = this.router.url;
+      const allowedRoutes = ['/video', '/legal', '/privacy'];
+      if (!allowedRoutes.some(route => currentUrl.startsWith(route))) {
+        this.router.navigate(['/main']);
+      }
     } else this.token = null;
   }
 

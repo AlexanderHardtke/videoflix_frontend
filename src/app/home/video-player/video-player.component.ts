@@ -43,7 +43,6 @@ export class VideoPlayerComponent {
             if (url) {
                 this.videoUrl = url;
                 this.getVideoDetails(url);
-
             } else {
                 this.feedback.showError('Keine Videodaten gefunden');
                 this.router.navigate(['/main']);
@@ -135,22 +134,6 @@ export class VideoPlayerComponent {
      */
     ngAfterViewInit() {
         this.resetTimeout();
-    }
-
-    /**
-     * toggles stop and play if the video is clicked
-     * 
-     * @returns if no video is loaded
-     */
-    togglePlay() {
-        if (!this.player) return;
-        if (this.player.paused()) {
-            const space = new KeyboardEvent('keydown', { keyCode: 32 });
-            document.dispatchEvent(space);
-        } else {
-            const space = new KeyboardEvent('keydown', { keyCode: 32 });
-            document.dispatchEvent(space);
-        }
     }
 
     /**
