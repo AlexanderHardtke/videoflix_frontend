@@ -1,11 +1,17 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
+
 @Injectable({ providedIn: 'root' })
 export class BackgroundService {
     private backgroundUrl = new BehaviorSubject<string>('../assets/img/background.jp');
     background$ = this.backgroundUrl.asObservable();
 
+    /**
+     * sets the backgroundimage for the corresponding route
+     * 
+     * @param route the url from the browser
+     */
     public setBackgroundForRoute(route: string) {
         const backgrounds: Record<string, string> = {
             '/login': '../assets/img/background2.jpg',
@@ -18,7 +24,12 @@ export class BackgroundService {
         this.backgroundUrl.next(bg);
     }
 
-    public setDynamicBackground(url: string) {
-        this.backgroundUrl.next(url);
+    /**
+     * sets a dynamic background image from another component
+     * 
+     * @param img the location of the image in the folder
+     */
+    public setDynamicBackground(img: string) {
+        this.backgroundUrl.next(img);
     }
 }

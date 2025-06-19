@@ -22,7 +22,7 @@
         "errorPw": "Min. 8 chars, number, upper & lowercase",
         "errorRepeatedPw": "Passwords must match.",
         "forgotPw": "Forgot password?",
-        "newCustomer": "New to Videoflix? ",
+        "newCustomer": "New to Videoflix?",
         "SignUpNow": "Sign Up now"
     },
     "forgot": {

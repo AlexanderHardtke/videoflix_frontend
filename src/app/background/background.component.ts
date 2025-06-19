@@ -15,6 +15,9 @@ export class BackgroundComponent implements OnInit {
 
   constructor(private backgroundService: BackgroundService) { }
 
+  /**
+   * loads the image from the backgroundservice into the background and fixed the image if it is not a custom image
+   */
   ngOnInit() {
     this.backgroundService.background$.subscribe(img => {
       this.background = img;
