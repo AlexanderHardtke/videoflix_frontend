@@ -50,38 +50,12 @@ section {
         margin-block: 16px;
         padding-left: 30px;
     }
-
-    img {
-        min-width: 100%;
-        max-height: 100%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    h4 {
-        font-size: 16px;
-        position: relative;
-        bottom: 27px;
-        color: var(--white);
-        display: none;
-        justify-content: center;
-        border-radius: 26px 26px 0 0;
-    }
-
-    video {
-        min-width: 100%;
-        max-height: 100%;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 }
 
 .hide {
-    visibility: hidden;
-    position: absolute;
-    z-index: -2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in;
 }
 
 .carousel {
@@ -103,6 +77,7 @@ section {
 }
 
 .categorys {
+    position: relative;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -113,6 +88,7 @@ section {
     max-width: 213px;
     height: 120px;
     cursor: pointer;
+    position: relative;
 
     &:hover,
     &:focus {
@@ -120,6 +96,36 @@ section {
             display: flex;
             background-color: var(--black);
         }
+    }
+
+    img {
+        position: absolute;
+        min-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.2s ease-in;
+    }
+
+    video {
+        position: absolute;
+        min-width: 100%;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.2s ease-in;
+    }
+
+    h4 {
+        font-size: 16px;
+        position: relative;
+        bottom: 27px;
+        color: var(--white);
+        display: none;
+        justify-content: center;
+        border-radius: 26px 26px 0 0;
     }
 }
 

@@ -3,14 +3,16 @@
 
 <section>
 
-    <header>
-        <h2>{{ atfVideo.name }}</h2>
-        <p>{{ getDescriptionLang(atfVideo)}}</p>
-        <a (click)="playVideo(atfVideo.url)" tabindex="4" class="button"
-            (keydown.enter)="playVideo(atfVideo.url)" (keydown.space)="playVideo(atfVideo.url)">
-            {{'chooseVid.play' | translate}}
-        </a>
-    </header>
+    @if(atfVideo) {
+        <header>
+            <h2>{{ atfVideo.name }}</h2>
+            <p>{{ getDescriptionLang(atfVideo)}}</p>
+            <a (click)="playVideo(atfVideo.url)" tabindex="4" class="button"
+                (keydown.enter)="playVideo(atfVideo.url)" (keydown.space)="playVideo(atfVideo.url)">
+                {{'chooseVid.play' | translate}}
+            </a>
+        </header>
+    }
 
     @for (category of categories; track category) {
 

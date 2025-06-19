@@ -35,7 +35,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     ];
     nextPage: string | null = null;
     currScreenWidth = 0;
-    atfVideo:any
+    atfVideo:Video | null = null;
 
     constructor(
         private router: Router,
@@ -65,9 +65,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * initializes lazyloading and sliders and then subscribes to changes in the sliderRefs and initializes the sliders
      */
     ngAfterViewInit() {
-        this.initLazyVideoLoading();
-        this.initializeSliders();
         this.sliderRefs.changes.subscribe(() => this.reinitializeSliders());
+        this.lazyVideos.changes.subscribe(() => this.initLazyVideoLoading());
     }
 
     /**
@@ -78,8 +77,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             const video = entry.target as HTMLVideoElement;
             if (entry.isIntersecting) {
                 const src = video.dataset['src'];
-                if (src) video.src = src;
-                console.log('📹 Lazy loading video:', src);
+                if (src && !video.src) {
+                    video.src = src;
+                }
                 obs.unobserve(video);
             }
         }, { threshold: 0.25 });
@@ -200,6 +200,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         const video = (event.currentTarget as HTMLElement).querySelector('video');
         const img = (event.currentTarget as HTMLElement).querySelector('img');
         if (video && video.dataset['src']) {
+            video.muted = true;
             video.src = video.dataset['src'];
             img?.classList.add('hide');
             video.classList.remove('hide');
