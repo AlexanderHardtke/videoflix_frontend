@@ -71,18 +71,6 @@ p {
   }
 }
 
-@keyframes fadeOutHeader {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-}
-
 @media screen and (min-width: 1921px) {
   header {
     max-width: 1920px;

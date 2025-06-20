@@ -110,23 +110,15 @@ export class VideoPlayerComponent {
         if (this.videoUrl && this.videoElement) {
             if (this.player) this.player.dispose();
             this.player = videojs(this.videoElement.nativeElement, {
-                sources: [{ src: this.videoUrl, type: 'video/mp4' }],
-                controls: true,
-                preload: 'auto',
-                autoplay: true,
-                responsive: true,
-                fluid: true
+                sources: [{ src: this.videoUrl, type: 'video/mp4' }], controls: true,
+                preload: 'auto', autoplay: true, responsive: true, fluid: true
             });
             this.player.ready(() => {
                 this.player!.hotkeys({
-                    volumeStep: 0.1,
-                    seekStep: 5,
-                    enableModifiersForNumbers: false
+                    volumeStep: 0.1, seekStep: 5, enableModifiersForNumbers: false
                 });
             });
-        } else if (!this.videoUrl) {
-            this.feedback.showError('Keine gültige Video-URL gefunden');
-        }
+        } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');
     }
 
     /**

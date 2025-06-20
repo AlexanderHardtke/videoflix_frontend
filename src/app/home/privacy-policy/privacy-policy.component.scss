@@ -1,7 +1,3 @@
-section {
-    min-height: calc(100svh - 190px);
-}
-
 .invis-header {
     background: linear-gradient(180deg, var(--black) 50%, rgba(0, 0, 0, 0) 100%);
     position: fixed;
@@ -13,7 +9,7 @@ section {
 
 h2 {
     font-size: 32px;
-    color: var((--purple));
+    color: var(--purple);
 }
 
 @media screen and (min-width: 1921px) {
