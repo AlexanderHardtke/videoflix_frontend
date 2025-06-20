@@ -21,9 +21,10 @@
     @for (category of categories; track category) {
 
         <div class="categorys">
-            <h3>{{ 'chooseVid.' + category | translate }}</h3>
 
             @if (videosByCategory[category].length > 0) {
+                <h3>{{ 'chooseVid.' + category | translate }}</h3>
+                
                 @if (shouldShowSlider(category)) {
                     <a (click)="navigateVideos(category, 'left')" class="arrow" [attr.aria-label]="'Navigate left for ' + category">
                         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
