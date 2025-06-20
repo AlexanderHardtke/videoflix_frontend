@@ -5,7 +5,7 @@
     } @else {
     <img class="logo" src="../assets/img/logo_small.svg">
     }
-    <img class="smallLogo" src="../assets/img/logo_small.svg">
+    <img class="small-logo" src="../assets/img/logo_small.svg">
 
     <div>
 
@@ -69,7 +69,7 @@
         @if (currentUrl !== "/login") {
             @if (token) {
                 <a class="button" tabindex="4" (click)="logout()" (keydown.enter)="logout()" (keydown.space)="logout()">
-                    <svg class="logoutSvg" width="18" height="18" viewBox="0 0 18 18" fill="none"
+                    <svg class="logout-svg" width="18" height="18" viewBox="0 0 18 18" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 18C1.45 18 0.979167 17.8042 0.5875 17.4125C0.195833 17.0208 0 16.55 0 16V2C0 1.45
                             0.195833 0.979167 0.5875 0.5875C0.979167 0.195833 1.45 0 2 0H8C8.28333 0 8.52083 0.0958333

@@ -2,8 +2,8 @@ section {
     min-height: calc(100svh - 190px);
 }
 
-.invisHeader {
-    background: linear-gradient(180deg,var(--black) 50%, rgba(0, 0, 0, 0) 100%);
+.invis-header {
+    background: linear-gradient(180deg, var(--black) 50%, rgba(0, 0, 0, 0) 100%);
     position: fixed;
     top: 0;
     z-index: 1;
@@ -27,4 +27,16 @@ h2 {
     }
 }
 
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+    * {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+}

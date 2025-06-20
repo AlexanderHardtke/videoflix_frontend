@@ -68,7 +68,7 @@ nav {
     }
 }
 
-.smallLogo {
+.small-logo {
     display: none;
 }
 
@@ -83,7 +83,7 @@ nav {
     }
 }
 
-.logoutSvg {
+.logout-svg {
     fill: var(--white) !important;
     border-radius: 0 !important;
     padding: 0;
@@ -140,14 +140,14 @@ nav {
         display: none;
     }
 
-    .smallLogo {
+    .small-logo {
         display: block;
         padding-right: 60px;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .smallLogo {
+    .small-logo {
         padding-right: 10px;
     }
 }

@@ -1,4 +1,4 @@
-.invisHeader {
+.invis-header {
     background: linear-gradient(180deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
     position: fixed;
     top: 0;
@@ -7,7 +7,7 @@
     width: 100%;
 }
 
-.invisBottom {
+.invis-bottom {
     background: linear-gradient(0deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
     position: absolute;
     bottom: -20px;
@@ -123,7 +123,7 @@ section {
     h4 {
         font-size: 16px;
         position: relative;
-        bottom: 27px;
+        top: 100px;
         color: var(--white);
         display: none;
         justify-content: center;
@@ -154,7 +154,7 @@ section {
 }
 
 @media screen and (min-width: 1921px) {
-    .invisBottom {
+    .invis-bottom {
         height: 62px;
     }
 
@@ -162,6 +162,10 @@ section {
         min-width: 288px;
         max-width: 288px;
         height: 162px;
+
+        h4 {
+            top: 144px;
+        }
     }
 
     .arrow {
@@ -206,6 +210,10 @@ section {
         min-width: 352px;
         max-width: 352px;
         height: 198px;
+
+        h4 {
+            top: 178px;
+        }
     }
 
     header {
@@ -230,6 +238,10 @@ section {
         max-width: 448px;
         min-width: 448px;
         height: 252px;
+
+        h4 {
+            top: 234px;
+        }
     }
 
     .carousel {
@@ -251,6 +263,10 @@ section {
         min-width: 192px;
         max-width: 192px;
         height: 108px;
+
+        h4 {
+            top: 88px;
+        }
     }
 }
 
@@ -284,5 +300,9 @@ section {
         min-width: 170px;
         max-width: 170px;
         height: 96px;
+
+        h4 {
+            top: 76px;
+        }
     }
 }
