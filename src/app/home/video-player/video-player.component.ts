@@ -26,7 +26,6 @@ export class VideoPlayerComponent {
     videoTitle: string = 'Lade Videoinformationen...';
     player!: Player
 
-
     constructor(
         private router: Router,
         private feedback: FeedbackService,
@@ -111,11 +110,21 @@ export class VideoPlayerComponent {
             if (this.player) this.player.dispose();
             this.player = videojs(this.videoElement.nativeElement, {
                 sources: [{ src: this.videoUrl, type: 'video/mp4' }], controls: true,
+                controlBar: {
+                    children: [
+                        'playToggle',
+                        'SkipBackButton',
+                        'progressControl',
+                        'SkipForwardButton',
+                        'volumePanel',
+                        'fullscreenToggle'
+                    ]
+                },
                 preload: 'auto', autoplay: true, responsive: true, fluid: true
             });
             this.player.ready(() => {
                 this.player!.hotkeys({
-                    volumeStep: 0.1, seekStep: 5, enableModifiersForNumbers: false
+                    volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false
                 });
             });
         } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');

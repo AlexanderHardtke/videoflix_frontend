@@ -55,6 +55,28 @@ p {
   }
 }
 
+::ng-deep .vjs-control-bar {
+  background-color: none;
+}
+
+::ng-deep .vjs-skip-back .vjs-icon-placeholder {
+  background-image: url('/assets/img/replay_10.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+}
+
+::ng-deep .vjs-skip-forward .vjs-icon-placeholder {
+  background-image: url('/assets/img/forward_10.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  font-size: 0;
+  width: 24px;
+  height: 24px;
+}
+
 @keyframes rotateAndMove {
   0% {
     transform: rotate(0deg) translateX(0);
