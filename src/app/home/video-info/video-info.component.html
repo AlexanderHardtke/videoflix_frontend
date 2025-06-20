@@ -2,12 +2,13 @@
 
     @if(video) {
         <div>
+            <aside></aside>
             <div></div>
         </div>
         <img [src]="video.big_image">
 
         <h2>{{ video.name }}</h2>
-        <p>{{ getDescriptionLang(video)}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos labore vero provident, nulla sit fugiat eligendi minus velit omnis tenetur sequi dignissimos eos aut iusto alias odio sint veritatis a.</p>
+        <p>{{ getDescriptionLang(video)}}</p>
         <a (click)="playVideo(video.url)" tabindex="4" class="button" (keydown.enter)="playVideo(video.url)"
             (keydown.space)="playVideo(video.url)">
             {{'chooseVid.play' | translate}}

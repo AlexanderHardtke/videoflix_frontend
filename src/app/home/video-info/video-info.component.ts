@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { Video } from '../../services/video.model';
 import { Router } from '@angular/router';
@@ -14,13 +14,14 @@ import { VideoTransferService } from '../../services/video-transfer.service';
 })
 export class VideoInfoComponent {
   video!: Video | null;
+  currScreenWidth = 0;
 
   constructor(
     private router: Router,
     private feedback: FeedbackService,
     private translate: TranslateService,
     private videoTrans: VideoTransferService
-    ) { }
+  ) { }
 
   /**
    * checks for a token and either rejects the user or gets the videos
@@ -30,7 +31,8 @@ export class VideoInfoComponent {
     if (!token) {
       this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
       this.router.navigate(['']);
-    } else this.video = this.videoTrans.getVideo();
+    } else if (this.videoTrans.getVideo()) this.video = this.videoTrans.getVideo();
+    else this.router.navigate(['/main']);
   }
 
   /**
@@ -44,10 +46,6 @@ export class VideoInfoComponent {
     return currentLang === 'en' ? video.description_en : video.description_de;
   }
 
-  public getVideoInfo(video: Video) {
-    this.video = video;
-  }
-
   /**
    * navigates to a single video with thr url
    * 
@@ -57,5 +55,22 @@ export class VideoInfoComponent {
     this.router.navigate(['/video'], {
       queryParams: { url: videoUrl }
     });
+  }
+
+  /**
+   * Listener für das verändern der Browsergröße
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateScreenWidth();
+  }
+
+  /**
+   * Aktualisiert die aktuelle Browsergröße, wenn mobile entfernt das Titelbild
+   */
+  updateScreenWidth() {
+    this.currScreenWidth = window.innerWidth;
+    if (this.currScreenWidth < 768) return
+    else this.router.navigate(['/main']);
   }
 }
