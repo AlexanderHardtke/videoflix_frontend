@@ -12,7 +12,7 @@ import "videojs-hotkeys";
     selector: 'app-video-player',
     imports: [RouterLink],
     templateUrl: './video-player.component.html',
-    styleUrls: ['./video-player.component.scss', './video-player-js.component.scss']
+    styleUrl: './video-player.component.scss'
 })
 export class VideoPlayerComponent {
     @ViewChild('videoRef') videoElement!: ElementRef<HTMLVideoElement>;
