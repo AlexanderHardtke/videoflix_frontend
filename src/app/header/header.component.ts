@@ -45,7 +45,7 @@ export class HeaderComponent {
     if (auth) {
       this.token = auth;
       const currentUrl = this.router.url;
-      const allowedRoutes = ['/video', '/legal', '/privacy'];
+      const allowedRoutes = ['/video', '/legal', '/privacy', '/info'];
       if (!allowedRoutes.some(route => currentUrl.startsWith(route))) {
         this.router.navigate(['/main']);
       }

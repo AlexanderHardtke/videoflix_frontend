@@ -10,6 +10,7 @@ import { VideoPlayerComponent } from './home/video-player/video-player.component
 import { ResetPasswordComponent } from './home/reset-password/reset-password.component';
 import { SignupConfirmComponent } from './home/signup-confirm/signup-confirm.component';
 import { CheckEmailComponent } from './home/check-email/check-email.component';
+import { VideoInfoComponent } from './home/video-info/video-info.component';
 
 export const routes: Routes = [
     { path: '', component: StartPageComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
     { path: 'signUp/:token', component: SignupConfirmComponent },
     { path: 'main', component: MainPageComponent },
     { path: 'video', component: VideoPlayerComponent },
+    { path: 'info', component: VideoInfoComponent },
     { path: 'legal', component: LegalNoticeComponent },
     { path: 'privacy', component: PrivacyPolicyComponent },
     { path: 'check', component: CheckEmailComponent },

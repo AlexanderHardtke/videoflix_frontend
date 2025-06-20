@@ -21,7 +21,7 @@ header {
     flex-direction: column;
     align-items: flex-start;
     height: calc(100svh - 316px);
-    width: 440px;
+    width: 480px;
     max-width: 100%;
     padding-bottom: 32px;
     gap: 32px;
@@ -45,6 +45,7 @@ header {
 }
 
 section {
+    min-height: calc(100svh - 200px);
     padding-inline: 66px;
 
     h3 {

@@ -1,0 +1,13 @@
+<section>
+
+    @if(video) {
+        <img [src]="video.big_image">
+        <h2>{{ video.name }}</h2>
+        <p>{{ getDescriptionLang(video)}}</p>
+        <a (click)="playVideo(video.url)" tabindex="4" class="button" (keydown.enter)="playVideo(video.url)"
+            (keydown.space)="playVideo(video.url)">
+            {{'chooseVid.play' | translate}}
+        </a>
+    }
+
+</section>

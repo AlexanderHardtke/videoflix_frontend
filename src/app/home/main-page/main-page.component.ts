@@ -7,6 +7,7 @@ import { env } from '../../../../src/environments/environment';
 import { Video, VideoApiResponse, VIDEO_CATEGORIES } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
+import { VideoTransferService } from '../../services/video-transfer.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     ];
     nextPage: string | null = null;
     currScreenWidth = 0;
-    atfVideo:Video | null = null;
+    atfVideo: Video | null = null;
+    isMobile = false;
 
     constructor(
         private router: Router,
@@ -43,6 +45,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         private feedback: FeedbackService,
         private translate: TranslateService,
         private backgroundService: BackgroundService,
+        private videoTrans: VideoTransferService
     ) { }
 
     /**
@@ -67,6 +70,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.sliderRefs.changes.subscribe(() => this.reinitializeSliders());
         this.lazyVideos.changes.subscribe(() => this.initLazyVideoLoading());
+        this.updateScreenWidth();
     }
 
     /**
@@ -153,7 +157,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getNewestVideo() {
         this.atfVideo = this.videosByCategory['new'][0];
-        this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        if (this.isMobile) {
+            this.backgroundService.setDynamicBackground('');
+        } else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
     }
 
     /**
@@ -257,8 +263,13 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param video a video for display
      */
     putVideoAtf(video: Video) {
-        this.atfVideo = video;
-        this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        if (this.isMobile && this.atfVideo) {
+            this.videoTrans.setVideo(this.atfVideo);
+            this.router.navigate(['/info']);
+        } else {
+            this.atfVideo = video;
+            this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        }
     }
 
     /**
@@ -271,10 +282,18 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Aktualisiert die aktuelle Browsergröße
+     * Aktualisiert die aktuelle Browsergröße, wenn mobile entfernt das Titelbild
      */
     updateScreenWidth() {
         this.currScreenWidth = window.innerWidth;
+        if (this.currScreenWidth > 768) {
+            this.isMobile = false;
+            if (this.atfVideo) this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        }
+        else {
+            this.isMobile = true;
+            this.backgroundService.setDynamicBackground('');
+        }
     }
 
     /**

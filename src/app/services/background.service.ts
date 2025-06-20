@@ -30,6 +30,7 @@ export class BackgroundService {
      * @param img the location of the image in the folder
      */
     public setDynamicBackground(img: string) {
-        this.backgroundUrl.next(img);
+        if (img === '') this.backgroundUrl.next('../assets/img/backgroundTrans.png');
+        else this.backgroundUrl.next(img);
     }
 }
