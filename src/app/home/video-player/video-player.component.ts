@@ -8,12 +8,11 @@ import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import "videojs-hotkeys";
 
-
 @Component({
     selector: 'app-video-player',
     imports: [RouterLink],
     templateUrl: './video-player.component.html',
-    styleUrl: './video-player.component.scss'
+    styleUrls: ['./video-player.component.scss', './video-player-js.component.scss']
 })
 export class VideoPlayerComponent {
     @ViewChild('videoRef') videoElement!: ElementRef<HTMLVideoElement>;
@@ -108,26 +107,32 @@ export class VideoPlayerComponent {
     loadVideo() {
         if (this.videoUrl && this.videoElement) {
             if (this.player) this.player.dispose();
-            this.player = videojs(this.videoElement.nativeElement, {
-                sources: [{ src: this.videoUrl, type: 'video/mp4' }], controls: true,
-                controlBar: {
-                    children: [
-                        'playToggle',
-                        'SkipBackButton',
-                        'progressControl',
-                        'SkipForwardButton',
-                        'volumePanel',
-                        'fullscreenToggle'
-                    ]
-                },
-                preload: 'auto', autoplay: true, responsive: true, fluid: true
-            });
+            this.player = videojs(this.videoElement.nativeElement, this.getPlayerOptions());
             this.player.ready(() => {
                 this.player!.hotkeys({
                     volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false
                 });
             });
         } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');
+    }
+
+    /**
+     * gets the player options for the videojs player
+     * 
+     * @returns the configuration of the player
+     */
+    getPlayerOptions() {
+        return {
+            sources: [{ src: this.videoUrl, type: 'video/mp4' }], controls: true, fluid: true,
+            playbackRates: [0.5, 1, 1.5, 2], preload: 'auto', autoplay: true, responsive: true,
+            controlBar: {
+                skipButtons: { forward: 10, backward: 10 },
+                children: [
+                    'playToggle', 'skipBackward', 'skipForward', 'progressControl',
+                    'volumePanel', 'playbackRateMenuButton', 'fullscreenToggle'
+                ]
+            },
+        };
     }
 
     /**
