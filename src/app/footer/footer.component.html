@@ -1,4 +1,4 @@
-<section [ngClass]="{ 'toSide': currentUrl === '/main' }">
+<section [ngClass]="{ 'toSide': currentUrl === '/main', 'dNone': currentUrl === '/info' }">
 
     <a [routerLink]="'/privacy'">{{ 'footer.privacy' | translate }}</a>
     <a [routerLink]="'/legal'">{{ 'footer.legal' | translate }}</a>

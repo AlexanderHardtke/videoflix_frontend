@@ -263,11 +263,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param video a video for display
      */
     putVideoAtf(video: Video) {
+        this.atfVideo = video;
         if (this.isMobile && this.atfVideo) {
             this.videoTrans.setVideo(this.atfVideo);
             this.router.navigate(['/info']);
         } else {
-            this.atfVideo = video;
             this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
         }
     }

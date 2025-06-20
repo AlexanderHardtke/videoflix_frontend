@@ -18,6 +18,7 @@ export class BackgroundService {
             '/forgot': '../assets/img/background2.jpg',
             '/signUp': '../assets/img/background3.jpg',
             '/check': '../assets/img/background3.jpg',
+            '/info': '../assets/img/backgroundTrans.png',
         };
         const fallback = '../assets/img/background.jpg';
         const bg = backgrounds[route] ?? fallback;

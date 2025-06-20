@@ -1,5 +1,5 @@
 .invisHeader {
-    background: linear-gradient(180deg, var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(180deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
     position: fixed;
     top: 0;
     z-index: 3;
@@ -8,7 +8,7 @@
 }
 
 .invisBottom {
-    background: linear-gradient(0deg, var(--black) 50%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(0deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
     position: absolute;
     bottom: -20px;
     z-index: 0;
@@ -270,15 +270,6 @@ section {
 }
 
 @media screen and (max-width: 480px) {
-    header {
-        padding-left: 16px;
-        height: calc(100svh - 296px);
-
-        h2 {
-            font-size: 48px;
-        }
-    }
-
     section {
         padding-inline: 0;
     }

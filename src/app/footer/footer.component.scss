@@ -28,3 +28,9 @@ a:nth-child(2) {
 .toSide {
     justify-content: right;
 }
+
+@media screen and (max-width: 768px) {
+    .dNone {
+        display: none;
+    }
+}
