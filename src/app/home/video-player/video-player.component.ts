@@ -112,6 +112,7 @@ export class VideoPlayerComponent {
                 this.player!.hotkeys({
                     volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false
                 });
+                this.customizeFullscreenButton();
             });
         } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');
     }
@@ -133,6 +134,56 @@ export class VideoPlayerComponent {
                 ]
             },
         };
+    }
+
+    /**
+     * changes the orientation of the device on mopbile after entering fullscreen
+     * and sets it back after leaving it
+     * 
+     * @returns
+     */
+    customizeFullscreenButton() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const fsToggle = (this.player as any).controlBar.fullscreenToggle;
+        if (!fsToggle) return;
+        fsToggle.handleClick = async () => {
+            if (!this.player.isFullscreen()) {
+                await this.player.requestFullscreen();
+                if (isMobile) this.lockLandscape();
+            } else {
+                await this.player.exitFullscreen();
+                if (isMobile && screen.orientation) screen.orientation.unlock();
+            }
+        };
+        this.checkFullscreenChange(isMobile)
+    }
+
+    /**
+     * locks the device in landscape mode
+     */
+    lockLandscape() {
+        if ('orientation' in screen && 'lock' in screen.orientation) {
+            setTimeout(async () => {
+                try {
+                    await (screen.orientation as any).lock('landscape');
+                } catch (err: any) {
+                    console.warn('Orientation lock failed:', err.name, err.message);
+                }
+            }, 100);
+        }
+    }
+
+    /**
+     * checks if the fullscreen is chnaged off and removes the screenlock
+     * 
+     * @param isMobile 
+     */
+    checkFullscreenChange(isMobile: boolean) {
+        this.player.on('fullscreenchange', () => {
+            if (!this.player.isFullscreen() && isMobile && screen.orientation) {
+                setTimeout(() => screen.orientation.unlock(), 100);
+            }
+        });
     }
 
     /**
