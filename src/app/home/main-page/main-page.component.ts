@@ -337,35 +337,36 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     initializeSliders() {
         if (!this.sliderRefs) return;
-
         const sliderCategories = this.categories.filter(cat => this.shouldShowSlider(cat));
-
         this.sliderRefs.forEach((sliderRef, index) => {
             try {
                 const category = sliderCategories[index];
-                const loopEnabled = this.nextPage === null;
-
-                const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: loopEnabled,
-                    mode: "snap",
-                    slides: { perView: "auto", spacing: 16 },
-                    created: (sliderInstance) => {
-                        if (sliderInstance.track.details.slides.length - 1) {
-                            this.observeLastSlide(sliderRef.nativeElement);
-                        }
-
-                        const savedIndex = this.sliderPositions[category] ?? 0;
-                        sliderInstance.moveToIdx(savedIndex);
-                    }
-                });
-
-                this.categorySliders[category] = slider;
-                this.sliders.push(slider);
-
+                this.createSlider(sliderRef, category);
             } catch (error) {
                 console.error(`Error initializing slider ${index}:`, error);
             }
         });
+    }
+
+    /**
+     * creates a new slider 
+     * 
+     * @param sliderRef 
+     * @param category 
+     */
+    createSlider(sliderRef: ElementRef, category: string) {
+        const loopEnabled = this.nextPage === null;
+        const savedIndex = this.sliderPositions[category] ?? 0;
+        const slider = new KeenSlider(sliderRef.nativeElement, {
+            loop: loopEnabled, mode: "snap", slides: { perView: "auto", spacing: 16 }, initial: savedIndex,
+            created: (sliderInstance) => {
+                if (sliderInstance.track.details.slides.length - 1) {
+                    this.observeLastSlide(sliderRef.nativeElement);
+                }
+            }
+        });
+        this.categorySliders[category] = slider;
+        this.sliders.push(slider);
     }
 
     /**
