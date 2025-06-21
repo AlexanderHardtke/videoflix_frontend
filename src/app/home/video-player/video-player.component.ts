@@ -128,8 +128,8 @@ export class VideoPlayerComponent {
             controlBar: {
                 skipButtons: { forward: 10, backward: 10 },
                 children: [
-                    'playToggle', 'skipBackward', 'skipForward', 'progressControl',
-                    'volumePanel', 'playbackRateMenuButton', 'fullscreenToggle'
+                    'playToggle', 'skipBackward', 'skipForward', 'volumePanel',
+                    'progressControl', 'playbackRateMenuButton', 'fullscreenToggle'
                 ]
             },
         };
