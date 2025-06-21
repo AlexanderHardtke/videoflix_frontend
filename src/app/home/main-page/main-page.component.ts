@@ -24,6 +24,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     categorySliders: { [category: string]: KeenSliderInstance } = {};
     sliders: KeenSliderInstance[] = [];
     categories = VIDEO_CATEGORIES;
+    sliderPositions: Record<string, number> = {};
     videosByCategory: Record<string, Video[]> = Object.fromEntries(
         VIDEO_CATEGORIES.map(category => [category, []])
     );
@@ -211,9 +212,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             img?.classList.add('hide');
             video.classList.remove('hide');
             video.play().catch(err => {
-                if (err.name !== 'AbortError') {
-                    console.warn('Video konnte nicht abgespielt werden:', err);
-                }
+                if (err.name !== 'AbortError') console.warn('Video konnte nicht abgespielt werden:', err);
             });
         }
     }
@@ -317,10 +316,16 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Slider neu initialisieren
+     * Slider neu initialisieren und den index speichern
      */
     reinitializeSliders() {
-        this.sliders.forEach(slider => slider.destroy());
+        this.sliders.forEach((slider, index) => {
+            const category = this.categories.filter(cat => this.shouldShowSlider(cat))[index];
+            if (slider) {
+                this.sliderPositions[category] = slider.track.details.rel;
+                slider.destroy();
+            }
+        });
         this.sliders = [];
         setTimeout(() => this.initializeSliders(), 100);
     }
@@ -332,39 +337,56 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     initializeSliders() {
         if (!this.sliderRefs) return;
+
         const sliderCategories = this.categories.filter(cat => this.shouldShowSlider(cat));
+
         this.sliderRefs.forEach((sliderRef, index) => {
             try {
                 const category = sliderCategories[index];
                 const loopEnabled = this.nextPage === null;
+
                 const slider = new KeenSlider(sliderRef.nativeElement, {
-                    loop: loopEnabled, mode: "snap",
-                    slides: { perView: "auto", spacing: 16, },
-                    created: (slider) => { slider.track.details.slides.length - 1 && this.observeLastSlide(sliderRef.nativeElement); }
+                    loop: loopEnabled,
+                    mode: "snap",
+                    slides: { perView: "auto", spacing: 16 },
+                    created: (sliderInstance) => {
+                        if (sliderInstance.track.details.slides.length - 1) {
+                            this.observeLastSlide(sliderRef.nativeElement);
+                        }
+
+                        const savedIndex = this.sliderPositions[category] ?? 0;
+                        sliderInstance.moveToIdx(savedIndex);
+                    }
                 });
+
                 this.categorySliders[category] = slider;
+                this.sliders.push(slider);
+
             } catch (error) {
                 console.error(`Error initializing slider ${index}:`, error);
             }
         });
     }
 
+    /**
+     * sets an Observer on the slider to determine if the user has reached the last one
+     * then gets the next videos and reinitilaizes the slider
+     * 
+     * @param sliderElement 
+     * @returns 
+     */
     observeLastSlide(sliderElement: HTMLElement) {
         const slides = sliderElement.querySelectorAll('.keen-slider__slide');
-        const lastSlide = slides[slides.length - 1];
+        const lastSlide = slides[slides.length - 2];
         if (!lastSlide) return;
-
         const observer = new IntersectionObserver(async (entries, obs) => {
             if (entries[0].isIntersecting && this.nextPage) {
                 obs.disconnect();
                 const token = localStorage.getItem('auth');
-                if (token) {
-                    await this.getVideos(token);
-                }
+                if (token) await this.getVideos(token);
                 this.reinitializeSliders();
             }
         }, { threshold: 1.0 });
-
         observer.observe(lastSlide);
     }
 }
