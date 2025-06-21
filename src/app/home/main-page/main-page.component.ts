@@ -113,6 +113,12 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         } else console.warn(`No slider found for category ${category}`);
     }
 
+    /**
+     * geres the videos sorted by the category
+     * 
+     * @param category
+     * @returns videos-array
+     */
     getVisibleVideos(category: string): Video[] {
         return this.videosByCategory[category] || [];
     }
@@ -272,7 +278,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Listener für das verändern der Browsergröße
+     * event listener for resizing the brwoser window to adjust the sliders
      */
     @HostListener('window:resize', ['$event'])
     onResize(event: Event) {
@@ -281,7 +287,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Aktualisiert die aktuelle Browsergröße, wenn mobile entfernt das Titelbild
+     * updates the screen width and setss the dynamic background if user is on mobile
      */
     updateScreenWidth() {
         this.currScreenWidth = window.innerWidth;
@@ -296,7 +302,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Bestimmt die minimale Anzahl Videos basierend auf der Browsergröße
+     * get the minimum videos for the current screen size to be slided
      */
     getMinVideosForCurrentScreen(): number {
         const screenWidth = this.currScreenWidth;
@@ -307,7 +313,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Prüft ob für eine Kategorie genügend Videos für Slider vorhanden sind
+     * checks if the slider is active or they are not enough videos
      */
     shouldShowSlider(cat: string): boolean {
         const videos = this.videosByCategory[cat];
@@ -316,7 +322,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Slider neu initialisieren und den index speichern
+     * reinitalizes the sliders
      */
     reinitializeSliders() {
         this.sliders.forEach((slider, index) => {
