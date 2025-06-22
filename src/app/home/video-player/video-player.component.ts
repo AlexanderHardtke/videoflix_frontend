@@ -109,6 +109,8 @@ export class VideoPlayerComponent {
             if (this.player) this.player.dispose();
             this.player = videojs(this.videoElement.nativeElement, this.getPlayerOptions());
             this.player.ready(() => {
+                const startTime = this.video?.watched_until ?? 0;
+                this.player!.currentTime(startTime);
                 this.player!.hotkeys({
                     volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false
                 });
