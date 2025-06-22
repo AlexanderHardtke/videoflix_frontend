@@ -1,5 +1,5 @@
 .invis-header {
-    background: linear-gradient(180deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(180deg, var(--black) 30%, var(--fade-black) 100%);
     position: fixed;
     top: 0;
     z-index: 3;
@@ -8,7 +8,7 @@
 }
 
 .invis-bottom {
-    background: linear-gradient(0deg, var(--black) 30%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(0deg, var(--black) 30%, var(--fade-black) 100%);
     position: absolute;
     bottom: -20px;
     z-index: 0;
@@ -270,7 +270,26 @@ section {
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-height: 800px) and (min-width: 768px) {
+    header {
+        h2 {
+            font-size: 56px;
+            margin-block: 8px;
+        }
+    }
+}
+
+@media screen and (max-height: 640px) and (min-width: 768px) {
+    header {
+        h2 {
+            font-size: 44px;
+            margin-block: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait),
+screen and (max-width: 1024px) and (orientation: landscape) {
     section {
         padding-inline: 18px;
     }

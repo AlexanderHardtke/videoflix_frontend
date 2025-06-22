@@ -291,13 +291,13 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     updateScreenWidth() {
         this.currScreenWidth = window.innerWidth;
-        if (this.currScreenWidth > 768) {
-            this.isMobile = false;
-            if (this.atfVideo) this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
-        }
-        else {
+        if (this.currScreenWidth < 769 || this.currScreenWidth < 1025 && window.innerHeight < 769 ) {
             this.isMobile = true;
             this.backgroundService.setDynamicBackground('');
+        }
+        else {
+            this.isMobile = false;
+            if (this.atfVideo) this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
         }
     }
 

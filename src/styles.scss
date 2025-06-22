@@ -1,6 +1,7 @@
 html.darkmode {
     --white: #ffffff;
     --black: #000000;
+    --fade-black:rgba(0, 0, 0, 0.1);
     --error-red: #FF002E;
     --green: #4CAF50;
     --purple: #2E3EDF;
@@ -14,6 +15,7 @@ html.darkmode {
 html.lightmode {
     --white: #121212;
     --black: #ffffff;
+    --fade-black:rgba(255, 255, 255, 0.1) ;
     --error-red: #FF3B30;
     --green: #66BB6A;
     --purple: #7c8fff;
