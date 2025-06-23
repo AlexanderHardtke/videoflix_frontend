@@ -3,6 +3,7 @@ import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VideoDetail } from '../../services/video.model';
+import { env } from '../../../../src/environments/environment';
 import Player from "video.js/dist/types/player";
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
@@ -222,8 +223,8 @@ export class VideoPlayerComponent {
         const token = localStorage.getItem('auth');
         if (!token || !this.video?.id) return;
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.patch('/api/watched/' + this.video.watched_until_id + '/', {
-            watched_until: currentTime
+        this.http.patch(env.url + '/api/watched/' + this.video.watched_until_id + '/', {
+           "watched_until": currentTime
         }, { headers }).subscribe({
             error: err => console.warn('Fehler beim Speichern des Fortschritts:', err)
         });
