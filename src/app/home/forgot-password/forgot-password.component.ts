@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,10 +30,9 @@ export class ForgotPasswordComponent {
         if (this.isLoading) return;
         this.isLoading = true;
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.http.post(env.url + 'api/reset/', this.form).subscribe({
-            next: (response: any) => {
-                this.successMail(response)
-            },
+        const headers = new HttpHeaders({ 'Accept-Language': this.form.lang });
+        this.http.post(env.url + 'api/reset/', this.form, { headers }).subscribe({
+            next: (response: any) => this.successMail(response),
             error: (err) => {
                 this.feedback.showError(err.error.error);
                 this.isLoading = false;

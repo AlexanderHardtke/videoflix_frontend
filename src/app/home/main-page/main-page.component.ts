@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener, Directive } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
@@ -127,7 +127,10 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * gets the video from the backend
      */
     async getVideos(token: string) {
-        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+        const lang = localStorage.getItem('lang') || 'en';
+        const headers = new HttpHeaders()
+            .set('Authorization', `Token ${token}`)
+            .set('Accept-Language', lang);
         if (!this.nextPage) this.nextPage = env.url + 'api/videos/';
         this.http.get<VideoApiResponse>(this.nextPage, { headers }).subscribe({
             next: (videos) => this.sortVideos(videos),
@@ -291,7 +294,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     updateScreenWidth() {
         this.currScreenWidth = window.innerWidth;
-        if (this.currScreenWidth < 769 || this.currScreenWidth < 1025 && window.innerHeight < 769 ) {
+        if (this.currScreenWidth < 769 || this.currScreenWidth < 1025 && window.innerHeight < 769) {
             this.isMobile = true;
             this.backgroundService.setDynamicBackground('');
         }

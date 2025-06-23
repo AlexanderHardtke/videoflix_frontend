@@ -4,7 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { Router, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
 
@@ -31,10 +31,10 @@ export class LoginComponent {
     loginUser() {
         if (this.isLoading) return;
         this.isLoading = true;
-        this.http.post(env.url + 'api/login/', this.form).subscribe({
-            next: (response: any) => {
-                this.successLogin(response)
-            },
+        const lang = localStorage.getItem('lang') || 'en';
+        const headers = new HttpHeaders({ 'Accept-Language': lang });
+        this.http.post(env.url + 'api/login/', this.form, { headers }).subscribe({
+            next: (response: any) => this.successLogin(response),
             error: (err) => {
                 this.feedback.showError(err.error.error);
                 this.isLoading = false;

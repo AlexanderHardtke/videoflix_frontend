@@ -66,8 +66,9 @@ export class VideoPlayerComponent {
      */
     getVideoDetails(url: string) {
         const token = localStorage.getItem('auth');
+        const lang = localStorage.getItem('lang') || 'en';
         if (token) {
-            const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+            const headers = new HttpHeaders().set('Authorization', `Token ${token}`).set('Accept-Language', lang);
             this.http.get<VideoDetail>(url, { headers }).subscribe({
                 next: data => {
                     this.video = data;
@@ -93,7 +94,7 @@ export class VideoPlayerComponent {
      * @param err 
      */
     failedVideo(err: any) {
-        
+
         console.error(this.translate.instant('error.failedLoad'), err);
         this.feedback.showError(err.error.error);
         this.router.navigate(['/main']);
@@ -225,13 +226,15 @@ export class VideoPlayerComponent {
      */
     updateWatchProgress(currentTime: number) {
         const token = localStorage.getItem('auth');
+        const lang = localStorage.getItem('lang') || 'en';
         if (!token || !this.video?.id) return;
-        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.patch(env.url + '/api/wched/' + this.video.watched_until_id + '/', {
-            "watched_until": currentTime
-        }, { headers }).subscribe({
-            error: err => console.warn(this.translate.instant('error.updateVideo'), err)
-        });
+        const headers = new HttpHeaders()
+            .set('Authorization', `Token ${token}`)
+            .set('Accept-Language', lang);
+        this.http.patch(env.url + '/api/wched/' + this.video.watched_until_id + '/',
+            { "watched_until": currentTime }, { headers }).subscribe({
+                error: err => console.warn(this.translate.instant('error.updateVideo'), err)
+            });
     }
 
     /**

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,7 +38,9 @@ export class ResetPasswordComponent {
     const token = this.route.snapshot.paramMap.get('token');
     if (token) {
       this.form.token = token;
-      this.http.post(env.url + 'api/change/', this.form).subscribe({
+      const lang = localStorage.getItem('lang') || 'en';
+      const headers = new HttpHeaders({ 'Accept-Language': lang });
+      this.http.post(env.url + 'api/change/', this.form, { headers }).subscribe({
         next: (response: any) => {
           const msg = response?.message || 'Passwort erfolgreich geändert';
           this.feedback.showFeedback(msg);

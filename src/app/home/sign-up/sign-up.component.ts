@@ -4,7 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { RegistrationService } from '../../services/registration.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
@@ -51,10 +51,9 @@ export class SignUpComponent {
         if (this.isLoading) return;
         this.isLoading = true;
         this.form.lang = this.translate.currentLang || this.translate.getDefaultLang();
-        this.http.post(env.url + 'api/registration/', this.form).subscribe({
-            next: (response: any) => {
-                this.successReg(response)
-            },
+        const headers = new HttpHeaders({ 'Accept-Language': this.form.lang });
+        this.http.post(env.url + 'api/registration/', this.form, { headers }).subscribe({
+            next: (response: any) => this.successReg(response),
             error: (err) => {
                 this.feedback.showError(err.error.error);
                 this.isLoading = false;

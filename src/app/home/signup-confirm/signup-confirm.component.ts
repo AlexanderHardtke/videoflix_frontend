@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,14 +29,14 @@ export class SignupConfirmComponent {
    */
   ngOnInit() {
     const token = this.route.snapshot.paramMap.get('token');
+    const lang = localStorage.getItem('lang') || 'en';
     if (token) {
-      this.http.post(env.url + 'api/confirm/', { token }).subscribe({
+      const headers = new HttpHeaders({ 'Accept-Language': lang });
+      this.http.post(env.url + 'api/confirm/', { token }, { headers }).subscribe({
         next: (response: any) => {
           const msg = response?.message || 'Erfolgreich bestätigt';
           this.feedback.showFeedback(msg);
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 1500);
+          setTimeout(() => this.router.navigate(['/login']), 1500);
         },
         error: () => this.errorMsg = true
       });
