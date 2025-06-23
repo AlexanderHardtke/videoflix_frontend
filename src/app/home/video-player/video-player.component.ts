@@ -231,7 +231,7 @@ export class VideoPlayerComponent {
         const headers = new HttpHeaders()
             .set('Authorization', `Token ${token}`)
             .set('Accept-Language', lang);
-        this.http.patch(env.url + '/api/wched/' + this.video.watched_until_id + '/',
+        this.http.patch(env.url + 'api/watched/' + this.video.watched_until_id + '/',
             { "watched_until": currentTime }, { headers }).subscribe({
                 error: err => console.warn(this.translate.instant('error.updateVideo'), err)
             });
