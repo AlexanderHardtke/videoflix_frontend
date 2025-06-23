@@ -9,7 +9,6 @@ import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { VideoTransferService } from '../../services/video-transfer.service';
 
-
 @Component({
     selector: 'app-main-page',
     imports: [TranslatePipe],
@@ -51,8 +50,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
     /**
      * checks for a token and either rejects the user or gets the videos
-     * 
-     * @returns 
      */
     ngOnInit() {
         const token = localStorage.getItem('auth');
@@ -154,9 +151,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             }
             if (this.isValidCategory(video.video_type)) {
                 this.videosByCategory[video.video_type].push(video);
-                setTimeout(() => {
-                    this.categorySliders[video.video_type]?.update();
-                }, 0);
+                setTimeout(() => this.categorySliders[video.video_type]?.update(), 0);
             }
         });
         this.getNewestVideo();
@@ -167,9 +162,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getNewestVideo() {
         this.atfVideo = this.videosByCategory['new'][0];
-        if (this.isMobile) {
-            this.backgroundService.setDynamicBackground('');
-        } else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        if (this.isMobile) this.backgroundService.setDynamicBackground('');
+        else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
     }
 
     /**
@@ -260,9 +254,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @param videoUrl the url for the choosen video
      */
     playVideo(videoUrl: string) {
-        this.router.navigate(['/video'], {
-            queryParams: { url: videoUrl }
-        });
+        this.router.navigate(['/video'], { queryParams: { url: videoUrl } });
     }
 
     /**
@@ -275,9 +267,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         if (this.isMobile && this.atfVideo) {
             this.videoTrans.setVideo(this.atfVideo);
             this.router.navigate(['/info']);
-        } else {
-            this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
-        }
+        } else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
     }
 
     /**
@@ -341,8 +331,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
     /**
      * initialize the keensliders for each category
-     * 
-     * @returns null if slider haqs no ref
      */
     initializeSliders() {
         if (!this.sliderRefs) return;
@@ -382,8 +370,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * sets an Observer on the slider to determine if the user has reached the last one
      * then gets the next videos and reinitilaizes the slider
      * 
-     * @param sliderElement 
-     * @returns 
+     * @param sliderElement
      */
     observeLastSlide(sliderElement: HTMLElement) {
         const slides = sliderElement.querySelectorAll('.keen-slider__slide');
@@ -398,5 +385,16 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             }
         }, { threshold: 1.0 });
         observer.observe(lastSlide);
+    }
+
+    /**
+     * calculates the percentage of the video that was watched by the user
+     * 
+     * @param video the video
+     * @returns percentage watched from 1 to 100
+     */
+    getWatchedPercentage(video: Video): number {
+        if (!video.watched_until || !video['duration']) return 0;
+        return Math.min((video.watched_until / video['duration']) * 100, 100);
     }
 }

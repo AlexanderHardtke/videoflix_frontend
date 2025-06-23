@@ -1,4 +1,4 @@
-// DO not change the 'new' category
+// DO NOT change the 'new' category
 export const VIDEO_CATEGORIES = ['new', 'training', 'animals', 'nature', 'tutorials'];
 type VideoCategory = typeof VIDEO_CATEGORIES[number];
 
@@ -9,6 +9,8 @@ export interface Video {
   image: string;
   big_image: string;
   file_preview144p: string;
+  watched_until: number | null;
+  duration: number;
   description_en: string;
   description_de: string;
   uploaded_at: string;
