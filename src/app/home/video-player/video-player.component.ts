@@ -201,13 +201,13 @@ export class VideoPlayerComponent {
     }
 
     /**
-     * creates a timer in the video to update every 8 seconds
+     * creates a timer in the video to update every 6 seconds
      */
     watchTimer() {
         let lastSentTime = 0;
         this.player.on('timeupdate', () => {
             const currentTime = Math.floor(this.player!.currentTime() ?? 0);
-            if (currentTime - lastSentTime >= 8 && currentTime > lastSentTime) {
+            if (currentTime - lastSentTime >= 6 && currentTime > lastSentTime) {
                 lastSentTime = currentTime;
                 this.updateWatchProgress(currentTime);
             }
