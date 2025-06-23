@@ -67,6 +67,9 @@
                                 <img [src]="video.image" [alt]="video.name" loading="lazy">
                                 <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.file_preview144p"
                                     loop muted playsinline></video>
+                                <div class="progress-container">
+                                    <div class="progress-bar" [style.width.%]="getWatchedPercentage(video)"></div>
+                                </div>
                                 <h4>{{ video.name }}</h4>
                             </div>
                         }
