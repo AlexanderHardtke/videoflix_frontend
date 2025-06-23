@@ -17,16 +17,19 @@
 }
 
 .progress-container {
+    display: none;
     height: 4px;
-    background-color: #ddd;
+    background-color: var(--white);
     border-radius: 2px;
     overflow: hidden;
-    margin-top: 4px;
+    position: relative;
+    z-index: 3;
+    opacity: 0.7;
 }
 
 .progress-bar {
     height: 100%;
-    background-color: #ff4444;
+    background-color: var(--purple);
     transition: width 0.3s ease;
 }
 
@@ -108,6 +111,13 @@ section {
 
     &:hover,
     &:focus {
+        .progress-container {
+            display: block;
+        }
+    }
+
+    &:hover,
+    &:focus {
         h4 {
             display: flex;
             background-color: var(--black);
@@ -137,7 +147,7 @@ section {
     h4 {
         font-size: 16px;
         position: relative;
-        top: 100px;
+        top: 96px;
         color: var(--white);
         display: none;
         justify-content: center;
@@ -178,7 +188,7 @@ section {
         height: 162px;
 
         h4 {
-            top: 144px;
+            top: 140px;
         }
     }
 
@@ -226,7 +236,7 @@ section {
         height: 198px;
 
         h4 {
-            top: 178px;
+            top: 174px;
         }
     }
 
@@ -254,7 +264,7 @@ section {
         height: 252px;
 
         h4 {
-            top: 234px;
+            top: 230px;
         }
     }
 
@@ -279,7 +289,7 @@ section {
         height: 108px;
 
         h4 {
-            top: 88px;
+            top: 84px;
         }
     }
 }
@@ -335,7 +345,7 @@ screen and (max-width: 1024px) and (orientation: landscape) {
         height: 96px;
 
         h4 {
-            top: 76px;
+            top: 72px;
         }
     }
 }
