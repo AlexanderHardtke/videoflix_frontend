@@ -3,11 +3,13 @@ import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VideoDetail } from '../../services/video.model';
+import { TranslateService } from '@ngx-translate/core';
 import { env } from '../../../../src/environments/environment';
 import Player from "video.js/dist/types/player";
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import "videojs-hotkeys";
+
 
 @Component({
     selector: 'app-video-player',
@@ -30,7 +32,8 @@ export class VideoPlayerComponent {
         private router: Router,
         private feedback: FeedbackService,
         private route: ActivatedRoute,
-        private http: HttpClient
+        private http: HttpClient,
+        private translate: TranslateService,
     ) { }
 
     /**
@@ -43,7 +46,7 @@ export class VideoPlayerComponent {
                 this.videoUrl = url;
                 this.getVideoDetails(url);
             } else {
-                this.feedback.showError('Keine Videodaten gefunden');
+                this.feedback.showError(this.translate.instant('error.noVideo'));
                 this.router.navigate(['/main']);
             }
         });
@@ -80,7 +83,7 @@ export class VideoPlayerComponent {
      * removes the user from the page and brings him to the start page
      */
     removeUserFromPage() {
-        this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
+        this.feedback.showError(this.translate.instant('error.noToken'));
         this.router.navigate(['']);
     }
 
@@ -90,7 +93,8 @@ export class VideoPlayerComponent {
      * @param err 
      */
     failedVideo(err: any) {
-        console.error('Failed to load video details:', err);
+        
+        console.error(this.translate.instant('error.failedLoad'), err);
         this.feedback.showError(err.error.error);
         this.router.navigate(['/main']);
     }
@@ -123,7 +127,7 @@ export class VideoPlayerComponent {
                 this.customizeFullscreenButton();
                 this.watchTimer();
             });
-        } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');
+        } else if (!this.videoUrl) this.feedback.showError(this.translate.instant('error.noVideo'));
     }
 
     /**
@@ -176,7 +180,7 @@ export class VideoPlayerComponent {
                 try {
                     await (screen.orientation as any).lock('landscape');
                 } catch (err: any) {
-                    console.warn('Orientation lock failed:', err.name, err.message);
+                    console.warn(this.translate.instant('error.orientation'), err.name, err.message);
                 }
             }, 100);
         }
@@ -223,10 +227,10 @@ export class VideoPlayerComponent {
         const token = localStorage.getItem('auth');
         if (!token || !this.video?.id) return;
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
-        this.http.patch(env.url + '/api/watched/' + this.video.watched_until_id + '/', {
-           "watched_until": currentTime
+        this.http.patch(env.url + '/api/wched/' + this.video.watched_until_id + '/', {
+            "watched_until": currentTime
         }, { headers }).subscribe({
-            error: err => console.warn('Fehler beim Speichern des Fortschritts:', err)
+            error: err => console.warn(this.translate.instant('error.updateVideo'), err)
         });
     }
 

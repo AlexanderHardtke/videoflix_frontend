@@ -57,7 +57,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         const token = localStorage.getItem('auth');
         if (!token) {
-            this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
+            this.feedback.showError(this.translate.instant('error.noToken'));
             this.router.navigate(['']);
             return
         }
@@ -110,7 +110,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         if (slider) {
             if (direction === 'left') slider.prev();
             else slider.next();
-        } else console.warn(`No slider found for category ${category}`);
+        } else console.warn(this.translate.instant('error.noToken') + `${category}`);
     }
 
     /**
@@ -218,7 +218,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             img?.classList.add('hide');
             video.classList.remove('hide');
             video.play().catch(err => {
-                if (err.name !== 'AbortError') console.warn('Video konnte nicht abgespielt werden:', err);
+                if (err.name !== 'AbortError') console.warn(this.translate.instant('error.videoPlay'), err);
             });
         }
     }
@@ -349,7 +349,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
                 const category = sliderCategories[index];
                 this.createSlider(sliderRef, category);
             } catch (error) {
-                console.error(`Error initializing slider ${index}:`, error);
+                console.error(this.translate.instant('error.iniSlider') + `${index}:`, error);
             }
         });
     }

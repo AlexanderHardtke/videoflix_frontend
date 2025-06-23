@@ -29,7 +29,7 @@ export class VideoInfoComponent {
   ngOnInit() {
     const token = localStorage.getItem('auth');
     if (!token) {
-      this.feedback.showError('Kein Token gefunden, Zugriff verweigert');
+      this.feedback.showError(this.translate.instant('error.noToken'));
       this.router.navigate(['']);
     } else if (this.videoTrans.getVideo()) this.video = this.videoTrans.getVideo();
     else this.router.navigate(['/main']);
