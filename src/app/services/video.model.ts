@@ -15,6 +15,7 @@ export interface Video {
 }
 
 export interface VideoDetail {
+  id: number;
   name: string;
   video_urls: {
     "1080p": string;
@@ -23,6 +24,7 @@ export interface VideoDetail {
     "240p": string;
   };
   watched_until: number;
+  watched_until_id: number;
 }
 
 export interface VideoApiResponse {

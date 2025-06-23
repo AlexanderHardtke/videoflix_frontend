@@ -49,6 +49,13 @@ export class VideoPlayerComponent {
     }
 
     /**
+     * starts the video after the component is fully loaded
+     */
+    ngAfterViewInit() {
+        this.resetTimeout();
+    }
+
+    /**
      * checks the authentication and gets the video-detail from the backend and loads the video
      * 
      * @param url the url from the http
@@ -111,10 +118,9 @@ export class VideoPlayerComponent {
             this.player.ready(() => {
                 const startTime = this.video?.watched_until ?? 0;
                 this.player!.currentTime(startTime);
-                this.player!.hotkeys({
-                    volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false
-                });
+                this.player!.hotkeys({ volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false });
                 this.customizeFullscreenButton();
+                this.watchTimer();
             });
         } else if (!this.videoUrl) this.feedback.showError('Keine gültige Video-URL gefunden');
     }
@@ -189,10 +195,38 @@ export class VideoPlayerComponent {
     }
 
     /**
-     * starts the video after the component is fully loaded
+     * creates a timer in the video to update every 8 seconds
      */
-    ngAfterViewInit() {
-        this.resetTimeout();
+    watchTimer() {
+        let lastSentTime = 0;
+        this.player.on('timeupdate', () => {
+            const currentTime = Math.floor(this.player!.currentTime() ?? 0);
+            if (currentTime - lastSentTime >= 8 && currentTime > lastSentTime) {
+                lastSentTime = currentTime;
+                this.updateWatchProgress(currentTime);
+            }
+        });
+        this.player.on('ended', () => {
+            const duration = Math.floor(this.player!.duration() ?? 0);
+            this.updateWatchProgress(duration);
+        });
+    }
+
+    /**
+     * updates the wached_until in the backend to remember where the user has stopped watching
+     * 
+     * @param currentTime the current time in the video
+     * @returns 
+     */
+    updateWatchProgress(currentTime: number) {
+        const token = localStorage.getItem('auth');
+        if (!token || !this.video?.id) return;
+        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+        this.http.patch('/api/watched/' + this.video.watched_until_id + '/', {
+            watched_until: currentTime
+        }, { headers }).subscribe({
+            error: err => console.warn('Fehler beim Speichern des Fortschritts:', err)
+        });
     }
 
     /**
