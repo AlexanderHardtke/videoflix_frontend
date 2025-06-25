@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { StartPageComponent } from './start-page.component';
 
@@ -8,9 +9,16 @@ describe('StartPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StartPageComponent]
+      imports: [
+        StartPageComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        })]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(StartPageComponent);
     component = fixture.componentInstance;

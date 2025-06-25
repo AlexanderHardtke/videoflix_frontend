@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VideoInfoComponent } from './video-info.component';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('VideoInfoComponent', () => {
   let component: VideoInfoComponent;
@@ -8,9 +9,16 @@ describe('VideoInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VideoInfoComponent]
+      imports: [
+        VideoInfoComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        })]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(VideoInfoComponent);
     component = fixture.componentInstance;

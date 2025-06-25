@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LegalNoticeComponent } from './legal-notice.component';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('LegalNoticeComponent', () => {
   let component: LegalNoticeComponent;
@@ -8,9 +9,16 @@ describe('LegalNoticeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LegalNoticeComponent]
+      imports: [
+        LegalNoticeComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        })]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LegalNoticeComponent);
     component = fixture.componentInstance;

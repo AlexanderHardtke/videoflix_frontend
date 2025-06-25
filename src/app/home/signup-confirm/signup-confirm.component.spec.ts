@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignupConfirmComponent } from './signup-confirm.component';
+import { RouterModule } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('SignupConfirmComponent', () => {
   let component: SignupConfirmComponent;
@@ -8,9 +11,20 @@ describe('SignupConfirmComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignupConfirmComponent]
+      providers: [
+        provideHttpClient()
+      ],
+      imports: [
+        SignupConfirmComponent,
+        RouterModule.forRoot([]),
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        })]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SignupConfirmComponent);
     component = fixture.componentInstance;
