@@ -4,7 +4,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
-import { Video, VideoApiResponse, VIDEO_CATEGORIES } from '../../services/video.model';
+import { Video, VideoApiResponse, VIDEO_CATEGORIES, minVidForRes } from '../../services/video.model';
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { VideoTransferService } from '../../services/video-transfer.service';
@@ -27,17 +27,12 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     videosByCategory: Record<string, Video[]> = Object.fromEntries(
         VIDEO_CATEGORIES.map(category => [category, []])
     );
-    minVidForRes = [
-        { maxWidth: 400, minVideos: 2 },
-        { maxWidth: 700, minVideos: 3 },
-        { maxWidth: 1100, minVideos: 4 },
-        { maxWidth: 1920, minVideos: 5 },
-        { maxWidth: Infinity, minVideos: 6 }
-    ];
     nextPage: string | null = null;
     currScreenWidth = 0;
     atfVideo: Video | null = null;
     isMobile = false;
+    lastSlideObservers: IntersectionObserver[] = [];
+    private token: string | null = null;
 
     constructor(
         private router: Router,
@@ -52,14 +47,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * checks for a token and either rejects the user or gets the videos
      */
     ngOnInit() {
-        const token = localStorage.getItem('auth');
-        if (!token) {
+        this.token = localStorage.getItem('auth');
+        if (!this.token) {
             this.feedback.showError(this.translate.instant('error.noToken'));
             this.router.navigate(['']);
             return
         }
         this.resetCategories();
-        this.getVideos(token);
+        this.getVideos(this.token);
         this.updateScreenWidth();
     }
 
@@ -72,6 +67,16 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * destroys all sliders on exiting the main-page
+     */
+    ngOnDestroy() {
+        this.sliders.forEach(slider => slider.destroy());
+        this.sliders = [];
+        this.lastSlideObservers.forEach(observer => observer.disconnect());
+        this.lastSlideObservers = [];
+    }
+
+    /**
      * initializes lazy video loading
      */
     initLazyVideoLoading() {
@@ -79,21 +84,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             const video = entry.target as HTMLVideoElement;
             if (entry.isIntersecting) {
                 const src = video.dataset['src'];
-                if (src && !video.src) {
-                    video.src = src;
-                }
+                if (src && !video.src) video.src = src;
                 obs.unobserve(video);
             }
         }, { threshold: 0.25 });
         this.lazyVideos.forEach(ref => observer.observe(ref.nativeElement));
-    }
-
-    /**
-     * destroys all sliders on exiting the main-page
-     */
-    ngOnDestroy() {
-        this.sliders.forEach(slider => slider.destroy());
-        this.sliders = [];
     }
 
     /**
@@ -299,7 +294,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      */
     getMinVideosForCurrentScreen(): number {
         const screenWidth = this.currScreenWidth;
-        for (const breakpoint of this.minVidForRes) {
+        for (const breakpoint of minVidForRes) {
             if (screenWidth <= breakpoint.maxWidth) return breakpoint.minVideos;
         }
         return 0;
@@ -315,9 +310,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * reinitalizes the sliders
+     * reinitalizes the sliders and the lastslideObservers
      */
     reinitializeSliders() {
+        this.lastSlideObservers.forEach(observer => observer.disconnect());
+        this.lastSlideObservers = [];
         this.sliders.forEach((slider, index) => {
             const category = this.categories.filter(cat => this.shouldShowSlider(cat))[index];
             if (slider) {
@@ -326,7 +323,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             }
         });
         this.sliders = [];
-        setTimeout(() => this.initializeSliders(), 100);
+        this.categorySliders = {};
+        setTimeout(() => this.initializeSliders(), 200);
     }
 
     /**
@@ -377,14 +375,16 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         const lastSlide = slides[slides.length - 2];
         if (!lastSlide) return;
         const observer = new IntersectionObserver(async (entries, obs) => {
-            if (entries[0].isIntersecting && this.nextPage) {
-                obs.disconnect();
-                const token = localStorage.getItem('auth');
-                if (token) await this.getVideos(token);
-                this.reinitializeSliders();
+            const entry = entries[0];
+            if (!entry.isIntersecting || !this.nextPage) return;
+            obs.disconnect();
+            if (this.token) {
+                await this.getVideos(this.token);
+                setTimeout(() => this.reinitializeSliders(), 150);
             }
-        }, { threshold: 1.0 });
+        }, { threshold: 0.8, rootMargin: '50px' });
         observer.observe(lastSlide);
+        this.lastSlideObservers.push(observer);
     }
 
     /**

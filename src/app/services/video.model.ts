@@ -2,6 +2,14 @@
 export const VIDEO_CATEGORIES = ['new', 'training', 'animals', 'nature', 'tutorials'];
 type VideoCategory = typeof VIDEO_CATEGORIES[number];
 
+export const minVidForRes = [
+  { maxWidth: 400, minVideos: 2 },
+  { maxWidth: 700, minVideos: 3 },
+  { maxWidth: 1100, minVideos: 4 },
+  { maxWidth: 1920, minVideos: 5 },
+  { maxWidth: Infinity, minVideos: 6 }
+];
+
 export interface Video {
   name: string;
   url: string;
