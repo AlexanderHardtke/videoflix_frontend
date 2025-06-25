@@ -60,6 +60,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         }
         this.resetCategories();
         this.getVideos(token);
+        this.updateScreenWidth();
     }
 
     /**
@@ -68,7 +69,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         this.sliderRefs.changes.subscribe(() => this.reinitializeSliders());
         this.lazyVideos.changes.subscribe(() => this.initLazyVideoLoading());
-        this.updateScreenWidth();
     }
 
     /**
