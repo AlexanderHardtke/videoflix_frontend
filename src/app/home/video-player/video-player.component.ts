@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { env } from '../../../../src/environments/environment';
 import Player from "video.js/dist/types/player";
 import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
 import "videojs-hotkeys";
 
 
