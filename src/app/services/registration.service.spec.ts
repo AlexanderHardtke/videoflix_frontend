@@ -13,4 +13,10 @@ describe('RegistrationService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should set the email', () => {
+    const testEmail = 'test@example.com';
+    service.setEmail(testEmail);
+    expect(service.getEmail()).toBe(testEmail);
+  })
 });
