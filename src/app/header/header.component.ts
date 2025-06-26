@@ -41,7 +41,7 @@ export class HeaderComponent {
    * gets the token from the local storage or sets it to null
    */
   checkAuthentication() {
-    let auth = localStorage.getItem("auth");
+    let auth = localStorage.getItem('auth');
     if (auth) {
       this.token = auth;
       const currentUrl = this.router.url;
@@ -73,7 +73,7 @@ export class HeaderComponent {
   public changeLang(lang: string) {
     this.translate.use(lang);
     this.currentLang = lang === 'en' ? 'en' : 'de';
-    localStorage.setItem("lang", this.currentLang);
+    localStorage.setItem('lang', this.currentLang);
   }
 
   /**
@@ -81,13 +81,12 @@ export class HeaderComponent {
    * if local storage is empty sets the color scheme
    */
   checkDarkmode() {
-    switch (localStorage.getItem("color")) {
-      case "dark":
+    switch (localStorage.getItem('color')) {
+      case 'dark':
         this.setDarkMode();
         break;
-      case "light":
+      case 'light':
         this.setLightMode();
-        this.darkmode = false;
         break;
       default: this.setColorScheme()
         break;
@@ -99,18 +98,16 @@ export class HeaderComponent {
    */
   setColorScheme() {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      localStorage.setItem("color", "dark")
       this.setDarkMode();
-    } else {
-      localStorage.setItem("color", "light")
-      this.setLightMode();
-    }
+    } else this.setLightMode();
   }
 
   /**
    * sets the colors to darkmode
    */
   setDarkMode() {
+    this.darkmode = true;
+    localStorage.setItem('color', 'dark')
     document.documentElement.classList.add('darkmode');
     document.documentElement.classList.remove('lightmode');
   }
@@ -119,6 +116,8 @@ export class HeaderComponent {
    * sets the colors to lightmode
    */
   setLightMode() {
+    this.darkmode = false;
+    localStorage.setItem('color', 'light')
     document.documentElement.classList.add('lightmode');
     document.documentElement.classList.remove('darkmode');
   }
@@ -128,13 +127,8 @@ export class HeaderComponent {
    */
   switchColorScheme() {
     this.darkmode = !this.darkmode;
-    if (this.darkmode) {
-      this.setDarkMode();
-      localStorage.setItem("color", "dark")
-    } else {
-      this.setLightMode();
-      localStorage.setItem("color", "light")
-    }
+    if (this.darkmode) this.setDarkMode();
+    else this.setLightMode();
   }
 
   /**
@@ -143,15 +137,15 @@ export class HeaderComponent {
   setTranslation() {
     this.translate.setTranslation('de', translateionsDE);
     this.translate.setTranslation('en', translateionsEN);
-    if (localStorage.getItem("lang")) {
-      let lang = localStorage.getItem("lang")
+    if (localStorage.getItem('lang')) {
+      let lang = localStorage.getItem('lang')
       if (lang) {
         this.currentLang = lang;
         this.translate.setDefaultLang(lang);
       }
     } else {
       this.translate.setDefaultLang('de');
-      localStorage.setItem("lang", 'de');
+      localStorage.setItem('lang', 'de');
     }
   }
 
