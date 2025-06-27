@@ -1,14 +1,18 @@
 # VideoflixFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+
+This project functions only in combination with my Videoflix-backend project which you can find here (`https://github.com/AlexanderHardtke/videoflix_frontend`).
+
+# Installation
+
+IMPORTANT NOTE: Activate the correct Environment for YOUR backend which you can find in src/environments/environment.ts
+It is currently set to the developement django-plattform. For more Information look at the backend README and how to install your personal backend of Videoflix.
+Copy the project after you ## Build it in the dist/ directory and load it onto your FTP-server.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -17,10 +21,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
