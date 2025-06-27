@@ -141,10 +141,10 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
         videos.forEach(video => {
             const uploadedDate = new Date(video.uploaded_at);
-            if (uploadedDate >= sevenDaysAgo && this.videosByCategory['new'].length < 10) {
-                this.videosByCategory['new'].push(video);
-            }
-            if (this.isValidCategory(video.video_type)) {
+            if (uploadedDate >= sevenDaysAgo && this.videosByCategory['new'].length < 10
+                && !this.videosByCategory['new'].some(vid => vid.url === video.url)
+            ) this.videosByCategory['new'].push(video);
+            if (this.isValidCategory(video.video_type) && !this.videosByCategory[video.video_type].some(vid => vid.url === video.url)) {
                 this.videosByCategory[video.video_type].push(video);
                 setTimeout(() => this.categorySliders[video.video_type]?.update(), 0);
             }
