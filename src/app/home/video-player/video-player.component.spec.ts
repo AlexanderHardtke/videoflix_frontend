@@ -52,14 +52,13 @@ describe('VideoPlayerComponent', () => {
   });
 
   it('should call getVideoDetails on ngOnInit if url exists', () => {
-    const spy = spyOn(component, 'getVideoDetails').and.callThrough();
+    let spy = spyOn(component, 'getVideoDetails').and.callThrough();
     component.ngOnInit();
     expect(spy).toHaveBeenCalledWith('testUrl');
   });
 
   it('should navigate to /main and show error if no URL', () => {
-    const route = TestBed.inject(ActivatedRoute);
-    spyOn(route.queryParamMap, 'subscribe').and.callFake((cb: any) => cb({ get: () => null }));
+    spyOn(TestBed.inject(ActivatedRoute).queryParamMap, 'subscribe').and.callFake((cb: any) => cb({ get: () => null }));
     component.ngOnInit();
     expect(feedbackSpy.showError).toHaveBeenCalled();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/main']);
@@ -67,7 +66,7 @@ describe('VideoPlayerComponent', () => {
 
   it('should call removeUserFromPage if no token in getVideoDetails', () => {
     spyOn(localStorage, 'getItem').and.returnValue(null);
-    const spy = spyOn(component, 'removeUserFromPage');
+    let spy = spyOn(component, 'removeUserFromPage');
     component.getVideoDetails('someUrl');
     expect(spy).toHaveBeenCalled();
   });
@@ -76,13 +75,13 @@ describe('VideoPlayerComponent', () => {
     spyOn(localStorage, 'getItem').and.callFake((key) => key === 'auth' ? 'abc' : 'en');
     component.video = { id: 1 } as any;
     component.getVideoDetails('someUrl');
-    const req = httpMock.expectOne('someUrl');
+    let req = httpMock.expectOne('someUrl');
     expect(req.request.method).toBe('GET');
     req.flush({ name: 'Test Video', video_urls: {}, watched_until: 0 });
   });
 
   it('should show and hide header correctly', fakeAsync(() => {
-    const mockHeader = {
+    let mockHeader = {
       nativeElement: { style: { transform: '', opacity: '' } },
     } as any;
     component.header = mockHeader;
@@ -96,12 +95,12 @@ describe('VideoPlayerComponent', () => {
   }));
 
   it('should update watch progress every 6 seconds on timeupdate and on ended', () => {
-    const mockPlayer: any = {
+    let mockPlayer: any = {
       on: jasmine.createSpy(), currentTime: jasmine.createSpy(),
       duration: jasmine.createSpy(), dispose: jasmine.createSpy()
     };
     component.player = mockPlayer;
-    const updateSpy = spyOn(component, 'updateWatchProgress');
+    let updateSpy = spyOn(component, 'updateWatchProgress');
     component.watchTimer();
     const timeupdateCallback = mockPlayer.on.calls.all()
       .find((call: { args: string[]; }) => call.args[0] === 'timeupdate').args[1];

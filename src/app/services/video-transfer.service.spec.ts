@@ -17,7 +17,7 @@ describe('VideoTransferService', () => {
     });
 
     it('should set the video', () => {
-        const testVideo: Video = {
+        let testVideo: Video = {
             name: 'Test Video',
             url: 'https://example.com/video.mp4',
             video_type: 'training',

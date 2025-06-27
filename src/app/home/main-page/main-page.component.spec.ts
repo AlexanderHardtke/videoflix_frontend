@@ -83,8 +83,7 @@ describe('MainPageComponent', () => {
   });
 
   it('should set background to empty string for mobile', () => {
-    const mockVideo = { big_image: 'test.jpg' } as Video;
-    component.videosByCategory['new'].push(mockVideo);
+    component.videosByCategory['new'].push({ big_image: 'test.jpg' } as Video);
     component.isMobile = true;
     component.getNewestVideo();
     expect(mockBackground.setDynamicBackground).toHaveBeenCalledWith('');

@@ -52,7 +52,7 @@ describe('FeedbackOverlayComponent', () => {
     component.errorText = 'test';
     component.visible = true;
     fixture.detectChanges();
-    const text = nativeElement.querySelector('p');
+    let text = nativeElement.querySelector('p');
     expect(component.errorText).toBe('test')
     expect(text?.textContent).toContain('test');
   })
@@ -65,7 +65,7 @@ describe('FeedbackOverlayComponent', () => {
     jasmine.clock().tick(31);
     fixture.detectChanges();
     expect(component.isActive).toBeTrue();
-    const closeButton = fixture.debugElement.query(By.css('a'));
+    let closeButton = fixture.debugElement.query(By.css('a'));
     expect(closeButton).toBeTruthy();
     closeButton.triggerEventHandler('click', null);
     fixture.detectChanges();

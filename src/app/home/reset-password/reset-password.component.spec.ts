@@ -46,12 +46,9 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should send reset password request and handle success', fakeAsync(() => {
-    const mockActivatedRoute = TestBed.inject(ActivatedRoute);
-    spyOn(mockActivatedRoute.snapshot.paramMap, 'get').and.returnValue('mock-token');
-    const http = TestBed.inject(HttpClient);
-    const mockResponse = { message: 'Passwort erfolgreich geändert' };
-    spyOn(http, 'post').and.returnValue(of(mockResponse));
-    const router = TestBed.inject(Router);
+    spyOn(TestBed.inject(ActivatedRoute).snapshot.paramMap, 'get').and.returnValue('mock-token');
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue(of({ message: 'Passwort erfolgreich geändert' }));
+    let router = TestBed.inject(Router);
     spyOn(router, 'navigate');
     component.resetPassword();
     expect(feedback.showFeedback).toHaveBeenCalledWith('Passwort erfolgreich geändert');
@@ -60,18 +57,15 @@ describe('ResetPasswordComponent', () => {
   }));
 
   it('should call showError on error', () => {
-    const mockActivatedRoute = TestBed.inject(ActivatedRoute);
-    spyOn(mockActivatedRoute.snapshot.paramMap, 'get').and.returnValue('mock-token');
+    spyOn(TestBed.inject(ActivatedRoute).snapshot.paramMap, 'get').and.returnValue('mock-token');
     spyOn(localStorage, 'getItem').and.returnValue('en');
-    const http = TestBed.inject(HttpClient);
-    const mockError = { error: { error: 'Token ungültig' } };
-    spyOn(http, 'post').and.returnValue(throwError(mockError));
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue(throwError({ error: { error: 'Token ungültig' } }));
     component.resetPassword();
     expect(feedback.showError).toHaveBeenCalledWith('Token ungültig');
   });
 
   it('should mark field as untouched', () => {
-    const mockModel = {
+    let mockModel = {
       control: {
         markAsUntouched: jasmine.createSpy(), root: {}
       }
@@ -81,7 +75,7 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should show password and set SVG path', () => {
-    const svg = document.createElement('div');
+    let svg = document.createElement('div');
     svg.innerHTML = '<svg><path></path></svg>';
     component.showPassword(svg, 'pw');
     expect(component.passwordType).toBe('text');
@@ -89,7 +83,7 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should hide password and reset SVG path', () => {
-    const svg = document.createElement('div');
+    let svg = document.createElement('div');
     svg.innerHTML = '<svg><path></path></svg>';
     component.hidePassword(svg, 'pw');
     expect(component.passwordType).toBe('password');

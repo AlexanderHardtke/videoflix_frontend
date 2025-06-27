@@ -39,11 +39,10 @@ describe('HeaderComponent', () => {
       if (key === 'auth') return 'testToken';
       return null;
     });
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate'], {
+    let routerSpy = jasmine.createSpyObj('Router', ['navigate'], {
       events: of(new NavigationEnd(1, '/login', '/login')), url: '/login'
     });
-    const translateService = { setTranslation: () => { }, setDefaultLang: () => { } };
-    const component = new HeaderComponent(translateService as any, routerSpy);
+    new HeaderComponent({ setTranslation: () => { }, setDefaultLang: () => { } } as any, routerSpy);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/main']);
   });
 
@@ -102,14 +101,12 @@ describe('HeaderComponent', () => {
   });
 
   it('should toggle the language box', () => {
-    const noBox = fixture.debugElement.query(By.css('nav'));
-    expect(noBox).toBeFalsy();
+    expect(fixture.debugElement.query(By.css('nav'))).toBeFalsy();
     expect(component.selectLang).toBeFalse();
     component.toggleLangBox();
     fixture.detectChanges()
     expect(component.selectLang).toBeTrue();
-    const langBox = fixture.debugElement.query(By.css('nav'));
-    expect(langBox).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('nav'))).toBeTruthy();
   });
 
   it('should switch language', () => {
@@ -126,15 +123,15 @@ describe('HeaderComponent', () => {
   it('should show login button when no token', () => {
     component.token = null;
     fixture.detectChanges();
-    const loginButton = fixture.debugElement.query(By.css('.button'));
-    const buttonText = loginButton.nativeElement.textContent;
+    let loginButton = fixture.debugElement.query(By.css('.button'));
+    let buttonText = loginButton.nativeElement.textContent;
     expect(['Anmelden', 'Login']).toContain(buttonText);
   });
 
   it('should show logout button when token exists', () => {
     component.token = 'abc';
     fixture.detectChanges();
-    const logoutIcon = fixture.debugElement.query(By.css('.logout-svg'));
+    let logoutIcon = fixture.debugElement.query(By.css('.logout-svg'));
     expect(logoutIcon).toBeTruthy();
   });
 
@@ -148,7 +145,7 @@ describe('HeaderComponent', () => {
   it('should display back button on /legal and /privacy', () => {
     component.currentUrl = '/privacy';
     fixture.detectChanges();
-    const backButton = fixture.debugElement.query(By.css('svg.back'));
+    let backButton = fixture.debugElement.query(By.css('svg.back'));
     expect(backButton).toBeTruthy();
   });
 
@@ -156,7 +153,7 @@ describe('HeaderComponent', () => {
     component.currentUrl = '/login';
     component.token = null;
     fixture.detectChanges();
-    const button = fixture.debugElement.query(By.css('.button'));
+    let button = fixture.debugElement.query(By.css('.button'));
     expect(button).toBeNull();
   });
 });

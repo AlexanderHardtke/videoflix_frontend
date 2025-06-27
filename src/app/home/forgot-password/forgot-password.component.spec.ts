@@ -40,10 +40,9 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should set isLoading and call successMail on success', () => {
-    const http = TestBed.inject(HttpClient);
-    const feedback = TestBed.inject(FeedbackService) as jasmine.SpyObj<FeedbackService>;
-    const router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-    spyOn(http, 'post').and.returnValue({
+    let feedback = TestBed.inject(FeedbackService) as jasmine.SpyObj<FeedbackService>;
+    let router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue({
       subscribe: ({ next }: any) => next({ message: 'Mail sent' })
     } as any);
     component.form.email = 'user@example.com';
@@ -55,9 +54,8 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should call showError on request error', () => {
-    const http = TestBed.inject(HttpClient);
-    const feedback = TestBed.inject(FeedbackService) as jasmine.SpyObj<FeedbackService>;
-    spyOn(http, 'post').and.returnValue({
+    let feedback = TestBed.inject(FeedbackService) as jasmine.SpyObj<FeedbackService>;
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue({
       subscribe: ({ error }: any) => error({ error: { error: 'Fehlermeldung' } })
     } as any);
     component.sendEmail();
@@ -67,14 +65,14 @@ describe('ForgotPasswordComponent', () => {
 
   it('should do nothing if isLoading is true', () => {
     component.isLoading = true;
-    const http = TestBed.inject(HttpClient);
+    let http = TestBed.inject(HttpClient);
     spyOn(http, 'post');
     component.sendEmail();
     expect(http.post).not.toHaveBeenCalled();
   });
 
   it('should mark field as untouched', () => {
-    const mockModel = {
+    let mockModel = {
       control: {
         markAsUntouched: jasmine.createSpy()
       }

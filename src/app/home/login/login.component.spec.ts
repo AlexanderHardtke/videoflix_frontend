@@ -71,7 +71,7 @@ describe('LoginComponent', () => {
   });
 
   it('should mark field as untouched', () => {
-    const mockModel = {
+    let mockModel = {
       control: {
         markAsUntouched: jasmine.createSpy()
       }
@@ -81,9 +81,9 @@ describe('LoginComponent', () => {
   });
 
   it('should show and hide password with correct SVG', () => {
-    const mockSvg = document.createElement('div');
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    let mockSvg = document.createElement('div');
+    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     svg.appendChild(path);
     mockSvg.appendChild(svg);
     component.showPassword(mockSvg);

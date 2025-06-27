@@ -38,8 +38,8 @@ describe('SignUpComponent', () => {
   });
 
   it('should get email from service and clear it on init', () => {
-    const testEmail = 'test@example.com';
-    const regService = TestBed.inject(RegistrationService);
+    let testEmail = 'test@example.com';
+    let regService = TestBed.inject(RegistrationService);
     spyOn(regService, 'getEmail').and.returnValue(testEmail);
     spyOn(regService, 'clear');
     component.ngOnInit();
@@ -48,11 +48,10 @@ describe('SignUpComponent', () => {
   });
 
   it('should set isLoading true when registering and send correct data', () => {
-    const http = TestBed.inject(HttpClient);
-    spyOn(http, 'post').and.returnValue({ subscribe: ({ next }: any) => next({ message: 'Erfolg' }) } as any);
-    const feedback = TestBed.inject(FeedbackService);
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue({ subscribe: ({ next }: any) => next({ message: 'Erfolg' }) } as any);
+    let feedback = TestBed.inject(FeedbackService);
     spyOn(feedback, 'showFeedback');
-    const router = TestBed.inject(Router);
+    let router = TestBed.inject(Router);
     spyOn(router, 'navigate');
     component.form.email = 'user@test.de';
     component.form.password = 'pw1234';
@@ -64,9 +63,8 @@ describe('SignUpComponent', () => {
   });
 
   it('should show error on registration failure', () => {
-    const http = TestBed.inject(HttpClient);
-    spyOn(http, 'post').and.returnValue({ subscribe: ({ error }: any) => error({ error: { error: 'Fehler' } }) } as any);
-    const feedback = TestBed.inject(FeedbackService);
+    spyOn(TestBed.inject(HttpClient), 'post').and.returnValue({ subscribe: ({ error }: any) => error({ error: { error: 'Fehler' } }) } as any);
+    let feedback = TestBed.inject(FeedbackService);
     spyOn(feedback, 'showError');
     component.registerUser();
     expect(component.isLoading).toBe(false);
@@ -74,7 +72,7 @@ describe('SignUpComponent', () => {
   });
 
   it('should show password and set SVG path', () => {
-    const svg = document.createElement('div');
+    let svg = document.createElement('div');
     svg.innerHTML = '<svg><path></path></svg>';
     component.showPassword(svg, 'pw');
     expect(component.passwordType).toBe('text');
@@ -82,7 +80,7 @@ describe('SignUpComponent', () => {
   });
 
   it('should hide password and reset SVG path', () => {
-    const svg = document.createElement('div');
+    let svg = document.createElement('div');
     svg.innerHTML = '<svg><path></path></svg>';
     component.hidePassword(svg, 'pw');
     expect(component.passwordType).toBe('password');
@@ -90,7 +88,7 @@ describe('SignUpComponent', () => {
   });
 
   it('should mark input as untouched', () => {
-    const mockNgModel = {
+    let mockNgModel = {
       control: {
         markAsUntouched: jasmine.createSpy()
       }

@@ -15,7 +15,7 @@ describe('RegistrationService', () => {
   });
 
   it('should set the email', () => {
-    const testEmail = 'test@example.com';
+    let testEmail = 'test@example.com';
     service.setEmail(testEmail);
     expect(service.getEmail()).toBe(testEmail);
   })

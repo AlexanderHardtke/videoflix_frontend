@@ -54,20 +54,20 @@ describe('VideoInfoComponent', () => {
 
   it('should set video if token and video found', () => {
     spyOn(localStorage, 'getItem').and.returnValue('token');
-    const mockVideo = { name: 'Test Video' } as any;
+    let mockVideo = { name: 'Test Video' } as any;
     mockVideoTrans.getVideo.and.returnValue(mockVideo);
     component.ngOnInit();
     expect(component.video).toEqual(mockVideo);
   });
 
   it('should return German description', () => {
-    const video = { description_de: 'German', description_en: 'English' } as any;
+    let video = { description_de: 'German', description_en: 'English' } as any;
     mockTranslate.currentLang = 'de';
     expect(component.getDescriptionLang(video)).toBe('German');
   });
 
   it('should return English description', () => {
-    const video = { description_de: 'German', description_en: 'English' } as any;
+    let video = { description_de: 'German', description_en: 'English' } as any;
     mockTranslate.currentLang = 'en';
     expect(component.getDescriptionLang(video)).toBe('English');
   });
@@ -80,7 +80,7 @@ describe('VideoInfoComponent', () => {
   });
 
   it('should call updateScreenWidth on resize', () => {
-    const spy = spyOn(component, 'updateScreenWidth');
+    let spy = spyOn(component, 'updateScreenWidth');
     component.onResize(new Event('resize'));
     expect(spy).toHaveBeenCalled();
   });
