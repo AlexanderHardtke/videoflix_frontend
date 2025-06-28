@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
 
-This project functions only in combination with my Videoflix-backend project which you can find here (`https://github.com/AlexanderHardtke/videoflix_frontend`).
+This project functions only in combination with my Videoflix-Backend project which you can find here (`https://github.com/AlexanderHardtke/videoflix_frontend`).
 
 # Installation
 
