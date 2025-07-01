@@ -38,7 +38,7 @@ header {
     flex-direction: column;
     align-items: flex-start;
     height: calc(100svh - 316px);
-    width: 480px;
+    width: 675px;
     max-width: 100%;
     padding-bottom: 32px;
     gap: 32px;
@@ -48,6 +48,9 @@ header {
         font-size: 88px;
         margin-block: 32px;
         z-index: 2;
+        max-height: 350px;
+        overflow: hidden;
+        white-space: pre-wrap;
     }
 
     p {

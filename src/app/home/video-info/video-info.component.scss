@@ -46,6 +46,9 @@ section {
         font-size: 64px;
         max-width: 100%;
         word-break: break-word;
+        max-height: 250px;
+        overflow: hidden;
+        white-space: pre-wrap;
     }
 
     p {
