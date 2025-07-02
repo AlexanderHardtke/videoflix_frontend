@@ -19,7 +19,7 @@ export class LoginComponent {
     isLoading = false;
     passwordType: string = 'password';
     form = {
-        username: "",
+        email: "",
         password: ""
     }
 
@@ -52,7 +52,7 @@ export class LoginComponent {
         this.feedback.showFeedback(msg);
         localStorage.setItem('auth', response.token);
         this.router.navigate(['/main']);
-        this.form.username = '';
+        this.form.email = '';
         this.form.password = '';
         this.isLoading = false;
     }
