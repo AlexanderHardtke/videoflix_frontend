@@ -156,9 +156,15 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * gets the newest video and send it to the backgroundservice
      */
     getNewestVideo() {
-        this.atfVideo = this.videosByCategory['new'][0];
-        if (this.isMobile) this.backgroundService.setDynamicBackground('');
-        else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        if (this.videosByCategory['new'][0]) {
+            this.atfVideo = this.videosByCategory['new'][0];
+            if (this.isMobile) this.backgroundService.setDynamicBackground('');
+            else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
+        } else {
+            this.feedback.showError("Bisher keine Videos vorhanden")
+            localStorage.removeItem('auth');
+            setTimeout(() => this.router.navigate(['']), 200);
+        }
     }
 
     /**
