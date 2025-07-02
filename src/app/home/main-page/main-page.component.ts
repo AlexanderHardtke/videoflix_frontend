@@ -394,7 +394,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * @returns percentage watched from 1 to 100
      */
     getWatchedPercentage(video: Video): number {
-        if (!video.watched_until || !video['duration']) return 0;
-        return Math.min((video.watched_until / video['duration']) * 100, 100);
+        if (!video.watched_until || !video.duration) return 0;
+        return Math.min((video.watched_until / video.duration) * 100, 100);
     }
 }
