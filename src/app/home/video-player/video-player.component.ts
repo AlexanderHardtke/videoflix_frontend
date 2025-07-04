@@ -123,7 +123,8 @@ export class VideoPlayerComponent {
             this.player.ready(() => {
                 const startTime = this.video?.watched_until ?? 0;
                 this.player!.currentTime(startTime);
-                this.player!.volume((this.video?.sound_volume ?? 50) / 100);
+                const volume = this.video?.sound_volume;
+                if (volume !== undefined && volume !== null) this.player!.volume(volume / 100);
                 this.player!.hotkeys({ volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false });
                 this.customizeFullscreenButton();
                 this.watchTimer();
@@ -259,7 +260,7 @@ export class VideoPlayerComponent {
         const lang = localStorage.getItem('lang') || 'en';
         if (!token) return;
         const headers = new HttpHeaders().set('Authorization', `Token ${token}`).set('Accept-Language', lang);
-        this.http.patch(env.url + '/api/volume/', { sound_volume: volume }, { headers })
+        this.http.patch(env.url + 'api/volume/', { sound_volume: volume }, { headers })
             .subscribe({
                 next: () => { },
                 error: err => console.error('Failed to update volume', err)
