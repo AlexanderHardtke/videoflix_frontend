@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class RegistrationService {
   private email: string = '';
+  auth: boolean | null = null;
 
   /**
    * sets the current email

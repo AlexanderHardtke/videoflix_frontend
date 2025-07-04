@@ -8,6 +8,7 @@ import { Video, VideoApiResponse, VIDEO_CATEGORIES, minVidForRes } from '../../s
 import { BackgroundService } from '../../services/background.service';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { VideoTransferService } from '../../services/video-transfer.service';
+import { RegistrationService } from '../../services/registration.service';
 
 @Component({
     selector: 'app-main-page',
@@ -32,7 +33,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     atfVideo: Video | null = null;
     isMobile = false;
     lastSlideObservers: IntersectionObserver[] = [];
-    private token: string | null = null;
+    private auth: boolean | null = null;
 
     constructor(
         private router: Router,
@@ -40,21 +41,22 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         private feedback: FeedbackService,
         private translate: TranslateService,
         private backgroundService: BackgroundService,
-        private videoTrans: VideoTransferService
+        private videoTrans: VideoTransferService,
+        private registration : RegistrationService
     ) { }
 
     /**
-     * checks for a token and either rejects the user or gets the videos
+     * checks if user is registrated and either rejects the user or gets the videos
      */
     ngOnInit() {
-        this.token = localStorage.getItem('auth');
-        if (!this.token) {
+        this.auth = this.registration.auth;
+        if (!this.auth) {
             this.feedback.showError(this.translate.instant('error.noToken'));
             this.router.navigate(['']);
             return
         }
         this.resetCategories();
-        this.getVideos(this.token);
+        this.getVideos();
         this.updateScreenWidth();
     }
 
@@ -118,13 +120,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     /**
      * gets the video from the backend
      */
-    async getVideos(token: string) {
+    async getVideos() {
         const lang = localStorage.getItem('lang') || 'en';
-        const headers = new HttpHeaders()
-            .set('Authorization', `Token ${token}`)
-            .set('Accept-Language', lang);
+        const headers = new HttpHeaders().set('Accept-Language', lang);
         if (!this.nextPage) this.nextPage = env.url + 'api/videos/';
-        this.http.get<VideoApiResponse>(this.nextPage, { headers }).subscribe({
+        this.http.get<VideoApiResponse>(this.nextPage, { headers, withCredentials: true }).subscribe({
             next: (videos) => this.sortVideos(videos),
             error: (err) => this.errorMessage(err)
         });
@@ -162,7 +162,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             else this.backgroundService.setDynamicBackground(this.atfVideo.big_image);
         } else {
             this.feedback.showError("Bisher keine Videos vorhanden")
-            localStorage.removeItem('auth');
+            this.registration.auth = null;
             setTimeout(() => this.router.navigate(['']), 200);
         }
     }
@@ -198,7 +198,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     errorMessage(err: HttpErrorResponse) {
         const error = err?.error?.error || 'Fehler beim laden der Videos';
         this.feedback.showError(error);
-        localStorage.removeItem('auth');
+        this.registration.auth = null;
         this.router.navigate(['']);
     }
 
@@ -384,8 +384,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             const entry = entries[0];
             if (!entry.isIntersecting || !this.nextPage) return;
             obs.disconnect();
-            if (this.token) {
-                await this.getVideos(this.token);
+            if (this.auth) {
+                await this.getVideos();
                 setTimeout(() => this.reinitializeSliders(), 150);
             }
         }, { threshold: 0.8, rootMargin: '50px' });
