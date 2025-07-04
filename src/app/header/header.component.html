@@ -1,6 +1,6 @@
 <section>
 
-    @if (!token) {
+    @if (!auth) {
         <img class="logo" src="../assets/img/Logo.svg">
     } @else {
         <img class="logo" src="../assets/img/logo_small.svg">
@@ -67,7 +67,7 @@
         </svg>
         } @else {
         @if (currentUrl !== "/login") {
-            @if (token) {
+            @if (auth) {
                 <a class="button" tabindex="4" (click)="logout()" (keydown.enter)="logout()" (keydown.space)="logout()">
                     <svg class="logout-svg" width="18" height="18" viewBox="0 0 18 18" fill="none"
                         xmlns="http://www.w3.org/2000/svg">

@@ -5,6 +5,9 @@ import translateionsEN from '../../../public/i18n/en.json';
 import { NgStyle } from '@angular/common';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { RegistrationService } from '../services/registration.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { env } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -19,9 +22,14 @@ export class HeaderComponent {
   public currentLang = 'de';
   selectLang = false;
   currentUrl = '';
-  token: string | null = null;
+  auth: boolean | null = null;
 
-  constructor(private translate: TranslateService, private router: Router) {
+  constructor(
+    private translate: TranslateService,
+    private router: Router,
+    private registration: RegistrationService,
+    private http: HttpClient
+  ) {
     this.setTranslation();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -31,25 +39,24 @@ export class HeaderComponent {
   }
 
   /**
-   * checks authentication and darkmode
+   * checks darkmode
    */
   ngOnInit() {
     this.checkDarkmode();
   }
 
   /**
-   * gets the token from the local storage or sets it to null
+   * gets the confirmation for authentication from the registration service or sets it to null
    */
   checkAuthentication() {
-    let auth = localStorage.getItem('auth');
-    if (auth) {
-      this.token = auth;
+    this.auth = this.registration.auth;
+    if (this.auth) {
       const currentUrl = this.router.url;
       const allowedRoutes = ['/video', '/legal', '/privacy', '/info'];
       if (!allowedRoutes.some(route => currentUrl.startsWith(route))) {
         this.router.navigate(['/main']);
       }
-    } else this.token = null;
+    } else this.auth = null;
   }
 
   /**
@@ -157,9 +164,14 @@ export class HeaderComponent {
   }
 
   /**
-   * removes the token from the localstorage and navigates the user to the login-page
+   * removes the cookie from the localstorage and navigates the user to the login-page
    */
   logout() {
+    const lang = localStorage.getItem('lang') || 'en';
+    const headers = new HttpHeaders().set('Accept-Language', lang);
+    this.http.post(env.url + 'api/logout/', { headers, withCredentials: true }).subscribe(() => {
+      this.registration.auth = false;
+    });
     localStorage.removeItem('auth');
     this.router.navigate(['/login']);
   }
