@@ -4,6 +4,7 @@ import { Video } from '../../services/video.model';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { VideoTransferService } from '../../services/video-transfer.service';
+import { RegistrationService } from '../../services/registration.service';
 
 
 @Component({
@@ -20,15 +21,16 @@ export class VideoInfoComponent {
     private router: Router,
     private feedback: FeedbackService,
     private translate: TranslateService,
-    private videoTrans: VideoTransferService
+    private videoTrans: VideoTransferService,
+    private registration: RegistrationService
   ) { }
 
   /**
-   * checks for a token and either rejects the user or gets the videos
+   * checks for a authentication in the registration service and either rejects the user or gets the videos
    */
   ngOnInit() {
-    const token = localStorage.getItem('auth');
-    if (!token) {
+    const auth = this.registration.auth;
+    if (!auth) {
       this.feedback.showError(this.translate.instant('error.noToken'));
       this.router.navigate(['']);
     } else if (this.videoTrans.getVideo()) this.video = this.videoTrans.getVideo();

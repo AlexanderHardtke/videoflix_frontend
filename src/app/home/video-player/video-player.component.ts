@@ -8,6 +8,7 @@ import { env } from '../../../../src/environments/environment';
 import Player from "video.js/dist/types/player";
 import videojs from 'video.js';
 import "videojs-hotkeys";
+import { RegistrationService } from '../../services/registration.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class VideoPlayerComponent {
         private route: ActivatedRoute,
         private http: HttpClient,
         private translate: TranslateService,
+        private registration: RegistrationService
     ) { }
 
     /**
@@ -64,11 +66,11 @@ export class VideoPlayerComponent {
      * @param url the url from the http
      */
     getVideoDetails(url: string) {
-        const token = localStorage.getItem('auth');
+        const auth = this.registration.auth;
         const lang = localStorage.getItem('lang') || 'en';
-        if (token) {
-            const headers = new HttpHeaders().set('Authorization', `Token ${token}`).set('Accept-Language', lang);
-            this.http.get<VideoDetail>(url, { headers }).subscribe({
+        if (auth) {
+            const headers = new HttpHeaders().set('Accept-Language', lang);
+            this.http.get<VideoDetail>(url, { headers, withCredentials: true }).subscribe({
                 next: data => {
                     this.video = data;
                     if (this.video.name) this.videoTitle = this.video.name;
@@ -93,7 +95,6 @@ export class VideoPlayerComponent {
      * @param err 
      */
     failedVideo(err: any) {
-
         console.error(this.translate.instant('error.failedLoad'), err);
         this.feedback.showError(err.error.error);
         this.router.navigate(['/main']);
@@ -227,14 +228,12 @@ export class VideoPlayerComponent {
      * @returns 
      */
     updateWatchProgress(currentTime: number) {
-        const token = localStorage.getItem('auth');
+        const auth = this.registration.auth;
         const lang = localStorage.getItem('lang') || 'en';
-        if (!token || !this.video?.id) return;
-        const headers = new HttpHeaders()
-            .set('Authorization', `Token ${token}`)
-            .set('Accept-Language', lang);
+        if (!auth || !this.video?.id) return;
+        const headers = new HttpHeaders().set('Accept-Language', lang);
         this.http.patch(env.url + 'api/watched/' + this.video.watched_until_id + '/',
-            { "watched_until": currentTime }, { headers }).subscribe({
+            { "watched_until": currentTime }, { headers, withCredentials: true }).subscribe({
                 error: err => console.warn(this.translate.instant('error.updateVideo'), err)
             });
     }
@@ -256,11 +255,11 @@ export class VideoPlayerComponent {
      * @returns 
      */
     saveUserVolume(volume: number) {
-        const token = localStorage.getItem('auth');
+        const auth = this.registration.auth;
         const lang = localStorage.getItem('lang') || 'en';
-        if (!token) return;
-        const headers = new HttpHeaders().set('Authorization', `Token ${token}`).set('Accept-Language', lang);
-        this.http.patch(env.url + 'api/volume/', { sound_volume: volume }, { headers })
+        if (!auth) return;
+        const headers = new HttpHeaders().set('Accept-Language', lang);
+        this.http.patch(env.url + 'api/volume/', { sound_volume: volume }, { headers, withCredentials: true })
             .subscribe({
                 next: () => { },
                 error: err => console.error('Failed to update volume', err)
