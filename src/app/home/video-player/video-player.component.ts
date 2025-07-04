@@ -123,9 +123,11 @@ export class VideoPlayerComponent {
             this.player.ready(() => {
                 const startTime = this.video?.watched_until ?? 0;
                 this.player!.currentTime(startTime);
+                this.player!.volume((this.video?.sound_volume ?? 50) / 100);
                 this.player!.hotkeys({ volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false });
                 this.customizeFullscreenButton();
                 this.watchTimer();
+                this.changeVolume()
             });
         } else if (!this.videoUrl) this.feedback.showError(this.translate.instant('error.noVideo'));
     }
@@ -233,6 +235,34 @@ export class VideoPlayerComponent {
         this.http.patch(env.url + 'api/watched/' + this.video.watched_until_id + '/',
             { "watched_until": currentTime }, { headers }).subscribe({
                 error: err => console.warn(this.translate.instant('error.updateVideo'), err)
+            });
+    }
+
+    /**
+     * checks if the user changes the volume and submits it to the backend
+     */
+    changeVolume() {
+        this.player!.on('volumechange', () => {
+            const newVolume = Math.round((this.player?.volume() ?? 0.5) * 100);
+            this.saveUserVolume(newVolume);
+        });
+    }
+
+    /**
+     * updates the sound_volume for the user that is logged in
+     * 
+     * @param volume the sound volume of the user
+     * @returns 
+     */
+    saveUserVolume(volume: number) {
+        const token = localStorage.getItem('auth');
+        const lang = localStorage.getItem('lang') || 'en';
+        if (!token) return;
+        const headers = new HttpHeaders().set('Authorization', `Token ${token}`).set('Accept-Language', lang);
+        this.http.patch(env.url + '/api/volume/', { sound_volume: volume }, { headers })
+            .subscribe({
+                next: () => { },
+                error: err => console.error('Failed to update volume', err)
             });
     }
 

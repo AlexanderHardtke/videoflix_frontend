@@ -35,6 +35,7 @@ export interface VideoDetail {
   };
   watched_until: number;
   watched_until_id: number;
+  sound_volume: number;
 }
 
 export interface VideoApiResponse {
