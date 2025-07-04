@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
+import { RegistrationService } from '../../services/registration.service';
 
 
 @Component({
@@ -23,10 +24,15 @@ export class LoginComponent {
         password: ""
     }
 
-    constructor(private router: Router, private http: HttpClient, private feedback: FeedbackService) { }
+    constructor(
+        private router: Router,
+        private http: HttpClient,
+        private feedback: FeedbackService,
+        private registration: RegistrationService
+    ) { }
 
     /**
-     * requests a login token from the api and routes the user to the main page
+     * requests a login Cookie from the api and routes the user to the main page
      */
     loginUser() {
         if (this.isLoading) return;
@@ -48,9 +54,9 @@ export class LoginComponent {
      * @param response 
      */
     successLogin(response: any) {
+        this.registration.auth = true;
         const msg = response?.message || 'Erfolgreich angemeldet';
         this.feedback.showFeedback(msg);
-        localStorage.setItem('auth', response.token);
         this.router.navigate(['/main']);
         this.form.email = '';
         this.form.password = '';
