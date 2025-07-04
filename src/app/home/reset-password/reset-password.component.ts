@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { SVG_PATHS } from '../../assets/img/svg-paths';
 import { FeedbackService } from '../../services/feedback.service';
 import { env } from '../../../../src/environments/environment';
@@ -29,7 +29,6 @@ export class ResetPasswordComponent {
     private http: HttpClient,
     private router: Router,
     private feedback: FeedbackService,
-    private translate: TranslateService,
   ) { }
 
   /**
