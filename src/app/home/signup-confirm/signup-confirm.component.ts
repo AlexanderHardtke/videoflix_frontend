@@ -32,7 +32,7 @@ export class SignupConfirmComponent {
     const lang = localStorage.getItem('lang') || 'en';
     if (token) {
       const headers = new HttpHeaders({ 'Accept-Language': lang });
-      this.http.post(env.url + 'api/confirm/', { token }, { headers }).subscribe({
+      this.http.get(`${env.url}api/confirm/?code=${token}`, { headers }).subscribe({
         next: (response: any) => {
           const msg = response?.message || 'Erfolgreich bestätigt';
           this.feedback.showFeedback(msg);

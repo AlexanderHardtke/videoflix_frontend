@@ -19,7 +19,7 @@
                     10.2625 8.7875C10.1708 8.8125 10.0833 8.825 10 8.825C9.91667 8.825 9.82917 8.8125 9.7375
                     8.7875C9.64583 8.7625 9.55833 8.725 9.475 8.675L2 4V14H18V4ZM10 7L18 2H2L10 7ZM2 4.25V2.775V2.8V2.7875V4.25Z" />
                 </svg>
-                <input (focus)="markAsUntouched(email)" #email="ngModel" tabindex="4" [(ngModel)]="form.username"
+                <input (focus)="markAsUntouched(email)" #email="ngModel" tabindex="4" [(ngModel)]="form.email"
                     (keydown.enter)="loginUser()" type="email" name="email" required
                     pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                     placeholder="{{'main.email' | translate}}">
