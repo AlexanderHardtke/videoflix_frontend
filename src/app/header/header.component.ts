@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
 import { RegistrationService } from '../services/registration.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { env } from '../../environments/environment';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-header',
@@ -23,12 +24,14 @@ export class HeaderComponent {
   selectLang = false;
   currentUrl = '';
   auth: boolean | null = null;
+  isLoading = false;
 
   constructor(
     private translate: TranslateService,
     private router: Router,
     private registration: RegistrationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private feedback: FeedbackService
   ) {
     this.setTranslation();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
@@ -164,15 +167,32 @@ export class HeaderComponent {
   }
 
   /**
-   * removes the cookie from the localstorage and navigates the user to the login-page
+   * removes the cookie from the backend to be set to 0 and navigates the user to the login-page
    */
   logout() {
+    if (this.isLoading) return;
+    this.isLoading = true;
     const lang = localStorage.getItem('lang') || 'en';
     const headers = new HttpHeaders().set('Accept-Language', lang);
-    this.http.post(env.url + 'api/logout/', { headers, withCredentials: true }).subscribe(() => {
-      this.registration.auth = false;
+    this.http.post(env.url + 'api/logout/', { headers, withCredentials: true }).subscribe({
+      next: (response: any) => this.successLogout(response),
+      error: (err) => {
+        this.feedback.showError(err.error.error);
+        this.isLoading = false;
+      }
     });
-    localStorage.removeItem('auth');
+  }
+
+  /**
+   * successfully logs out the user and moves him to the start-page
+   * 
+   * @param response the message from the backend
+   */
+  successLogout(response: any) {
+    this.registration.auth = false;
     this.router.navigate(['/login']);
+    const msg = response.message || 'Erfolgreich abgemeldet';
+    this.feedback.showFeedback(msg)
+    this.isLoading = false;
   }
 }

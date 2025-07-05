@@ -39,7 +39,7 @@ export class LoginComponent {
         this.isLoading = true;
         const lang = localStorage.getItem('lang') || 'en';
         const headers = new HttpHeaders({ 'Accept-Language': lang });
-        this.http.post(env.url + 'api/login/', this.form, { headers }).subscribe({
+        this.http.post(env.url + 'api/login/', this.form, { headers, withCredentials: true }).subscribe({
             next: (response: any) => this.successLogin(response),
             error: (err) => {
                 this.feedback.showError(err.error.error);
@@ -51,7 +51,7 @@ export class LoginComponent {
     /**
      * successfully logs in the user and moves him to the /main page
      * 
-     * @param response 
+     * @param response the message from the backend
      */
     successLogin(response: any) {
         this.registration.auth = true;
