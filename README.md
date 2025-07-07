@@ -8,7 +8,6 @@ This project functions only in combination with my Videoflix-Backend project whi
 
 IMPORTANT NOTES:
 - Activate the correct Environment for YOUR backend which you can find in src/environments/environment.ts
-- After you build your dist/ directory place the 4 php files also in the top layer of your FTP-server
 It is currently set to the developement django-plattform. For more Information look at the backend README and how to install your personal backend of Videoflix.
 Copy the project after you ## Build it in the dist/ directory and load it onto your FTP-server.
 
@@ -19,6 +18,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Place the Logo.png from the main file in the same folder as the build files.
 
 ## Running unit tests
 
