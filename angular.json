@@ -68,7 +68,9 @@
               "buildTarget": "videoflix_frontend:build:production"
             },
             "development": {
-              "buildTarget": "videoflix_frontend:build:development"
+              "buildTarget": "videoflix_frontend:build:development",
+              "host": "127.0.0.1",
+              "port": 4200 
             }
           },
           "defaultConfiguration": "development"
