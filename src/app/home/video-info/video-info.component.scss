@@ -56,6 +56,24 @@ section {
     }
 }
 
+svg {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    height: 32px;
+    cursor: pointer;
+    fill: var(--white);
+
+    &:hover,
+    &:focus {
+        fill: var(--purple);
+    }
+
+    &:active{
+        scale: 1.2;
+    }
+}
+
 @media screen and (max-width: 400px) {
     section {
         h2 {

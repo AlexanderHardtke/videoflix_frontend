@@ -46,7 +46,7 @@
                         @for (video of getVisibleVideos(category); track video.url) {
                         <div (click)="putVideoAtf(video)" class="preview keen-slider__slide" tabIndex="5" (mouseenter)="playPreview($event)"
                             (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
-                            (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)">
+                            (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)" (dblclick)="playVideo(video.url)">
                             <img [src]="video.image" [alt]="video.name" loading="lazy">
                             <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.file_preview144p"
                                 loop muted playsinline></video>
@@ -62,7 +62,7 @@
                         @for (video of getVisibleVideos(category); track video.url) {
                             <div (click)="putVideoAtf(video)" class="preview" tabIndex="5" (mouseenter)="playPreview($event)"
                                 (mouseleave)="stopPreview($event)" (focus)="playPreview($event)" (blur)="stopPreview($event)"
-                                (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)">
+                                (keydown.enter)="putVideoAtf(video)" (keydown.space)="putVideoAtf(video)" (dblclick)="playVideo(video.url)">
                             
                                 <img [src]="video.image" [alt]="video.name" loading="lazy">
                                 <video #lazyVideo class="hide" preload="none" [attr.data-src]="video.file_preview144p"

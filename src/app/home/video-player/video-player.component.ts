@@ -29,6 +29,7 @@ export class VideoPlayerComponent {
     videoTitle: string = 'Lade Videoinformationen...';
     player!: Player
     showQuality = false;
+    currentQuality: string | null = null;
 
     constructor(
         private router: Router,
@@ -114,6 +115,7 @@ export class VideoPlayerComponent {
         else if (net === '3g' && urls['720p']) this.videoUrl = urls['720p'];
         else if (net === '2g' && urls['360p']) this.videoUrl = urls['360p'];
         else this.videoUrl = urls['240p'] || urls['360p'] || urls['720p'] || urls['1080p'];
+        this.currentQuality = Object.entries(urls).find(([quality, url]) => url === this.videoUrl)?.[0] || '';
     }
 
     /**
@@ -360,6 +362,7 @@ export class VideoPlayerComponent {
         });
         this.showQuality = false;
         this.videoUrl = newUrl;
+        this.currentQuality = quality;
     }
 
     /**

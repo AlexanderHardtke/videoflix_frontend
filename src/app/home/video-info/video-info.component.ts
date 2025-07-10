@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { FeedbackService } from '../../services/feedback.service';
 import { Video } from '../../services/video.model';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { VideoTransferService } from '../../services/video-transfer.service';
 import { RegistrationService } from '../../services/registration.service';
@@ -9,7 +9,7 @@ import { RegistrationService } from '../../services/registration.service';
 
 @Component({
   selector: 'app-video-info',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, RouterLink],
   templateUrl: './video-info.component.html',
   styleUrl: './video-info.component.scss'
 })

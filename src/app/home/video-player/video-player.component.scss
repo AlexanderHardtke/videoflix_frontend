@@ -72,11 +72,12 @@ p {
       background-color: rgba(114.9141509434, 132.7028301887, 159.3858490566, 0.5);
       cursor: pointer;
     }
-
-    &:active {
-      background-color: #fff;
-    }
   }
+}
+
+.quality a.active {
+  color: var(--purple);
+  background-color: #fff;
 }
 
 ::ng-deep .video-js .vjs-control-bar {
