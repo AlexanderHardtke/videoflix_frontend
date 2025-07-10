@@ -2,7 +2,7 @@ import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import translateionsDE from '../../../public/i18n/de.json';
 import translateionsEN from '../../../public/i18n/en.json';
-import { NgStyle } from '@angular/common';
+import { NgStyle, NgClass } from '@angular/common';
 import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { RegistrationService } from '../services/registration.service';
@@ -12,7 +12,7 @@ import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-header',
-  imports: [TranslatePipe, NgStyle, RouterLink],
+  imports: [TranslatePipe, NgStyle, NgClass, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

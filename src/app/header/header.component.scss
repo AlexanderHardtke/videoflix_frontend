@@ -120,6 +120,11 @@ nav {
         left: calc(50svw - 960px);
     }
 
+    .main-section {
+        max-width: inherit;
+        left: auto;
+    }
+
     .logo {
         height: 60px;
     }

@@ -2,7 +2,7 @@
 <div class="overlay"></div>
 }
 
-<section>
+<section [ngClass]="{ 'main-section': currentUrl === '/main'}">
 
     @if (!auth) {
         <img class="logo" src="../assets/img/Logo.svg">
