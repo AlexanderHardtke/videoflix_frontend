@@ -134,6 +134,28 @@ p {
   display: none;
 }
 
+::ng-deep .video-js .vjs-play-control {
+  position: absolute;
+  top: calc(20px - 28svw);
+  left: calc(50% - 25px);
+}
+
+::ng-deep .video-js .vjs-skip-backward-10 {
+  position: absolute;
+  top: calc(20px - 28svw);
+  left: calc(50% - 96px);
+  width: 24px;
+  height: 54px;
+}
+
+::ng-deep .video-js .vjs-skip-forward-10 {
+  position: absolute;
+  top: calc(20px - 28svw);
+  left: calc(50% + 72px);
+  width: 24px;
+  height: 54px;
+}
+
 @keyframes rotateAndMove {
   0% {
     transform: rotate(0deg) translateX(0);
@@ -150,10 +172,10 @@ p {
   }
 }
 
-@media screen and (min-width: 1921px) {
+@media screen and (min-width: 1600px) {
   header {
-    max-width: 1920px;
-    left: calc(50svw - 960px);
+    max-width: 1600px;
+    left: calc(50svw - 800px);
   }
 
   .back {
@@ -163,9 +185,37 @@ p {
   .smallLogo {
     height: 42px;
   }
+
+  ::ng-deep .video-js .vjs-play-control {
+    position: absolute;
+    top: -440px;
+    left: calc(50% - 25px);
+  }
+
+  ::ng-deep .video-js .vjs-skip-backward-10 {
+    position: absolute;
+    top: -440px;
+    left: calc(50% - 116px);
+    width: 50px;
+    height: 50px;
+  }
+
+  ::ng-deep .video-js .vjs-skip-forward-10 {
+    position: absolute;
+    top: -440px;
+    left: calc(50% + 72px);
+    width: 50px;
+    height: 50px;
+  }
 }
 
-@media screen and (max-width: 768px) and (orientation: portrait) {
+@media screen and (min-width: 1921px) {
+  * {
+    font-size: auto;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-aspect-ratio: 16/9) {
   ::ng-deep .quality-button .vjs-icon-placeholder {
     top: 6px;
   }
@@ -202,31 +252,9 @@ p {
     bottom: -16px;
     left: 6px;
   }
-
-  ::ng-deep .video-js .vjs-play-control {
-    position: absolute;
-    top: calc(20px - 28svw);
-    left: calc(50% - 25px);
-  }
-
-  ::ng-deep .video-js .vjs-skip-backward-10 {
-    position: absolute;
-    top: calc(20px - 28svw);
-    left: calc(50% - 96px);
-    width: 24px;
-    height: 54px;
-  }
-
-  ::ng-deep .video-js .vjs-skip-forward-10 {
-    position: absolute;
-    top: calc(20px - 28svw);
-    left: calc(50% + 72px);
-    width: 24px;
-    height: 54px;
-  }
 }
 
-@media screen and (max-width: 1024px) and (orientation: landscape) {
+@media screen and (max-width: 1024px) and (max-aspect-ratio: 16/9) {
   ::ng-deep .video-js .vjs-control-bar {
     height: 38px;
     bottom: 6px;
@@ -258,28 +286,6 @@ p {
     font-size: 16px;
     bottom: -16px;
     left: 6px;
-  }
-
-  ::ng-deep .video-js .vjs-play-control {
-    position: absolute;
-    top: calc(26px - 50svh);
-    left: calc(50% - 25px);
-  }
-
-  ::ng-deep .video-js .vjs-skip-backward-10 {
-    position: absolute;
-    top: calc(26px - 50svh);
-    left: calc(50% - 96px);
-    width: 24px;
-    height: 54px;
-  }
-
-  ::ng-deep .video-js .vjs-skip-forward-10 {
-    position: absolute;
-    top: calc(26px - 50svh);
-    left: calc(50% + 72px);
-    width: 24px;
-    height: 54px;
   }
 
   ::ng-deep .video-js {
