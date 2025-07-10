@@ -11,6 +11,13 @@
     width: 100%;
 }
 
+.text-box {
+    background-color: var(--card-bg);
+    border-radius: 48px;
+    padding: 20px;
+    max-height: fit-content;
+}
+
 h2 {
     font-size: 32px;
     color: var((--purple));
@@ -38,5 +45,11 @@ h2 {
 
     h2 {
         font-size: 32px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    h2 {
+        font-size: 28px;
     }
 }
