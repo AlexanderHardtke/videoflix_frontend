@@ -3,12 +3,13 @@ import { FeedbackService } from '../../services/feedback.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { VideoDetail } from '../../services/video.model';
+import { RegistrationService } from '../../services/registration.service';
 import { TranslateService } from '@ngx-translate/core';
 import { env } from '../../../../src/environments/environment';
-import Player from "video.js/dist/types/player";
+import { VideoQualityButton } from './video-quality-button'
+import Player from 'video.js/dist/types/player';
 import videojs from 'video.js';
-import "videojs-hotkeys";
-import { RegistrationService } from '../../services/registration.service';
+import 'videojs-hotkeys';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class VideoPlayerComponent {
     video!: VideoDetail;
     videoTitle: string = 'Lade Videoinformationen...';
     player!: Player
+    showQuality = false;
 
     constructor(
         private router: Router,
@@ -120,6 +122,7 @@ export class VideoPlayerComponent {
     loadVideo() {
         if (this.videoUrl && this.videoElement) {
             if (this.player) this.player.dispose();
+            videojs.registerComponent('VideoQualityButton', VideoQualityButton);
             this.player = videojs(this.videoElement.nativeElement, this.getPlayerOptions());
             this.player.ready(() => {
                 const startTime = this.video?.watched_until ?? 0;
@@ -128,8 +131,9 @@ export class VideoPlayerComponent {
                 if (volume !== undefined && volume !== null) this.player!.volume(volume / 100);
                 this.player!.hotkeys({ volumeStep: 0.1, seekStep: 10, enableModifiersForNumbers: false });
                 this.customizeFullscreenButton();
+                this.customizeQualityButton();
                 this.watchTimer();
-                this.changeVolume()
+                this.changeVolume();
             });
         } else if (!this.videoUrl) this.feedback.showError(this.translate.instant('error.noVideo'));
     }
@@ -147,7 +151,7 @@ export class VideoPlayerComponent {
                 skipButtons: { forward: 10, backward: 10 },
                 children: [
                     'playToggle', 'skipBackward', 'skipForward', 'volumePanel',
-                    'progressControl', 'playbackRateMenuButton', 'fullscreenToggle'
+                    'progressControl', 'playbackRateMenuButton', 'VideoQualityButton', 'fullscreenToggle'
                 ]
             },
         };
@@ -173,6 +177,24 @@ export class VideoPlayerComponent {
             }
         };
         this.checkFullscreenChange(isMobile)
+    }
+
+    /**
+     * checks if the toggle quality button is pressed
+     */
+    customizeQualityButton() {
+        this.player.ready(() => {
+            this.player.on('toggle-quality', () => {
+                this.toggleQualityOverlay();
+            });
+        });
+    }
+
+    /**
+     * toggles the quality menu
+     */
+    toggleQualityOverlay() {
+        this.showQuality = !this.showQuality;
     }
 
     /**
@@ -233,7 +255,7 @@ export class VideoPlayerComponent {
         if (!auth || !this.video?.id) return;
         const headers = new HttpHeaders().set('Accept-Language', lang);
         this.http.patch(env.url + 'api/watched/' + this.video.watched_until_id + '/',
-            { "watched_until": currentTime }, { headers, withCredentials: true }).subscribe({
+            { 'watched_until': currentTime }, { headers, withCredentials: true }).subscribe({
                 error: err => console.warn(this.translate.instant('error.updateVideo'), err)
             });
     }
@@ -316,6 +338,28 @@ export class VideoPlayerComponent {
             header.style.opacity = '0';
             this.hidden = true;
         }
+    }
+
+    /**
+     * switches the quality of the video
+     * 
+     * @param quality the quality the user clicked on
+     * @returns 
+     */
+    switchQuality(quality: keyof VideoDetail['video_urls']) {
+        if (!this.player || !this.video) return;
+        const newUrl = this.video.video_urls[quality];
+        if (!newUrl) return;
+        const currentTime = this.player.currentTime();
+        const volume = this.player.volume();
+        this.player.src({ src: newUrl, type: 'video/mp4' });
+        this.player.ready(() => {
+            this.player.currentTime(currentTime);
+            this.player.volume(volume);
+            this.player.play();
+        });
+        this.showQuality = false;
+        this.videoUrl = newUrl;
     }
 
     /**

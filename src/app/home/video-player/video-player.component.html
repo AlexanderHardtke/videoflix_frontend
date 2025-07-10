@@ -20,6 +20,14 @@
 
     <div>
         <video #videoRef controls class="video-js" preload="auto" type="video/mp4"></video>
+        @if (showQuality) {
+            <div class="quality">
+                <a (click)="switchQuality('1080p')">1080p</a>
+                <a (click)="switchQuality('720p')">720p</a>
+                <a (click)="switchQuality('360p')">360p</a>
+                <a (click)="switchQuality('240p')">240p</a>
+            </div>
+        }
     </div>
-    
+
 </aside>

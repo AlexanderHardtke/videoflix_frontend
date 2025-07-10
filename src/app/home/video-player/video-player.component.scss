@@ -8,6 +8,7 @@ aside {
   align-items: center;
 
   >div {
+    position: relative;
     width: 100%;
     height: auto;
     max-width: 1600px;
@@ -55,6 +56,29 @@ p {
   }
 }
 
+.quality {
+  position: absolute;
+  right: 30px;
+  bottom: 50px;
+  background-color: rgba(43, 51, 63, 0.7);
+  display: flex;
+  flex-direction: column;
+
+  >a {
+    padding-block: 3px;
+    padding-inline: 6px;
+
+    &:hover {
+      background-color: rgba(114.9141509434, 132.7028301887, 159.3858490566, 0.5);
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: #fff;
+    }
+  }
+}
+
 ::ng-deep .video-js .vjs-control-bar {
   background-color: transparent;
   display: flex;
@@ -97,6 +121,15 @@ p {
   position: relative;
 }
 
+::ng-deep .quality-button .vjs-icon-placeholder {
+  background-image: url('/assets/img/quality.svg') !important;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+
 ::ng-deep .vjs-playback-rate-value {
   display: none;
 }
@@ -133,6 +166,10 @@ p {
 }
 
 @media screen and (max-width: 768px) and (orientation: portrait) {
+  ::ng-deep .quality-button .vjs-icon-placeholder {
+    top: 6px;
+  }
+
   ::ng-deep .video-js .vjs-control-bar {
     height: 38px;
     bottom: 6px;
