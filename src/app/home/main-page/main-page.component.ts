@@ -49,12 +49,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
      * checks if user is registrated and either rejects the user or gets the videos
      */
     ngOnInit() {
-        this.auth = this.registration.auth;
-        if (!this.auth) {
-            this.feedback.showError(this.translate.instant('error.noToken'));
-            this.router.navigate(['']);
-            return
-        }
         this.resetCategories();
         this.getVideos();
         this.updateScreenWidth();
@@ -125,8 +119,14 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         const headers = new HttpHeaders().set('Accept-Language', lang);
         if (!this.nextPage) this.nextPage = env.url + 'api/videos/';
         this.http.get<VideoApiResponse>(this.nextPage, { headers, withCredentials: true }).subscribe({
-            next: (videos) => this.sortVideos(videos),
-            error: (err) => this.errorMessage(err)
+            next: (videos) => {
+                this.auth = true;
+                this.sortVideos(videos);
+            },
+            error: (err) => {
+                this.router.navigate(['']);
+                this.errorMessage(err);
+            }
         });
     }
 
